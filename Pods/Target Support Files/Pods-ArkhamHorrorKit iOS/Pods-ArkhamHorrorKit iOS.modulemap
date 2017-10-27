@@ -1,0 +1,6 @@
+framework module Pods_ArkhamHorrorKit_iOS {
+  umbrella header "Pods-ArkhamHorrorKit iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

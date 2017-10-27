@@ -1,0 +1,33 @@
+//
+//  CardSubtype.swift
+//  ArkhamHorrorCompanion
+//
+//  Created by Tiago Bras on 19/04/2017.
+//  Copyright © 2017 Tiago Bras. All rights reserved.
+//
+
+public enum CardSubtype: Int {
+    case weakness = 1, basicweakness = 2
+    
+    var id: Int {
+        return rawValue
+    }
+    
+    var name: String {
+        switch self {
+        case .weakness: return "Weakness"
+        case .basicweakness: return "Basic Weakness"
+        }
+    }
+    
+    init?(code: String) {
+        let codes: [String: CardSubtype] = [
+            "weakness": .weakness,
+            "basicweakness": .basicweakness,
+        ]
+        
+        guard let value = codes[code]?.rawValue else { return nil }
+        
+        self.init(rawValue: value)
+    }
+}
