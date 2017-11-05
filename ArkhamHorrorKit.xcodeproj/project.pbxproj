@@ -187,7 +187,8 @@
 		A51A26621FAF3468004C6ED1 /* base_dwl.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_dwl.json; sourceTree = "<group>"; };
 		A51A26631FAF3468004C6ED1 /* base_core.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_core.json; sourceTree = "<group>"; };
 		A52F52021FAFC12900CEFA18 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
-		A52F52031FAFC1DC00CEFA18 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../../../../Desktop/TestArkhamHorrorKit/LICENSE; sourceTree = "<group>"; };
+		A52F52041FAFC39C00CEFA18 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		A52F52051FAFC3BC00CEFA18 /* ArkhamHorrorKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = ArkhamHorrorKit.podspec; sourceTree = SOURCE_ROOT; };
 		A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCardRecord.swift; sourceTree = "<group>"; };
 		A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTestSkillIcon.swift; sourceTree = "<group>"; };
 		A5BCA7B11FA24CE1001E6817 /* CardFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFilter.swift; sourceTree = "<group>"; };
@@ -329,7 +330,8 @@
 			isa = PBXGroup;
 			children = (
 				A52F52021FAFC12900CEFA18 /* Podfile */,
-				A52F52031FAFC1DC00CEFA18 /* LICENSE */,
+				A52F52041FAFC39C00CEFA18 /* LICENSE */,
+				A52F52051FAFC3BC00CEFA18 /* ArkhamHorrorKit.podspec */,
 			);
 			path = "Support Files";
 			sourceTree = "<group>";

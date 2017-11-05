@@ -1,14 +1,14 @@
 
 Pod::Spec.new do |s|
   s.name         = "ArkhamHorrorKit"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "Arhkahm Horror SDK"
   s.description  = <<-DESC
   A module with Arkham Horror LCG cards database and related helper classes.
   DESC
 
   s.homepage     = "https://tiagobras@bitbucket.org/tiagobras/arkhamhorrorkit.git"
-  s.license      = { :type => "MIT", :file => "LICENSE" }
+  s.license      = "MIT"
   s.author             = { "Tiago Bras" => "tiagodsbras@gmail.com" }
 
   s.ios.deployment_target = '8.0'
