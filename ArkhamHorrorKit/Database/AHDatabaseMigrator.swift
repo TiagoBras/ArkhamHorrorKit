@@ -9,9 +9,10 @@
 import Foundation
 import GRDB
 import SwiftyJSON
+import TBSwiftKit
 
-class AHDatabaseMigrator {
-    var lastVersion: MigrationVersion {
+public final class AHDatabaseMigrator {
+    public var lastVersion: MigrationVersion {
         let sortedMigrations = migrations.sorted(by: { $0.version.rawValue < $1.version.rawValue })
         
         return sortedMigrations.last!.version
@@ -25,13 +26,13 @@ class AHDatabaseMigrator {
         return [v1]
     }
     
-    init() {
+    public init() {
         migrations.forEach { (migration) in
             migration.register(with: &migrator)
         }
     }
     
-    func migrate(database: DatabaseWriter, upTo migration: MigrationVersion? = nil) throws  {
+    public func migrate(database: DatabaseWriter, upTo migration: MigrationVersion? = nil) throws  {
         if let version = migration {
             try migrator.migrate(database, upTo: version.stringValue)
         } else {
@@ -109,14 +110,14 @@ class AHDatabaseMigrator {
             
             var name: String { return "\(stem).\(ext)"}
             
-            init(stem: String, ext: String, bundle: Bundle = Bundle.main) {
+            init(stem: String, ext: String, bundle: Bundle) {
                 self.stem = stem
                 self.ext = ext
                 self.bundle = bundle
             }
             
             func url() throws -> URL {
-                guard let url = Bundle.main.url(forResource: stem, withExtension: ext) else {
+                guard let url = bundle.url(forResource: stem, withExtension: ext) else {
                     throw CardsDatabaseMigratorError.fileNotFound(name)
                 }
                 
@@ -133,32 +134,43 @@ class AHDatabaseMigrator {
         struct Schemas {
             private init() { }
             
-            static let v1 = Basename(stem: "schema_v1", ext: "sql")
+            #if os(iOS) || os(watchOS) || os(tvOS)
+            static let bundle = Bundle(identifier: "com.bitmountains.ArkhamHorrorKit-iOS")!
+            #elseif os(OSX)
+            static let bundle = Bundle(identifier: "com.bitmountains.ArkhamHorrorKit-macOS")!
+            #endif
+            
+            static let v1 = Basename(stem: "schema_v1", ext: "sql", bundle: Schemas.bundle)
         }
         
         struct BaseData {
+            #if os(iOS) || os(watchOS) || os(tvOS)
+            static let bundle = Bundle(identifier: "com.bitmountains.ArkhamHorrorKit-iOS")!
+            #elseif os(OSX)
+            static let bundle = Bundle(identifier: "com.bitmountains.ArkhamHorrorKit-macOS")!
+            #endif
             private init() { }
-            static let cycles = Basename(stem: "base_cycles", ext: "json")
-            static let packs = Basename(stem: "base_packs", ext: "json")
+            static let cycles = Basename(stem: "base_cycles", ext: "json", bundle: BaseData.bundle)
+            static let packs = Basename(stem: "base_packs", ext: "json", bundle: BaseData.bundle)
             
-            static let core = Basename(stem: "base_core", ext: "json")
-            static let dwl = Basename(stem: "base_dwl", ext: "json")
+            static let core = Basename(stem: "base_core", ext: "json", bundle: BaseData.bundle)
+            static let dwl = Basename(stem: "base_dwl", ext: "json", bundle: BaseData.bundle)
             
-            static let apot = Basename(stem: "base_apot", ext: "json")
-            static let bota = Basename(stem: "base_bota", ext: "json")
-            static let eotp = Basename(stem: "base_eotp", ext: "json")
-            static let litas = Basename(stem: "base_litas", ext: "json")
-            static let promo = Basename(stem: "base_promo", ext: "json")
-            static let ptc = Basename(stem: "base_ptc", ext: "json")
-            static let tece = Basename(stem: "base_tece", ext: "json")
-            static let tmm = Basename(stem: "base_tmm", ext: "json")
-            static let tuo = Basename(stem: "base_tuo", ext: "json")
-            static let uau = Basename(stem: "base_uau", ext: "json")
-            static let wda = Basename(stem: "base_wda", ext: "json")
+            static let apot = Basename(stem: "base_apot", ext: "json", bundle: BaseData.bundle)
+            static let bota = Basename(stem: "base_bota", ext: "json", bundle: BaseData.bundle)
+            static let eotp = Basename(stem: "base_eotp", ext: "json", bundle: BaseData.bundle)
+            static let litas = Basename(stem: "base_litas", ext: "json", bundle: BaseData.bundle)
+            static let promo = Basename(stem: "base_promo", ext: "json", bundle: BaseData.bundle)
+            static let ptc = Basename(stem: "base_ptc", ext: "json", bundle: BaseData.bundle)
+            static let tece = Basename(stem: "base_tece", ext: "json", bundle: BaseData.bundle)
+            static let tmm = Basename(stem: "base_tmm", ext: "json", bundle: BaseData.bundle)
+            static let tuo = Basename(stem: "base_tuo", ext: "json", bundle: BaseData.bundle)
+            static let uau = Basename(stem: "base_uau", ext: "json", bundle: BaseData.bundle)
+            static let wda = Basename(stem: "base_wda", ext: "json", bundle: BaseData.bundle)
         }
     }
     
-    enum MigrationVersion: Int {
+    public enum MigrationVersion: Int {
         case v1 = 1
         
         var stringValue: String {

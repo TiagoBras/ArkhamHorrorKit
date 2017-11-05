@@ -6,8 +6,8 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
-protocol DeckOption {
-    func isDeckValid(_ deck: Deck) -> DeckValidationResult
+public protocol DeckOption {
+    func isDeckValid(_ deck: Deck) -> Deck.DeckValidationResult
 }
 
 extension Set where Element == DeckCard {
@@ -16,19 +16,19 @@ extension Set where Element == DeckCard {
     }
 }
 
-struct Deck: Equatable {
-    var id: Int
-    var investigator: Investigator
-    var name: String
-    var cards: Set<DeckCard> {
+public struct Deck: Equatable {
+    public var id: Int
+    public var investigator: Investigator
+    public var name: String
+    public var cards: Set<DeckCard> {
         return Set(Array(_cards.values))
     }
-    var creationDate: Date
-    var updateDate: Date
+    public var creationDate: Date
+    public var updateDate: Date
     
     private var _cards: [Int: DeckCard]
     
-    init(id: Int, investigator: Investigator, name: String, cards: Set<DeckCard>, creationDate: Date, updateDate: Date) {
+    public init(id: Int, investigator: Investigator, name: String, cards: Set<DeckCard>, creationDate: Date, updateDate: Date) {
         self.id = id
         self.investigator = investigator
         self.name = name
@@ -43,23 +43,23 @@ struct Deck: Equatable {
         }
     }
     
-    var stats: DeckStats {
+    public var stats: DeckStats {
         return DeckStats.fromDeck(self)
     }
     
-    var numberOfCards: Int {
+    public var numberOfCards: Int {
         return cards.reduce(0, { $0 + $1.quantity })
     }
     
-    func deckCard(withId id: Int) -> DeckCard? {
+    public func deckCard(withId id: Int) -> DeckCard? {
         return _cards[id]
     }
     
-    func quantity(of card: Card) -> Int? {
+    public func quantity(of card: Card) -> Int? {
         return _cards[card.id]?.quantity
     }
     
-    func validateDeck() -> DeckValidationResult {
+    public func validateDeck() -> DeckValidationResult {
         for option in investigator.deckOptions {
             let result = option.isDeckValid(self)
             
@@ -78,15 +78,15 @@ struct Deck: Equatable {
         }
     }
     
-    mutating func changeQuantity(of card: Card, quantity: Int) {
+    public mutating func changeQuantity(of card: Card, quantity: Int) {
         _cards[card.id] = DeckCard(card: card, quantity: quantity)
     }
     
-    static func ==(lhs: Deck, rhs: Deck) -> Bool {
+    public static func ==(lhs: Deck, rhs: Deck) -> Bool {
         return lhs.id == rhs.id
     }
     
-    struct DeckValidationResult {
+    public struct DeckValidationResult {
         var isValid: Bool
         var message: String?
     }

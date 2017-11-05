@@ -7,13 +7,83 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		150066A0F0D845A7E6B4F319 /* Pods_ArkhamHorrorKit_macOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBD970C05946780D19896C7F /* Pods_ArkhamHorrorKit_macOSTests.framework */; };
+		3764492D6961AA54168F2563 /* Pods_ArkhamHorrorKit_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F04466D3EFBF00B2C7700C6 /* Pods_ArkhamHorrorKit_iOSTests.framework */; };
 		56A4CBEAE2957D33B0C9E53A /* Pods_ArkhamHorrorKit_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F26C2B14B385004DB7863952 /* Pods_ArkhamHorrorKit_iOS.framework */; };
 		A3F02738298214FEACF91D64 /* Pods_ArkhamHorrorKit_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F508E71D6325C8E474FB55A /* Pods_ArkhamHorrorKit_macOS.framework */; };
+		A51A261F1FAE7AFA004C6ED1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */; };
+		A51A26201FAE7B01004C6ED1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */; };
+		A51A264F1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */; };
+		A51A26501FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */; };
+		A51A26511FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */; };
+		A51A26521FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */; };
+		A51A26641FAF3470004C6ED1 /* schema_v1.sql in Resources */ = {isa = PBXBuildFile; fileRef = A51A26611FAF3468004C6ED1 /* schema_v1.sql */; };
+		A51A26651FAF3470004C6ED1 /* base_apot.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26541FAF3467004C6ED1 /* base_apot.json */; };
+		A51A26661FAF3470004C6ED1 /* base_bota.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265A1FAF3467004C6ED1 /* base_bota.json */; };
+		A51A26671FAF3470004C6ED1 /* base_core.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26631FAF3468004C6ED1 /* base_core.json */; };
+		A51A26681FAF3470004C6ED1 /* base_dwl.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26621FAF3468004C6ED1 /* base_dwl.json */; };
+		A51A26691FAF3470004C6ED1 /* base_eotp.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265E1FAF3467004C6ED1 /* base_eotp.json */; };
+		A51A266A1FAF3470004C6ED1 /* base_litas.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26561FAF3467004C6ED1 /* base_litas.json */; };
+		A51A266B1FAF3470004C6ED1 /* base_promo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26571FAF3467004C6ED1 /* base_promo.json */; };
+		A51A266C1FAF3470004C6ED1 /* base_ptc.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26551FAF3467004C6ED1 /* base_ptc.json */; };
+		A51A266D1FAF3470004C6ED1 /* base_tece.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265C1FAF3467004C6ED1 /* base_tece.json */; };
+		A51A266E1FAF3470004C6ED1 /* base_tmm.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26601FAF3468004C6ED1 /* base_tmm.json */; };
+		A51A266F1FAF3470004C6ED1 /* base_tuo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265B1FAF3467004C6ED1 /* base_tuo.json */; };
+		A51A26701FAF3470004C6ED1 /* base_uau.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26581FAF3467004C6ED1 /* base_uau.json */; };
+		A51A26711FAF3470004C6ED1 /* base_wda.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26591FAF3467004C6ED1 /* base_wda.json */; };
+		A51A26721FAF3470004C6ED1 /* base_cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265D1FAF3467004C6ED1 /* base_cycles.json */; };
+		A51A26731FAF3470004C6ED1 /* base_packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265F1FAF3468004C6ED1 /* base_packs.json */; };
+		A51A26841FAF347B004C6ED1 /* schema_v1.sql in Resources */ = {isa = PBXBuildFile; fileRef = A51A26611FAF3468004C6ED1 /* schema_v1.sql */; };
+		A51A26851FAF347B004C6ED1 /* base_apot.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26541FAF3467004C6ED1 /* base_apot.json */; };
+		A51A26861FAF347B004C6ED1 /* base_bota.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265A1FAF3467004C6ED1 /* base_bota.json */; };
+		A51A26871FAF347B004C6ED1 /* base_core.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26631FAF3468004C6ED1 /* base_core.json */; };
+		A51A26881FAF347B004C6ED1 /* base_dwl.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26621FAF3468004C6ED1 /* base_dwl.json */; };
+		A51A26891FAF347B004C6ED1 /* base_eotp.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265E1FAF3467004C6ED1 /* base_eotp.json */; };
+		A51A268A1FAF347B004C6ED1 /* base_litas.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26561FAF3467004C6ED1 /* base_litas.json */; };
+		A51A268B1FAF347B004C6ED1 /* base_promo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26571FAF3467004C6ED1 /* base_promo.json */; };
+		A51A268C1FAF347B004C6ED1 /* base_ptc.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26551FAF3467004C6ED1 /* base_ptc.json */; };
+		A51A268D1FAF347B004C6ED1 /* base_tece.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265C1FAF3467004C6ED1 /* base_tece.json */; };
+		A51A268E1FAF347B004C6ED1 /* base_tmm.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26601FAF3468004C6ED1 /* base_tmm.json */; };
+		A51A268F1FAF347B004C6ED1 /* base_tuo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265B1FAF3467004C6ED1 /* base_tuo.json */; };
+		A51A26901FAF347B004C6ED1 /* base_uau.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26581FAF3467004C6ED1 /* base_uau.json */; };
+		A51A26911FAF347B004C6ED1 /* base_wda.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26591FAF3467004C6ED1 /* base_wda.json */; };
+		A51A26921FAF347B004C6ED1 /* base_cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265D1FAF3467004C6ED1 /* base_cycles.json */; };
+		A51A26931FAF347B004C6ED1 /* base_packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265F1FAF3468004C6ED1 /* base_packs.json */; };
+		A51A26971FAF35D6004C6ED1 /* schema_v1.sql in Resources */ = {isa = PBXBuildFile; fileRef = A51A26611FAF3468004C6ED1 /* schema_v1.sql */; };
+		A51A26981FAF35D6004C6ED1 /* base_cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265D1FAF3467004C6ED1 /* base_cycles.json */; };
+		A51A26991FAF35D6004C6ED1 /* base_packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265F1FAF3468004C6ED1 /* base_packs.json */; };
+		A51A269A1FAF35D6004C6ED1 /* base_apot.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26541FAF3467004C6ED1 /* base_apot.json */; };
+		A51A269B1FAF35D6004C6ED1 /* base_bota.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265A1FAF3467004C6ED1 /* base_bota.json */; };
+		A51A269C1FAF35D6004C6ED1 /* base_core.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26631FAF3468004C6ED1 /* base_core.json */; };
+		A51A269D1FAF35D6004C6ED1 /* base_dwl.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26621FAF3468004C6ED1 /* base_dwl.json */; };
+		A51A269E1FAF35D6004C6ED1 /* base_eotp.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265E1FAF3467004C6ED1 /* base_eotp.json */; };
+		A51A269F1FAF35D6004C6ED1 /* base_litas.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26561FAF3467004C6ED1 /* base_litas.json */; };
+		A51A26A01FAF35D6004C6ED1 /* base_promo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26571FAF3467004C6ED1 /* base_promo.json */; };
+		A51A26A11FAF35D6004C6ED1 /* base_ptc.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26551FAF3467004C6ED1 /* base_ptc.json */; };
+		A51A26A21FAF35D6004C6ED1 /* base_tece.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265C1FAF3467004C6ED1 /* base_tece.json */; };
+		A51A26A31FAF35D6004C6ED1 /* base_tmm.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26601FAF3468004C6ED1 /* base_tmm.json */; };
+		A51A26A41FAF35D6004C6ED1 /* base_tuo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265B1FAF3467004C6ED1 /* base_tuo.json */; };
+		A51A26A51FAF35D6004C6ED1 /* base_uau.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26581FAF3467004C6ED1 /* base_uau.json */; };
+		A51A26A61FAF35D6004C6ED1 /* base_wda.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26591FAF3467004C6ED1 /* base_wda.json */; };
+		A51A26A71FAF35D7004C6ED1 /* schema_v1.sql in Resources */ = {isa = PBXBuildFile; fileRef = A51A26611FAF3468004C6ED1 /* schema_v1.sql */; };
+		A51A26A81FAF35D7004C6ED1 /* base_cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265D1FAF3467004C6ED1 /* base_cycles.json */; };
+		A51A26A91FAF35D7004C6ED1 /* base_packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265F1FAF3468004C6ED1 /* base_packs.json */; };
+		A51A26AA1FAF35D7004C6ED1 /* base_apot.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26541FAF3467004C6ED1 /* base_apot.json */; };
+		A51A26AB1FAF35D7004C6ED1 /* base_bota.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265A1FAF3467004C6ED1 /* base_bota.json */; };
+		A51A26AC1FAF35D7004C6ED1 /* base_core.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26631FAF3468004C6ED1 /* base_core.json */; };
+		A51A26AD1FAF35D7004C6ED1 /* base_dwl.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26621FAF3468004C6ED1 /* base_dwl.json */; };
+		A51A26AE1FAF35D7004C6ED1 /* base_eotp.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265E1FAF3467004C6ED1 /* base_eotp.json */; };
+		A51A26AF1FAF35D7004C6ED1 /* base_litas.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26561FAF3467004C6ED1 /* base_litas.json */; };
+		A51A26B01FAF35D7004C6ED1 /* base_promo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26571FAF3467004C6ED1 /* base_promo.json */; };
+		A51A26B11FAF35D7004C6ED1 /* base_ptc.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26551FAF3467004C6ED1 /* base_ptc.json */; };
+		A51A26B21FAF35D7004C6ED1 /* base_tece.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265C1FAF3467004C6ED1 /* base_tece.json */; };
+		A51A26B31FAF35D7004C6ED1 /* base_tmm.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26601FAF3468004C6ED1 /* base_tmm.json */; };
+		A51A26B41FAF35D7004C6ED1 /* base_tuo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265B1FAF3467004C6ED1 /* base_tuo.json */; };
+		A51A26B51FAF35D7004C6ED1 /* base_uau.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26581FAF3467004C6ED1 /* base_uau.json */; };
+		A51A26B61FAF35D7004C6ED1 /* base_wda.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26591FAF3467004C6ED1 /* base_wda.json */; };
+		A57E8EE41FAE6926008942B0 /* DeckCardRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */; };
+		A57E8EE51FAE6926008942B0 /* DeckCardRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */; };
 		A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */; };
-		A5BCA7AC1FA24C6C001E6817 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7AB1FA24C67001E6817 /* Color.swift */; };
-		A5BCA7AD1FA24C6D001E6817 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7AB1FA24C67001E6817 /* Color.swift */; };
-		A5BCA7AE1FA24C6F001E6817 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA6ADA1FA24AC300457F27 /* Image.swift */; };
-		A5BCA7AF1FA24C70001E6817 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA6ADA1FA24AC300457F27 /* Image.swift */; };
 		A5BCA7B01FA24C74001E6817 /* CardTestSkillIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */; };
 		A5BCA7B21FA24CE1001E6817 /* CardFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7B11FA24CE1001E6817 /* CardFilter.swift */; };
 		A5BCA7B31FA24CF3001E6817 /* CardFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7B11FA24CE1001E6817 /* CardFilter.swift */; };
@@ -22,11 +92,9 @@
 		A5BCA8101FA28353001E6817 /* DatabaseCardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA80F1FA28353001E6817 /* DatabaseCardStore.swift */; };
 		A5BCA8111FA28353001E6817 /* DatabaseCardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA80F1FA28353001E6817 /* DatabaseCardStore.swift */; };
 		A5DA6A5D1FA23B2900457F27 /* ArkhamHorrorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5DA6A531FA23B2900457F27 /* ArkhamHorrorKit.framework */; };
-		A5DA6A621FA23B2900457F27 /* ArkhamHorrorKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA6A611FA23B2900457F27 /* ArkhamHorrorKitTests.swift */; };
 		A5DA6A641FA23B2900457F27 /* ArkhamHorrorKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A5DA6A561FA23B2900457F27 /* ArkhamHorrorKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5DA6A7B1FA23C4C00457F27 /* ArkhamHorrorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5DA6A721FA23C4B00457F27 /* ArkhamHorrorKit.framework */; };
 		A5DA6A891FA23D4F00457F27 /* ArkhamHorrorKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A5DA6A561FA23B2900457F27 /* ArkhamHorrorKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A5DA6A8A1FA23D5900457F27 /* ArkhamHorrorKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA6A611FA23B2900457F27 /* ArkhamHorrorKitTests.swift */; };
 		A5DA6A9C1FA244C300457F27 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA6A981FA2441A00457F27 /* Card.swift */; };
 		A5DA6A9D1FA244C300457F27 /* CardAssetSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA6A931FA2441A00457F27 /* CardAssetSlot.swift */; };
 		A5DA6A9E1FA244C300457F27 /* CardCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA6A941FA2441A00457F27 /* CardCycle.swift */; };
@@ -93,9 +161,35 @@
 		5746127878EF0FE645682EAC /* Pods-ArkhamHorrorKit macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArkhamHorrorKit macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArkhamHorrorKit macOS/Pods-ArkhamHorrorKit macOS.debug.xcconfig"; sourceTree = "<group>"; };
 		6F508E71D6325C8E474FB55A /* Pods_ArkhamHorrorKit_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArkhamHorrorKit_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		739703D8630EB59C132EF167 /* Pods-ArkhamHorrorKit macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArkhamHorrorKit macOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArkhamHorrorKit macOS/Pods-ArkhamHorrorKit macOS.release.xcconfig"; sourceTree = "<group>"; };
+		78E4E9C345DA3BC51A624F4C /* Pods-ArkhamHorrorKit macOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArkhamHorrorKit macOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArkhamHorrorKit macOSTests/Pods-ArkhamHorrorKit macOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		7F04466D3EFBF00B2C7700C6 /* Pods_ArkhamHorrorKit_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArkhamHorrorKit_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C8B2EF27B1090F77CDBCD6 /* Pods-ArkhamHorrorKit iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArkhamHorrorKit iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArkhamHorrorKit iOS/Pods-ArkhamHorrorKit iOS.release.xcconfig"; sourceTree = "<group>"; };
+		92398109576434EC7D204ACE /* Pods-ArkhamHorrorKit iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArkhamHorrorKit iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArkhamHorrorKit iOSTests/Pods-ArkhamHorrorKit iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		972F31D02760183140847776 /* Pods-ArkhamHorrorKit iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArkhamHorrorKit iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArkhamHorrorKit iOSTests/Pods-ArkhamHorrorKit iOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		A214A815668A3EB391B6A12D /* Pods-ArkhamHorrorKit macOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArkhamHorrorKit macOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArkhamHorrorKit macOSTests/Pods-ArkhamHorrorKit macOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseBaseValuesTests.swift; sourceTree = "<group>"; };
+		A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTestsHelper.swift; sourceTree = "<group>"; };
+		A51A26541FAF3467004C6ED1 /* base_apot.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_apot.json; sourceTree = "<group>"; };
+		A51A26551FAF3467004C6ED1 /* base_ptc.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_ptc.json; sourceTree = "<group>"; };
+		A51A26561FAF3467004C6ED1 /* base_litas.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_litas.json; sourceTree = "<group>"; };
+		A51A26571FAF3467004C6ED1 /* base_promo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_promo.json; sourceTree = "<group>"; };
+		A51A26581FAF3467004C6ED1 /* base_uau.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_uau.json; sourceTree = "<group>"; };
+		A51A26591FAF3467004C6ED1 /* base_wda.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_wda.json; sourceTree = "<group>"; };
+		A51A265A1FAF3467004C6ED1 /* base_bota.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_bota.json; sourceTree = "<group>"; };
+		A51A265B1FAF3467004C6ED1 /* base_tuo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_tuo.json; sourceTree = "<group>"; };
+		A51A265C1FAF3467004C6ED1 /* base_tece.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_tece.json; sourceTree = "<group>"; };
+		A51A265D1FAF3467004C6ED1 /* base_cycles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_cycles.json; sourceTree = "<group>"; };
+		A51A265E1FAF3467004C6ED1 /* base_eotp.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_eotp.json; sourceTree = "<group>"; };
+		A51A265F1FAF3468004C6ED1 /* base_packs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_packs.json; sourceTree = "<group>"; };
+		A51A26601FAF3468004C6ED1 /* base_tmm.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_tmm.json; sourceTree = "<group>"; };
+		A51A26611FAF3468004C6ED1 /* schema_v1.sql */ = {isa = PBXFileReference; lastKnownFileType = text; path = schema_v1.sql; sourceTree = "<group>"; };
+		A51A26621FAF3468004C6ED1 /* base_dwl.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_dwl.json; sourceTree = "<group>"; };
+		A51A26631FAF3468004C6ED1 /* base_core.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_core.json; sourceTree = "<group>"; };
+		A52F52021FAFC12900CEFA18 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
+		A52F52031FAFC1DC00CEFA18 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../../../../Desktop/TestArkhamHorrorKit/LICENSE; sourceTree = "<group>"; };
+		A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCardRecord.swift; sourceTree = "<group>"; };
 		A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTestSkillIcon.swift; sourceTree = "<group>"; };
-		A5BCA7AB1FA24C67001E6817 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A5BCA7B11FA24CE1001E6817 /* CardFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFilter.swift; sourceTree = "<group>"; };
 		A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckRecord.swift; sourceTree = "<group>"; };
 		A5BCA80F1FA28353001E6817 /* DatabaseCardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseCardStore.swift; sourceTree = "<group>"; };
@@ -103,7 +197,6 @@
 		A5DA6A561FA23B2900457F27 /* ArkhamHorrorKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArkhamHorrorKit.h; sourceTree = "<group>"; };
 		A5DA6A571FA23B2900457F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5DA6A5C1FA23B2900457F27 /* ArkhamHorrorKit iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ArkhamHorrorKit iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5DA6A611FA23B2900457F27 /* ArkhamHorrorKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArkhamHorrorKitTests.swift; sourceTree = "<group>"; };
 		A5DA6A631FA23B2900457F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5DA6A721FA23C4B00457F27 /* ArkhamHorrorKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArkhamHorrorKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5DA6A7A1FA23C4C00457F27 /* ArkhamHorrorKit macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ArkhamHorrorKit macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,7 +221,7 @@
 		A5DA6ACE1FA246C000457F27 /* DeckStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckStore.swift; sourceTree = "<group>"; };
 		A5DA6ACF1FA246C000457F27 /* CardsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsStore.swift; sourceTree = "<group>"; };
 		A5DA6AD01FA246C000457F27 /* AHDatabaseMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHDatabaseMigrator.swift; sourceTree = "<group>"; };
-		A5DA6ADA1FA24AC300457F27 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		BBD970C05946780D19896C7F /* Pods_ArkhamHorrorKit_macOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArkhamHorrorKit_macOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F26C2B14B385004DB7863952 /* Pods_ArkhamHorrorKit_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArkhamHorrorKit_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -146,6 +239,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5DA6A5D1FA23B2900457F27 /* ArkhamHorrorKit.framework in Frameworks */,
+				3764492D6961AA54168F2563 /* Pods_ArkhamHorrorKit_iOSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5DA6A7B1FA23C4C00457F27 /* ArkhamHorrorKit.framework in Frameworks */,
+				150066A0F0D845A7E6B4F319 /* Pods_ArkhamHorrorKit_macOSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,8 +270,68 @@
 				89C8B2EF27B1090F77CDBCD6 /* Pods-ArkhamHorrorKit iOS.release.xcconfig */,
 				5746127878EF0FE645682EAC /* Pods-ArkhamHorrorKit macOS.debug.xcconfig */,
 				739703D8630EB59C132EF167 /* Pods-ArkhamHorrorKit macOS.release.xcconfig */,
+				92398109576434EC7D204ACE /* Pods-ArkhamHorrorKit iOSTests.debug.xcconfig */,
+				972F31D02760183140847776 /* Pods-ArkhamHorrorKit iOSTests.release.xcconfig */,
+				A214A815668A3EB391B6A12D /* Pods-ArkhamHorrorKit macOSTests.debug.xcconfig */,
+				78E4E9C345DA3BC51A624F4C /* Pods-ArkhamHorrorKit macOSTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A51A26531FAF3455004C6ED1 /* Data Files */ = {
+			isa = PBXGroup;
+			children = (
+				A51A26941FAF3495004C6ED1 /* Migrations */,
+				A51A26951FAF34A8004C6ED1 /* Base Data */,
+			);
+			path = "Data Files";
+			sourceTree = "<group>";
+		};
+		A51A26941FAF3495004C6ED1 /* Migrations */ = {
+			isa = PBXGroup;
+			children = (
+				A51A26611FAF3468004C6ED1 /* schema_v1.sql */,
+			);
+			path = Migrations;
+			sourceTree = "<group>";
+		};
+		A51A26951FAF34A8004C6ED1 /* Base Data */ = {
+			isa = PBXGroup;
+			children = (
+				A51A265D1FAF3467004C6ED1 /* base_cycles.json */,
+				A51A265F1FAF3468004C6ED1 /* base_packs.json */,
+				A51A26961FAF34B0004C6ED1 /* Packs */,
+			);
+			path = "Base Data";
+			sourceTree = "<group>";
+		};
+		A51A26961FAF34B0004C6ED1 /* Packs */ = {
+			isa = PBXGroup;
+			children = (
+				A51A26541FAF3467004C6ED1 /* base_apot.json */,
+				A51A265A1FAF3467004C6ED1 /* base_bota.json */,
+				A51A26631FAF3468004C6ED1 /* base_core.json */,
+				A51A26621FAF3468004C6ED1 /* base_dwl.json */,
+				A51A265E1FAF3467004C6ED1 /* base_eotp.json */,
+				A51A26561FAF3467004C6ED1 /* base_litas.json */,
+				A51A26571FAF3467004C6ED1 /* base_promo.json */,
+				A51A26551FAF3467004C6ED1 /* base_ptc.json */,
+				A51A265C1FAF3467004C6ED1 /* base_tece.json */,
+				A51A26601FAF3468004C6ED1 /* base_tmm.json */,
+				A51A265B1FAF3467004C6ED1 /* base_tuo.json */,
+				A51A26581FAF3467004C6ED1 /* base_uau.json */,
+				A51A26591FAF3467004C6ED1 /* base_wda.json */,
+			);
+			path = Packs;
+			sourceTree = "<group>";
+		};
+		A52F52011FAFC10100CEFA18 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				A52F52021FAFC12900CEFA18 /* Podfile */,
+				A52F52031FAFC1DC00CEFA18 /* LICENSE */,
+			);
+			path = "Support Files";
 			sourceTree = "<group>";
 		};
 		A5BCA7B91FA256B5001E6817 /* Frameworks */ = {
@@ -184,6 +339,8 @@
 			children = (
 				F26C2B14B385004DB7863952 /* Pods_ArkhamHorrorKit_iOS.framework */,
 				6F508E71D6325C8E474FB55A /* Pods_ArkhamHorrorKit_macOS.framework */,
+				7F04466D3EFBF00B2C7700C6 /* Pods_ArkhamHorrorKit_iOSTests.framework */,
+				BBD970C05946780D19896C7F /* Pods_ArkhamHorrorKit_macOSTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -192,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				A5DA6A551FA23B2900457F27 /* ArkhamHorrorKit */,
+				A52F52011FAFC10100CEFA18 /* Support Files */,
 				A5DA6A601FA23B2900457F27 /* ArkhamHorrorKitTests */,
 				A5DA6A541FA23B2900457F27 /* Products */,
 				A5BCA7B91FA256B5001E6817 /* Frameworks */,
@@ -215,9 +373,9 @@
 			children = (
 				A5DA6A561FA23B2900457F27 /* ArkhamHorrorKit.h */,
 				A5DA6ACC1FA2469800457F27 /* Database */,
-				A5DA6AD91FA24AB100457F27 /* General Models */,
 				A5DA6A8B1FA2440900457F27 /* Card Models */,
 				A5DA6A571FA23B2900457F27 /* Info.plist */,
+				A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */,
 			);
 			path = ArkhamHorrorKit;
 			sourceTree = "<group>";
@@ -225,7 +383,8 @@
 		A5DA6A601FA23B2900457F27 /* ArkhamHorrorKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				A5DA6A611FA23B2900457F27 /* ArkhamHorrorKitTests.swift */,
+				A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */,
+				A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */,
 				A5DA6A631FA23B2900457F27 /* Info.plist */,
 			);
 			path = ArkhamHorrorKitTests;
@@ -255,6 +414,7 @@
 			children = (
 				A5DA6ABD1FA2460B00457F27 /* CardRecord.swift */,
 				A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */,
+				A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */,
 				A5DA6AC01FA2460C00457F27 /* InvestigatorRecord.swift */,
 				A5DA6ABF1FA2460B00457F27 /* CardCycleRecord.swift */,
 				A5DA6ABE1FA2460B00457F27 /* CardPackRecord.swift */,
@@ -266,6 +426,7 @@
 		A5DA6ACC1FA2469800457F27 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				A51A26531FAF3455004C6ED1 /* Data Files */,
 				A5DA6ACD1FA246C000457F27 /* AHDatabase.swift */,
 				A5DA6AD01FA246C000457F27 /* AHDatabaseMigrator.swift */,
 				A5DA6ACF1FA246C000457F27 /* CardsStore.swift */,
@@ -276,15 +437,6 @@
 				A5DA6ABC1FA245F600457F27 /* Models */,
 			);
 			path = Database;
-			sourceTree = "<group>";
-		};
-		A5DA6AD91FA24AB100457F27 /* General Models */ = {
-			isa = PBXGroup;
-			children = (
-				A5BCA7AB1FA24C67001E6817 /* Color.swift */,
-				A5DA6ADA1FA24AC300457F27 /* Image.swift */,
-			);
-			path = "General Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,9 +485,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5DA6A6A1FA23B2900457F27 /* Build configuration list for PBXNativeTarget "ArkhamHorrorKit iOSTests" */;
 			buildPhases = (
+				6F4986562BBB54B6122D7014 /* [CP] Check Pods Manifest.lock */,
 				A5DA6A581FA23B2900457F27 /* Sources */,
 				A5DA6A591FA23B2900457F27 /* Frameworks */,
 				A5DA6A5A1FA23B2900457F27 /* Resources */,
+				2B9F8BB2355DB1B6F2E75AAC /* [CP] Embed Pods Frameworks */,
+				41E98D9BD9E6E48B217882AA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -371,9 +526,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5DA6A861FA23C4C00457F27 /* Build configuration list for PBXNativeTarget "ArkhamHorrorKit macOSTests" */;
 			buildPhases = (
+				6ACA81EA87C43D5C1119E52B /* [CP] Check Pods Manifest.lock */,
 				A5DA6A761FA23C4C00457F27 /* Sources */,
 				A5DA6A771FA23C4C00457F27 /* Frameworks */,
 				A5DA6A781FA23C4C00457F27 /* Resources */,
+				7F7B90C6204832B44A6D14BD /* [CP] Embed Pods Frameworks */,
+				D62D61BF7AEA90F2996CE7B9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -440,6 +598,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A51A26681FAF3470004C6ED1 /* base_dwl.json in Resources */,
+				A51A266E1FAF3470004C6ED1 /* base_tmm.json in Resources */,
+				A51A26651FAF3470004C6ED1 /* base_apot.json in Resources */,
+				A51A266C1FAF3470004C6ED1 /* base_ptc.json in Resources */,
+				A51A26691FAF3470004C6ED1 /* base_eotp.json in Resources */,
+				A51A26731FAF3470004C6ED1 /* base_packs.json in Resources */,
+				A51A26721FAF3470004C6ED1 /* base_cycles.json in Resources */,
+				A51A26641FAF3470004C6ED1 /* schema_v1.sql in Resources */,
+				A51A26671FAF3470004C6ED1 /* base_core.json in Resources */,
+				A51A266D1FAF3470004C6ED1 /* base_tece.json in Resources */,
+				A51A26661FAF3470004C6ED1 /* base_bota.json in Resources */,
+				A51A26711FAF3470004C6ED1 /* base_wda.json in Resources */,
+				A51A266B1FAF3470004C6ED1 /* base_promo.json in Resources */,
+				A51A26701FAF3470004C6ED1 /* base_uau.json in Resources */,
+				A51A266F1FAF3470004C6ED1 /* base_tuo.json in Resources */,
+				A51A266A1FAF3470004C6ED1 /* base_litas.json in Resources */,
+				A51A261F1FAE7AFA004C6ED1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +622,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A51A26A01FAF35D6004C6ED1 /* base_promo.json in Resources */,
+				A51A26A11FAF35D6004C6ED1 /* base_ptc.json in Resources */,
+				A51A26A31FAF35D6004C6ED1 /* base_tmm.json in Resources */,
+				A51A269F1FAF35D6004C6ED1 /* base_litas.json in Resources */,
+				A51A269E1FAF35D6004C6ED1 /* base_eotp.json in Resources */,
+				A51A26A41FAF35D6004C6ED1 /* base_tuo.json in Resources */,
+				A51A269A1FAF35D6004C6ED1 /* base_apot.json in Resources */,
+				A51A26991FAF35D6004C6ED1 /* base_packs.json in Resources */,
+				A51A269D1FAF35D6004C6ED1 /* base_dwl.json in Resources */,
+				A51A26971FAF35D6004C6ED1 /* schema_v1.sql in Resources */,
+				A51A26A51FAF35D6004C6ED1 /* base_uau.json in Resources */,
+				A51A26A61FAF35D6004C6ED1 /* base_wda.json in Resources */,
+				A51A269C1FAF35D6004C6ED1 /* base_core.json in Resources */,
+				A51A26A21FAF35D6004C6ED1 /* base_tece.json in Resources */,
+				A51A269B1FAF35D6004C6ED1 /* base_bota.json in Resources */,
+				A51A26981FAF35D6004C6ED1 /* base_cycles.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +645,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A51A26881FAF347B004C6ED1 /* base_dwl.json in Resources */,
+				A51A268E1FAF347B004C6ED1 /* base_tmm.json in Resources */,
+				A51A26851FAF347B004C6ED1 /* base_apot.json in Resources */,
+				A51A268C1FAF347B004C6ED1 /* base_ptc.json in Resources */,
+				A51A26891FAF347B004C6ED1 /* base_eotp.json in Resources */,
+				A51A26931FAF347B004C6ED1 /* base_packs.json in Resources */,
+				A51A26921FAF347B004C6ED1 /* base_cycles.json in Resources */,
+				A51A26841FAF347B004C6ED1 /* schema_v1.sql in Resources */,
+				A51A26871FAF347B004C6ED1 /* base_core.json in Resources */,
+				A51A268D1FAF347B004C6ED1 /* base_tece.json in Resources */,
+				A51A26861FAF347B004C6ED1 /* base_bota.json in Resources */,
+				A51A26911FAF347B004C6ED1 /* base_wda.json in Resources */,
+				A51A268B1FAF347B004C6ED1 /* base_promo.json in Resources */,
+				A51A26901FAF347B004C6ED1 /* base_uau.json in Resources */,
+				A51A268F1FAF347B004C6ED1 /* base_tuo.json in Resources */,
+				A51A268A1FAF347B004C6ED1 /* base_litas.json in Resources */,
+				A51A26201FAE7B01004C6ED1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +669,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A51A26B01FAF35D7004C6ED1 /* base_promo.json in Resources */,
+				A51A26B11FAF35D7004C6ED1 /* base_ptc.json in Resources */,
+				A51A26B31FAF35D7004C6ED1 /* base_tmm.json in Resources */,
+				A51A26AF1FAF35D7004C6ED1 /* base_litas.json in Resources */,
+				A51A26AE1FAF35D7004C6ED1 /* base_eotp.json in Resources */,
+				A51A26B41FAF35D7004C6ED1 /* base_tuo.json in Resources */,
+				A51A26AA1FAF35D7004C6ED1 /* base_apot.json in Resources */,
+				A51A26A91FAF35D7004C6ED1 /* base_packs.json in Resources */,
+				A51A26AD1FAF35D7004C6ED1 /* base_dwl.json in Resources */,
+				A51A26A71FAF35D7004C6ED1 /* schema_v1.sql in Resources */,
+				A51A26B51FAF35D7004C6ED1 /* base_uau.json in Resources */,
+				A51A26B61FAF35D7004C6ED1 /* base_wda.json in Resources */,
+				A51A26AC1FAF35D7004C6ED1 /* base_core.json in Resources */,
+				A51A26B21FAF35D7004C6ED1 /* base_tece.json in Resources */,
+				A51A26AB1FAF35D7004C6ED1 /* base_bota.json in Resources */,
+				A51A26A81FAF35D7004C6ED1 /* base_cycles.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,6 +724,105 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit iOS/Pods-ArkhamHorrorKit iOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		2B9F8BB2355DB1B6F2E75AAC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit iOSTests/Pods-ArkhamHorrorKit iOSTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GRDB.swift-iOS/GRDB.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON-iOS/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/TBSwiftKit-iOS/TBSwiftKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Zip-iOS/Zip.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TBSwiftKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit iOSTests/Pods-ArkhamHorrorKit iOSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		41E98D9BD9E6E48B217882AA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit iOSTests/Pods-ArkhamHorrorKit iOSTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6ACA81EA87C43D5C1119E52B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ArkhamHorrorKit macOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6F4986562BBB54B6122D7014 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ArkhamHorrorKit iOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7F7B90C6204832B44A6D14BD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit macOSTests/Pods-ArkhamHorrorKit macOSTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GRDB.swift-macOS/GRDB.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON-macOS/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/TBSwiftKit-macOS/TBSwiftKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Zip-macOS/Zip.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TBSwiftKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit macOSTests/Pods-ArkhamHorrorKit macOSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		82D4BA1A0F56E74739ED858E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -533,6 +856,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit macOS/Pods-ArkhamHorrorKit macOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D62D61BF7AEA90F2996CE7B9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit macOSTests/Pods-ArkhamHorrorKit macOSTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -541,9 +879,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5DA6AA11FA244C300457F27 /* CardPack.swift in Sources */,
-				A5BCA7AE1FA24C6F001E6817 /* Image.swift in Sources */,
 				A5DA6AA21FA244C300457F27 /* CardsSortingDescriptor.swift in Sources */,
-				A5BCA7AC1FA24C6C001E6817 /* Color.swift in Sources */,
 				A5DA6AA81FA244C300457F27 /* DeckStats.swift in Sources */,
 				A5DA6AC31FA2461300457F27 /* CardCycleRecord.swift in Sources */,
 				A5DA6AA71FA244C300457F27 /* DeckCard.swift in Sources */,
@@ -554,6 +890,7 @@
 				A5BCA7B21FA24CE1001E6817 /* CardFilter.swift in Sources */,
 				A5DA6A9E1FA244C300457F27 /* CardCycle.swift in Sources */,
 				A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */,
+				A57E8EE41FAE6926008942B0 /* DeckCardRecord.swift in Sources */,
 				A5BCA80D1FA282EF001E6817 /* DeckRecord.swift in Sources */,
 				A5DA6AC41FA2461300457F27 /* CardPackRecord.swift in Sources */,
 				A5DA6AD31FA246DC00457F27 /* CardsStore.swift in Sources */,
@@ -574,7 +911,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5DA6A621FA23B2900457F27 /* ArkhamHorrorKitTests.swift in Sources */,
+				A51A26511FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
+				A51A264F1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,7 +922,6 @@
 			files = (
 				A5DA6AB11FA244C400457F27 /* CardPack.swift in Sources */,
 				A5DA6AB21FA244C400457F27 /* CardsSortingDescriptor.swift in Sources */,
-				A5BCA7AF1FA24C70001E6817 /* Image.swift in Sources */,
 				A5DA6AB81FA244C400457F27 /* DeckStats.swift in Sources */,
 				A5BCA7B01FA24C74001E6817 /* CardTestSkillIcon.swift in Sources */,
 				A5DA6AC71FA2461300457F27 /* CardCycleRecord.swift in Sources */,
@@ -596,10 +933,10 @@
 				A5BCA7B31FA24CF3001E6817 /* CardFilter.swift in Sources */,
 				A5DA6AAE1FA244C400457F27 /* CardCycle.swift in Sources */,
 				A5DA6AC81FA2461300457F27 /* CardPackRecord.swift in Sources */,
+				A57E8EE51FAE6926008942B0 /* DeckCardRecord.swift in Sources */,
 				A5BCA80E1FA282EF001E6817 /* DeckRecord.swift in Sources */,
 				A5DA6AD71FA246DD00457F27 /* CardsStore.swift in Sources */,
 				A5DA6ACB1FA2468900457F27 /* FileChecksumRecord.swift in Sources */,
-				A5BCA7AD1FA24C6D001E6817 /* Color.swift in Sources */,
 				A5DA6AAD1FA244C400457F27 /* CardAssetSlot.swift in Sources */,
 				A5DA6AAF1FA244C400457F27 /* CardFaction.swift in Sources */,
 				A5DA6AD51FA246DD00457F27 /* AHDatabase.swift in Sources */,
@@ -616,7 +953,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5DA6A8A1FA23D5900457F27 /* ArkhamHorrorKitTests.swift in Sources */,
+				A51A26521FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
+				A51A26501FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,6 +1027,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -742,6 +1081,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -768,6 +1108,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bitmountains.ArkhamHorrorKit-iOS";
 				PRODUCT_NAME = ArkhamHorrorKit;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -793,6 +1134,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bitmountains.ArkhamHorrorKit-iOS";
 				PRODUCT_NAME = ArkhamHorrorKit;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -800,11 +1142,12 @@
 		};
 		A5DA6A6B1FA23B2900457F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 92398109576434EC7D204ACE /* Pods-ArkhamHorrorKit iOSTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AD79HUNM9T;
-				INFOPLIST_FILE = "ArkhamHorrorKit iOSTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ArkhamHorrorKitTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bitmountains.ArkhamHorrorKit-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -815,11 +1158,12 @@
 		};
 		A5DA6A6C1FA23B2900457F27 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 972F31D02760183140847776 /* Pods-ArkhamHorrorKit iOSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AD79HUNM9T;
-				INFOPLIST_FILE = "ArkhamHorrorKit iOSTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ArkhamHorrorKitTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bitmountains.ArkhamHorrorKit-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -834,7 +1178,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -851,6 +1195,7 @@
 				PRODUCT_NAME = ArkhamHorrorKit;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
@@ -862,7 +1207,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -879,19 +1224,21 @@
 				PRODUCT_NAME = ArkhamHorrorKit;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
 		A5DA6A871FA23C4C00457F27 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A214A815668A3EB391B6A12D /* Pods-ArkhamHorrorKit macOSTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = AD79HUNM9T;
-				INFOPLIST_FILE = "ArkhamHorrorKit macOSTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ArkhamHorrorKitTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bitmountains.ArkhamHorrorKit-macOSTests";
@@ -903,13 +1250,14 @@
 		};
 		A5DA6A881FA23C4C00457F27 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 78E4E9C345DA3BC51A624F4C /* Pods-ArkhamHorrorKit macOSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = AD79HUNM9T;
-				INFOPLIST_FILE = "ArkhamHorrorKit macOSTests/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ArkhamHorrorKitTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bitmountains.ArkhamHorrorKit-macOSTests";

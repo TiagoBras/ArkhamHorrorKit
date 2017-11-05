@@ -7,10 +7,10 @@
 //
 
 public struct CardCycle: Hashable {
-    var id: String
-    var name: String
-    var position: Int
-    var size: Int
+    public var id: String
+    public var name: String
+    public var position: Int
+    public var size: Int
     
     public var hashValue: Int {
         return position

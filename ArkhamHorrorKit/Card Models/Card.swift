@@ -7,36 +7,36 @@
 //
 
 public struct Card {
-    var id: Int
-    var name: String
-    var subname: String
-    var cost: Int
-    var level: Int
-    var type: CardType
-    var subtype: CardSubtype?
-    var faction: CardFaction
-    var text: String
-    var pack: CardPack
-    var assetSlot: CardAssetSlot?
-    var position: Int
-    var quantity: Int
-    var deckLimit: Int
-    var isUnique: Bool
-    var skillAgility: Int
-    var skillCombat: Int
-    var skillIntellect: Int
-    var skillWillpower: Int
-    var skillWild: Int
-    var restrictedToInvestigator: Investigator?
-    var health: Int
-    var sanity: Int
-    var flavorText: String
-    var traits: String
-    var illustrator: String
-    var enemyFight: Int
-    var enemyEvade: Int
-    var enemyHealth: Int
-    var enemyDamage: Int
-    var enemyHorror: Int
-    var enemyHealthPerInvestigator: Bool
+    public var id: Int
+    public var name: String
+    public var subname: String
+    public var cost: Int
+    public var level: Int
+    public var type: CardType
+    public var subtype: CardSubtype?
+    public var faction: CardFaction
+    public var text: String
+    public var pack: CardPack
+    public var assetSlot: CardAssetSlot?
+    public var position: Int
+    public var quantity: Int
+    public var deckLimit: Int
+    public var isUnique: Bool
+    public var skillAgility: Int
+    public var skillCombat: Int
+    public var skillIntellect: Int
+    public var skillWillpower: Int
+    public var skillWild: Int
+    public var restrictedToInvestigator: Investigator?
+    public var health: Int
+    public var sanity: Int
+    public var flavorText: String
+    public var traits: String
+    public var illustrator: String
+    public var enemyFight: Int
+    public var enemyEvade: Int
+    public var enemyHealth: Int
+    public var enemyDamage: Int
+    public var enemyHorror: Int
+    public var enemyHealthPerInvestigator: Bool
 }

@@ -6,20 +6,20 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
-struct DeckCard: Hashable {
-    let card: Card
-    let quantity: Int
+public struct DeckCard: Hashable {
+    public let card: Card
+    public let quantity: Int
 
-    var hashValue: Int {
+    public var hashValue: Int {
         return card.id
     }
     
-    init(card: Card, quantity: Int) {
+    public init(card: Card, quantity: Int) {
         self.card = card
         self.quantity = quantity
     }
 
-    static func ==(lhs: DeckCard, rhs: DeckCard) -> Bool {
+    public static func ==(lhs: DeckCard, rhs: DeckCard) -> Bool {
         return lhs.card.id == rhs.card.id
     }
     

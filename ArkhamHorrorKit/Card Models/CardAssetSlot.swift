@@ -9,13 +9,13 @@
 public enum CardAssetSlot: Int {
     case hand = 1, hand2, ally, body, accessory, arcane, arcane2
 
-    static var allValues: [CardAssetSlot] = [.ally, .body, .accessory, .hand, .hand2, .arcane, .arcane2]
+    public static var allValues: [CardAssetSlot] = [.ally, .body, .accessory, .hand, .hand2, .arcane, .arcane2]
     
-    var id: Int {
+    public var id: Int {
         return rawValue
     }
     
-    var name: String {
+    public var name: String {
         switch self {
         case .hand2: return "2Hands"
         case .arcane2: return "2Arcane"
@@ -23,7 +23,7 @@ public enum CardAssetSlot: Int {
         }
     }
     
-    init?(code: String) {
+    public init?(code: String) {
         let codes: [String: CardAssetSlot] = [
             "Hand": .hand,
             "Hand x2": .hand2,

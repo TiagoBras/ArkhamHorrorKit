@@ -7,11 +7,11 @@
 //
 
 public struct CardPack: Hashable {
-    var id: String
-    var name: String
-    var position: Int
-    var size: Int
-    var cycle: CardCycle
+    public var id: String
+    public var name: String
+    public var position: Int
+    public var size: Int
+    public var cycle: CardCycle
     
     public var hashValue: Int {
         return (cycle.position * 1000) + position

@@ -6,7 +6,7 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
-class DeckStats {
+public class DeckStats {
     var deckSize: Int = 0
     var numberOfCardsByType = [CardType: Int]()
     var numberOfCardsByFaction = [CardFaction: Int]()
@@ -15,7 +15,7 @@ class DeckStats {
     var totalXp = 0
     var totalCost = 0
     
-    subscript(key: CardType) -> Int {
+    public subscript(key: CardType) -> Int {
         get {
             if let number = numberOfCardsByType[key] {
                 return number
@@ -28,7 +28,7 @@ class DeckStats {
         }
     }
     
-    subscript(key: CardFaction) -> Int {
+    public subscript(key: CardFaction) -> Int {
         get {
             if let number = numberOfCardsByFaction[key] {
                 return number
@@ -41,7 +41,7 @@ class DeckStats {
         }
     }
     
-    func inc(cost: Int, by amount: Int) {
+    private func inc(cost: Int, by amount: Int) {
         numberOfCardsByCost[cost] = (numberOfCardsByCost[cost] ?? 0) + amount
     }
     

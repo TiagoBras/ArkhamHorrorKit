@@ -9,7 +9,7 @@
 import Foundation
 import GRDB
 
-class FileChecksumRecord: Record {
+final class FileChecksumRecord: Record {
     var filename: String
     var hex: String
     

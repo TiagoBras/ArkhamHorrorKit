@@ -10,7 +10,7 @@ import Foundation
 import GRDB
 import SwiftyJSON
 
-class CardPackRecord: Record {
+final class CardPackRecord: Record {
     var id: String
     var name: String
     var position: Int

@@ -1,0 +1,6 @@
+framework module TBSwiftKit {
+  umbrella header "TBSwiftKit-macOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

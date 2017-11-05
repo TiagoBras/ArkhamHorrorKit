@@ -8,16 +8,16 @@
 
 import GRDB
 
-class DeckStore {
+public final class DeckStore {
     private let dbPool: DatabasePool
     private let cardStore: CardsStore
     
-    init(dbPool: DatabasePool, cardStore: CardsStore) {
+    public init(dbPool: DatabasePool, cardStore: CardsStore) {
         self.dbPool = dbPool
         self.cardStore = cardStore
     }
     
-    func createDeck(name: String, investigator: Investigator) throws -> Deck {
+    public func createDeck(name: String, investigator: Investigator) throws -> Deck {
         return try dbPool.read({ (db) -> Deck in
             let record = DeckRecord(investigatorId: investigator.id, name: name)
             
@@ -27,7 +27,7 @@ class DeckStore {
         })
     }
     
-    func fetchDeck(id: Int) throws -> Deck? {
+    public func fetchDeck(id: Int) throws -> Deck? {
         return try dbPool.read({ (db) -> Deck? in
             guard let record = try DeckRecord.fetchOne(db: db, id: id) else {
                 return nil
@@ -39,7 +39,7 @@ class DeckStore {
         })
     }
     
-    func fetchAllDecks() throws -> [Deck] {
+    public func fetchAllDecks() throws -> [Deck] {
         return try dbPool.read({ (db) -> [Deck] in
             let records = try DeckRecord.fetchAll(db)
             
@@ -67,7 +67,7 @@ class DeckStore {
         return Set<DeckCard>(deckCards)
     }
     
-    func changeDeckName(deck: Deck, to name: String) throws -> Deck {
+    public func changeDeckName(deck: Deck, to name: String) throws -> Deck {
         guard deck.name != name else { return deck }
         
         var updatedDeck = deck
@@ -89,7 +89,7 @@ class DeckStore {
         })
     }
     
-    func changeCardQuantity(deck: Deck, card: Card, quantity: Int) throws -> Deck {
+    public func changeCardQuantity(deck: Deck, card: Card, quantity: Int) throws -> Deck {
         if let deckCard = deck.deckCard(withId: card.id) {
             if deckCard.quantity == quantity {
                 return deck
@@ -104,7 +104,7 @@ class DeckStore {
             if let retrieved = try DeckCardRecord.fetchOne(db: db, deckId: deck.id, cardId: card.id) {
                 record = retrieved
             } else {
-                record = try DeckCardRecord(deckId: deck.id, cardId: card.id, quantity: quantity)
+                record = DeckCardRecord(deckId: deck.id, cardId: card.id, quantity: quantity)
             }
             
             if record.hasPersistentChangedValues {

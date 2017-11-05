@@ -6,8 +6,8 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
-struct CardsSortingDescriptor {
-    enum CardColumn {
+public struct CardsSortingDescriptor {
+    public enum CardColumn {
         case faction, type, pack, level, assetSlot, name
         
         var name: String {
@@ -22,10 +22,10 @@ struct CardsSortingDescriptor {
         }
     }
     
-    var column: CardColumn
-    var ascending: Bool
+    public var column: CardColumn
+    public var ascending: Bool
     
-    static let defaultDescriptors: [CardsSortingDescriptor] = [
+    public static let defaultDescriptors: [CardsSortingDescriptor] = [
         CardsSortingDescriptor(column: .faction, ascending: true),
         CardsSortingDescriptor(column: .level, ascending: true),
         CardsSortingDescriptor(column: .type, ascending: true),
@@ -35,7 +35,7 @@ struct CardsSortingDescriptor {
     ]
 }
 
-protocol CardStoreFetchResult {
+public protocol CardStoreFetchResult {
     var numberOfSections: Int { get }
     
     func numberOfCards(inSection section: Int) -> Int

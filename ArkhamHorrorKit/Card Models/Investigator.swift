@@ -6,37 +6,39 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
-struct Investigator: Equatable {
-    var id: Int
-    var name: String
-    var subname: String
-    var faction: CardFaction
-    var health: Int
-    var sanity: Int
-    var frontText: String
-    var backText: String
-    var pack: CardPack
-    var agility: Int
-    var combat: Int
-    var intellect: Int
-    var willpower: Int
-    var position: Int
-    var traits: String
-    var frontFlavor: String
-    var backFlavor: String
-    var illustrator: String
+import TBSwiftKit
+
+public struct Investigator: Equatable {
+    public var id: Int
+    public var name: String
+    public var subname: String
+    public var faction: CardFaction
+    public var health: Int
+    public var sanity: Int
+    public var frontText: String
+    public var backText: String
+    public var pack: CardPack
+    public var agility: Int
+    public var combat: Int
+    public var intellect: Int
+    public var willpower: Int
+    public var position: Int
+    public var traits: String
+    public var frontFlavor: String
+    public var backFlavor: String
+    public var illustrator: String
     
-    static func ==(lhs: Investigator, rhs: Investigator) -> Bool {
+    public static func ==(lhs: Investigator, rhs: Investigator) -> Bool {
         return lhs.id == rhs.id
     }
 
-    var deckSize: Int {
+    public var deckSize: Int {
         return 30
     }
     
     // FIXME: find another way of doing this
     // TODO: add 2nd expansion investigators
-    var availableFactions: [CardFaction] {
+    public var availableFactions: [CardFaction] {
         var factions: [CardFaction] = []
         
         switch id {
@@ -63,7 +65,7 @@ struct Investigator: Equatable {
         return factions
     }
     
-    var avatar: Image {
+    public var avatar: Image {
         switch id {
         case 1001: return Image.inMainBundle("roland_banks_the_fed")
         case 1002: return Image.inMainBundle("daisy_walker_the_librarian")
@@ -79,7 +81,7 @@ struct Investigator: Equatable {
         }
     }
     
-    var deckOptions: [DeckOption] {
+    public var deckOptions: [DeckOption] {
         var options: [DeckOption] = []
         var factions: [CardFaction] = []
         
@@ -120,12 +122,12 @@ struct Investigator: Equatable {
     }
 }
 
-struct DeckOptionAllowedFactions: DeckOption {
-    var factions: [CardFaction]
-    var maxQuantity: Int
-    var levels: [Int]
+public struct DeckOptionAllowedFactions: DeckOption {
+    public var factions: [CardFaction]
+    public var maxQuantity: Int
+    public var levels: [Int]
     
-    init(_ factions: [CardFaction],
+    public init(_ factions: [CardFaction],
          levels: [Int] = [0, 1, 2, 3, 4, 5],
          maxQuantity: Int = Int.max) {
         self.factions = factions
@@ -133,7 +135,7 @@ struct DeckOptionAllowedFactions: DeckOption {
         self.levels = levels
     }
     
-    func isDeckValid(_ deck: Deck) -> DeckValidationResult {
+    public func isDeckValid(_ deck: Deck) -> Deck.DeckValidationResult {
         let numOfValidCards = deck.cards.filter { (deckCard) -> Bool in
             return contains(faction: deckCard.card.faction) && levels.contains(deckCard.card.level)
         }.reduce(0) { (partialResult, deckCard) -> Int in
@@ -141,11 +143,11 @@ struct DeckOptionAllowedFactions: DeckOption {
         }
         
         if numOfValidCards > maxQuantity {
-            return DeckValidationResult(isValid: false,
+            return Deck.DeckValidationResult(isValid: false,
                                         message: "Too many cards of limited factions")
         }
 
-        return DeckValidationResult(isValid: true, message: "Deck is valid")
+        return Deck.DeckValidationResult(isValid: true, message: "Deck is valid")
     }
     
     private func contains(faction: CardFaction) -> Bool {

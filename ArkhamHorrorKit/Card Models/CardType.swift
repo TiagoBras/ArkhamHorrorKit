@@ -9,19 +9,19 @@
 public enum CardType: Int {
     case asset = 1, event, skill, treachery, enemy
     
-    var id: Int {
+    public var id: Int {
         return rawValue
     }
     
-    var name: String {
+    public var name: String {
         return String(describing: self).capitalized
     }
     
-    static var allValues: [CardType] {
+    public static var allValues: [CardType] {
         return [.asset, .event, .skill, .treachery, .enemy]
     }
     
-    init?(code: String) {
+    public init?(code: String) {
         let codes: [String: CardType] = [
             "asset": .asset,
             "event": .event,

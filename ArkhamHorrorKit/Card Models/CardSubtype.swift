@@ -9,18 +9,18 @@
 public enum CardSubtype: Int {
     case weakness = 1, basicweakness = 2
     
-    var id: Int {
+    public var id: Int {
         return rawValue
     }
     
-    var name: String {
+    public var name: String {
         switch self {
         case .weakness: return "Weakness"
         case .basicweakness: return "Basic Weakness"
         }
     }
     
-    init?(code: String) {
+    public init?(code: String) {
         let codes: [String: CardSubtype] = [
             "weakness": .weakness,
             "basicweakness": .basicweakness,

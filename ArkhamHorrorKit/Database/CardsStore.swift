@@ -8,16 +8,17 @@
 
 import Foundation
 import GRDB
+import TBSwiftKit
 
-class CardsStore {
+public final class CardsStore {
     private let dbPool: DatabasePool
     private let cardCycles: [String: CardCycle]
     private let cardPacks: [String: CardPack]
-    let investigators: [Int: Investigator]
+    public let investigators: [Int: Investigator]
     
     private(set) var cardsCache = Cache<Int, Card>(maxItems: 50)
     
-    init(dbPool: DatabasePool,
+    public init(dbPool: DatabasePool,
          cycles: [String: CardCycle],
          packs: [String: CardPack],
          investigators: [Int: Investigator]) {
@@ -28,7 +29,7 @@ class CardsStore {
     }
     
     // MARK:- Public Interface
-    func fetchCard(id: Int) throws -> Card {
+    public func fetchCard(id: Int) throws -> Card {
         return try dbPool.read({ (db) -> Card in
             guard let record = try CardRecord.fetchOne(db: db, id: id) else {
                 throw AHDatabaseError.cardNotFound(id)
@@ -43,7 +44,7 @@ class CardsStore {
         
     }
     
-    func fetchCards(filter: CardFilter?, sorting: [CardsSortingDescriptor]?, groupResults: Bool) -> DatabaseCardStoreFetchResult? {
+    public func fetchCards(filter: CardFilter?, sorting: [CardsSortingDescriptor]?, groupResults: Bool) -> DatabaseCardStoreFetchResult? {
         do {
             let joinClause = genJoinClause(filter)
             let whereClause = genWhereClause(filter)
@@ -390,3 +391,37 @@ class CardsStore {
         return groups
     }
 }
+
+public struct DatabaseCardStoreFetchResult: CardStoreFetchResult {
+    public var cards: [[Card]]
+    public var sectionsNames: [String]
+    
+    public var numberOfSections: Int {
+        return cards.count
+    }
+    
+    public func numberOfCards(inSection section: Int) -> Int {
+        return cards[section].count
+    }
+    
+    public func sectionName(_ section: Int) -> String? {
+        guard section < sectionsNames.count else { return nil }
+        
+        return sectionsNames[section]
+    }
+    
+    public func card(_ indexPath: IndexPath) -> Card? {
+        #if os(iOS) || os(watchOS) || os(tvOS)
+            let row = indexPath.row
+        #elseif os(OSX)
+            let row = indexPath.item
+        #endif
+        
+        guard indexPath.section < numberOfSections, row < numberOfCards(inSection: indexPath.section) else {
+            return nil
+        }
+        
+        return cards[indexPath.section][row]
+    }
+}
+

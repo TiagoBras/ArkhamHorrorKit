@@ -6,21 +6,21 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
-struct CardFilter: Equatable {
-    var cardIds = Set<Int>()
-    var types = Set<CardType>()
-    var subtypes = Set<CardSubtype>()
-    var factions = Set<CardFaction>()
-    var packs = Set<CardPack>()
-    var assetSlots = Set<CardAssetSlot>()
-    var levels = Set<Int>()
-    var skillTestIcons = Set<CardSkillTestIcon>()
-    var investigatorOnly: Investigator? = nil
-    var hideRestrictedCards: Bool = true
-    var fullTextSearchMatch: String? = nil
-    var onlyDeck: Deck? = nil
+public struct CardFilter: Equatable {
+    public var cardIds = Set<Int>()
+    public var types = Set<CardType>()
+    public var subtypes = Set<CardSubtype>()
+    public var factions = Set<CardFaction>()
+    public var packs = Set<CardPack>()
+    public var assetSlots = Set<CardAssetSlot>()
+    public var levels = Set<Int>()
+    public var skillTestIcons = Set<CardSkillTestIcon>()
+    public var investigatorOnly: Investigator? = nil
+    public var hideRestrictedCards: Bool = true
+    public var fullTextSearchMatch: String? = nil
+    public var onlyDeck: Deck? = nil
     
-    static func ==(lhs: CardFilter, rhs: CardFilter) -> Bool {
+    public static func ==(lhs: CardFilter, rhs: CardFilter) -> Bool {
         if lhs.cardIds != rhs.cardIds { return false }
         if lhs.types != rhs.types { return false }
         if lhs.subtypes != rhs.subtypes { return false }

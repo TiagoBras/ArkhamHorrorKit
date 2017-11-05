@@ -21,8 +21,7 @@ enum AHDatabaseError: Error {
     case deckNotFound(Int)
 }
 
-// TODO: put all models and database related classes into its own module
-final class AHDatabase {
+public final class AHDatabase {
     private(set) var dbPool: DatabasePool
     
     private var _cardCycles: [String: CardCycle]?
@@ -32,7 +31,7 @@ final class AHDatabase {
     private(set) var cardStore: CardsStore!
     private(set) var deckStore: DeckStore!
     
-    init(path: String) throws {
+    public init(path: String) throws {
         dbPool = try DatabasePool(path: path)
         
         try updateStores()
@@ -46,7 +45,7 @@ final class AHDatabase {
         deckStore = DeckStore(dbPool: dbPool, cardStore: cardStore)
     }
     
-    func migrateToLastVersion() throws {
+    public func migrateToLastVersion() throws {
         try AHDatabaseMigrator().migrate(database: dbPool)
         
         // Invalidate cached values
@@ -58,7 +57,7 @@ final class AHDatabase {
     }
     
     // MARK:- CardCycle
-    func cardCyclesDictionary() throws -> [String: CardCycle] {
+    public func cardCyclesDictionary() throws -> [String: CardCycle] {
         if _cardCycles == nil {
             _cardCycles = try dbPool.read({ (db) -> [String: CardCycle] in
                 let records = try CardCycleRecord.fetchAll(db)
@@ -81,12 +80,12 @@ final class AHDatabase {
         return _cardCycles!
     }
     
-    func cardCycles() throws -> [CardCycle] {
+    public func cardCycles() throws -> [CardCycle] {
         return Array(try cardCyclesDictionary().values)
     }
     
     // MARK:- CardPack
-    func cardPacksDictionary() throws -> [String: CardPack] {
+    public func cardPacksDictionary() throws -> [String: CardPack] {
         if _cardPacks == nil {
             var cycles = try cardCyclesDictionary()
             
@@ -115,12 +114,12 @@ final class AHDatabase {
         return _cardPacks!
     }
     
-    func cardPacks() throws -> [CardPack] {
+    public func cardPacks() throws -> [CardPack] {
         return Array(try cardPacksDictionary().values)
     }
     
     // MARK:- Investigator
-    func investigatorsDictionary() throws -> [Int: Investigator] {
+    public func investigatorsDictionary() throws -> [Int: Investigator] {
         if _investigators == nil {
             var packs = try cardPacksDictionary()
             
@@ -167,7 +166,7 @@ final class AHDatabase {
         return _investigators!
     }
     
-    func investigators() throws -> [Investigator] {
+    public func investigators() throws -> [Investigator] {
         return Array(try investigatorsDictionary().values)
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 import GRDB
 import SwiftyJSON
 
-class InvestigatorRecord: Record {
+final class InvestigatorRecord: Record {
     var id: Int
     var name: String
     var position: Int

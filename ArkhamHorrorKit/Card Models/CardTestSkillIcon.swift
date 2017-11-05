@@ -6,20 +6,22 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
-enum CardSkillTestIcon: Int {
+import TBSwiftKit
+
+public enum CardSkillTestIcon: Int {
     case willpower = 1, intellect, combat, agility, wild
     
-    static var allValues: [CardSkillTestIcon] = [.willpower, .intellect, .combat, .agility, .wild]
+    public static var allValues: [CardSkillTestIcon] = [.willpower, .intellect, .combat, .agility, .wild]
     
-    var id: Int {
+    public var id: Int {
         return rawValue
     }
     
-    var name: String {
+    public var name: String {
         return String(describing: self).capitalized
     }
     
-    var color: Color {
+    public var color: Color {
         switch self {
         case .willpower: return Color(hexString: "2196F3")!
         case .intellect: return Color(hexString: "9C27B0")!

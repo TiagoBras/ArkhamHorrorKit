@@ -6,12 +6,14 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
+import TBSwiftKit
+
 public enum CardFaction: Int {
     case guardian = 1, seeker, rogue, mystic, survivor, neutral
     
-    static var allValues: [CardFaction] = [.guardian, .seeker, .rogue, .mystic, .survivor, .neutral]
+    public static var allValues: [CardFaction] = [.guardian, .seeker, .rogue, .mystic, .survivor, .neutral]
     
-    init?(code: String) {
+    public init?(code: String) {
         let codes: [String: CardFaction] = [
             "guardian": .guardian,
             "seeker": .seeker,
@@ -26,11 +28,11 @@ public enum CardFaction: Int {
         self.init(rawValue: value)
     }
     
-    var id: Int {
+    public var id: Int {
         return rawValue
     }
     
-    var name: String {
+    public var name: String {
         switch self {
         case .guardian: return "Guardian"
         case .seeker: return "Seeker"
@@ -41,7 +43,7 @@ public enum CardFaction: Int {
         }
     }
     
-    var color: Color {
+    public var color: Color {
         switch self {
         case .guardian: return Color(hexString: "598BBA")!
         case .seeker: return Color(hexString: "CC9933")!
@@ -52,7 +54,7 @@ public enum CardFaction: Int {
         }
     }
     
-    var lightColor: Color {
+    public var lightColor: Color {
         switch self {
         case .guardian: return Color(hexString: "E1F5FE")!
         case .seeker: return Color(hexString: "FFF59D")!
@@ -63,7 +65,7 @@ public enum CardFaction: Int {
         }
     }
     
-    var saturatedColor: Color {
+    public var saturatedColor: Color {
         switch self {
         case .guardian: return Color(hexString: "448AFF")!
         case .seeker: return Color(hexString: "FFEB3B")!
@@ -74,7 +76,7 @@ public enum CardFaction: Int {
         }
     }
     
-    var titledButtonImage: (on: Image, off: Image) {
+    public var titledButtonImage: (on: Image, off: Image) {
         switch self {
         case .guardian: return (on: Image.inMainBundle("btn_factions_guardian_ON"),
                                 off: Image.inMainBundle("btn_factions_guardian_OFF"))
