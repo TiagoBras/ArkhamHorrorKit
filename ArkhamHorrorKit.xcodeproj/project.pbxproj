@@ -309,31 +309,36 @@
 				A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */,
 				A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */,
 				A557A7E31FAFCBCF007B9D6F /* Models */,
-				A557A7DE1FAFCB49007B9D6F /* Data Files */,
 			);
 			path = Database;
 			sourceTree = "<group>";
 		};
-		A557A7DE1FAFCB49007B9D6F /* Data Files */ = {
+		A557A7E31FAFCBCF007B9D6F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A557A7E01FAFCB6A007B9D6F /* Packs */,
-				A557A7DF1FAFCB62007B9D6F /* Base Data */,
-				A557A7E21FAFCBB5007B9D6F /* Migrations */,
+				A5DA6ABD1FA2460B00457F27 /* CardRecord.swift */,
+				A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */,
+				A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */,
+				A5DA6AC01FA2460C00457F27 /* InvestigatorRecord.swift */,
+				A5DA6ABF1FA2460B00457F27 /* CardCycleRecord.swift */,
+				A5DA6ABE1FA2460B00457F27 /* CardPackRecord.swift */,
+				A5DA6AC91FA2468900457F27 /* FileChecksumRecord.swift */,
 			);
-			name = "Data Files";
+			name = Models;
 			sourceTree = "<group>";
 		};
-		A557A7DF1FAFCB62007B9D6F /* Base Data */ = {
+		A563C3E21FB129720060FE8C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A51A265D1FAF3467004C6ED1 /* base_cycles.json */,
-				A51A265F1FAF3468004C6ED1 /* base_packs.json */,
+				A51A26611FAF3468004C6ED1 /* schema_v1.sql */,
+				A563C3E51FB129CA0060FE8C /* Base Data */,
+				A563C3E31FB1298D0060FE8C /* Packs */,
+				A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */,
 			);
-			name = "Base Data";
+			path = Resources;
 			sourceTree = "<group>";
 		};
-		A557A7E01FAFCB6A007B9D6F /* Packs */ = {
+		A563C3E31FB1298D0060FE8C /* Packs */ = {
 			isa = PBXGroup;
 			children = (
 				A51A26541FAF3467004C6ED1 /* base_apot.json */,
@@ -353,26 +358,13 @@
 			name = Packs;
 			sourceTree = "<group>";
 		};
-		A557A7E21FAFCBB5007B9D6F /* Migrations */ = {
+		A563C3E51FB129CA0060FE8C /* Base Data */ = {
 			isa = PBXGroup;
 			children = (
-				A51A26611FAF3468004C6ED1 /* schema_v1.sql */,
+				A51A265D1FAF3467004C6ED1 /* base_cycles.json */,
+				A51A265F1FAF3468004C6ED1 /* base_packs.json */,
 			);
-			name = Migrations;
-			sourceTree = "<group>";
-		};
-		A557A7E31FAFCBCF007B9D6F /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				A5DA6ABD1FA2460B00457F27 /* CardRecord.swift */,
-				A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */,
-				A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */,
-				A5DA6AC01FA2460C00457F27 /* InvestigatorRecord.swift */,
-				A5DA6ABF1FA2460B00457F27 /* CardCycleRecord.swift */,
-				A5DA6ABE1FA2460B00457F27 /* CardPackRecord.swift */,
-				A5DA6AC91FA2468900457F27 /* FileChecksumRecord.swift */,
-			);
-			name = Models;
+			name = "Base Data";
 			sourceTree = "<group>";
 		};
 		A5BCA7B91FA256B5001E6817 /* Frameworks */ = {
@@ -413,10 +405,10 @@
 			isa = PBXGroup;
 			children = (
 				A5DA6A561FA23B2900457F27 /* ArkhamHorrorKit.h */,
+				A563C3E21FB129720060FE8C /* Resources */,
 				A557A7DD1FAFCB21007B9D6F /* Database */,
 				A5DA6A8B1FA2440900457F27 /* Card Models */,
 				A5DA6A571FA23B2900457F27 /* Info.plist */,
-				A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */,
 			);
 			path = ArkhamHorrorKit;
 			sourceTree = "<group>";
