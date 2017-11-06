@@ -24,4 +24,9 @@ public struct DeckSortingDescriptor {
     
     public var column: Column
     public var ascending: Bool
+    
+    public init(column: Column, ascending: Bool = true) {
+        self.column = column
+        self.ascending = ascending
+    }
 }
