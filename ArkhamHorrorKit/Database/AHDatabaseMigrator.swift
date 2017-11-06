@@ -134,21 +134,14 @@ public final class AHDatabaseMigrator {
         struct Schemas {
             private init() { }
             
-            #if os(iOS) || os(watchOS) || os(tvOS)
-            static let bundle = Bundle(identifier: "com.bitmountains.ArkhamHorrorKit-iOS")!
-            #elseif os(OSX)
-            static let bundle = Bundle(identifier: "com.bitmountains.ArkhamHorrorKit-macOS")!
-            #endif
-            
+            static let bundle = Bundle(for: AHDatabaseMigrator.self)
+
             static let v1 = Basename(stem: "schema_v1", ext: "sql", bundle: Schemas.bundle)
         }
         
         struct BaseData {
-            #if os(iOS) || os(watchOS) || os(tvOS)
-            static let bundle = Bundle(identifier: "com.bitmountains.ArkhamHorrorKit-iOS")!
-            #elseif os(OSX)
-            static let bundle = Bundle(identifier: "com.bitmountains.ArkhamHorrorKit-macOS")!
-            #endif
+            static let bundle = Bundle(for: AHDatabaseMigrator.self)
+
             private init() { }
             static let cycles = Basename(stem: "base_cycles", ext: "json", bundle: BaseData.bundle)
             static let packs = Basename(stem: "base_packs", ext: "json", bundle: BaseData.bundle)

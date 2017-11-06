@@ -86,6 +86,8 @@
 		A557A7E71FB0E63A007B9D6F /* DeckFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */; };
 		A557A7E81FB0E641007B9D6F /* DeckFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */; };
 		A557A7EA1FB0E65E007B9D6F /* DeckSortingDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */; };
+		A563C3701FB11D670060FE8C /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563C36F1FB11D670060FE8C /* CardStoreTests.swift */; };
+		A563C3711FB11D670060FE8C /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563C36F1FB11D670060FE8C /* CardStoreTests.swift */; };
 		A57E8EE41FAE6926008942B0 /* DeckCardRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */; };
 		A57E8EE51FAE6926008942B0 /* DeckCardRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */; };
 		A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */; };
@@ -195,6 +197,7 @@
 		A52F52051FAFC3BC00CEFA18 /* ArkhamHorrorKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = ArkhamHorrorKit.podspec; sourceTree = SOURCE_ROOT; };
 		A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckFilter.swift; sourceTree = "<group>"; };
 		A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckSortingDescriptor.swift; sourceTree = "<group>"; };
+		A563C36F1FB11D670060FE8C /* CardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreTests.swift; sourceTree = "<group>"; };
 		A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCardRecord.swift; sourceTree = "<group>"; };
 		A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTestSkillIcon.swift; sourceTree = "<group>"; };
 		A5BCA7B11FA24CE1001E6817 /* CardFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFilter.swift; sourceTree = "<group>"; };
@@ -425,6 +428,7 @@
 				A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */,
 				A5DA6A631FA23B2900457F27 /* Info.plist */,
 				A524FB7D1FB0F05B00123949 /* DeckStoreTests.swift */,
+				A563C36F1FB11D670060FE8C /* CardStoreTests.swift */,
 			);
 			path = ArkhamHorrorKitTests;
 			sourceTree = "<group>";
@@ -922,6 +926,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A524FB7E1FB0F05B00123949 /* DeckStoreTests.swift in Sources */,
+				A563C3701FB11D670060FE8C /* CardStoreTests.swift in Sources */,
 				A51A26511FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
 				A51A264F1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
 			);
@@ -965,6 +970,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A524FB7F1FB0F05B00123949 /* DeckStoreTests.swift in Sources */,
+				A563C3711FB11D670060FE8C /* CardStoreTests.swift in Sources */,
 				A51A26521FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
 				A51A26501FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
 			);
