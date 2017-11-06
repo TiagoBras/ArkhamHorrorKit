@@ -9,16 +9,16 @@
 import GRDB
 
 public final class DeckStore {
-    private let dbPool: DatabasePool
+    private let dbWriter: DatabaseWriter
     private let cardStore: CardsStore
     
-    public init(dbPool: DatabasePool, cardStore: CardsStore) {
-        self.dbPool = dbPool
+    public init(dbWriter: DatabaseWriter, cardStore: CardsStore) {
+        self.dbWriter = dbWriter
         self.cardStore = cardStore
     }
     
     public func createDeck(name: String, investigator: Investigator) throws -> Deck {
-        return try dbPool.read({ (db) -> Deck in
+        return try dbWriter.write({ (db) -> Deck in
             let record = DeckRecord(investigatorId: investigator.id, name: name)
             
             try record.save(db)
@@ -27,8 +27,18 @@ public final class DeckStore {
         })
     }
     
+    public func deleteDeck(_ deck: Deck) throws {
+        try dbWriter.write({ (db) in
+            guard let record = try DeckRecord.fetchOne(db: db, id: deck.id) else {
+                throw AHDatabaseError.deckNotFound(deck.id)
+            }
+            
+            try record.delete(db)
+        })
+    }
+    
     public func fetchDeck(id: Int) throws -> Deck? {
-        return try dbPool.read({ (db) -> Deck? in
+        return try dbWriter.read({ (db) -> Deck? in
             guard let record = try DeckRecord.fetchOne(db: db, id: id) else {
                 return nil
             }
@@ -40,7 +50,7 @@ public final class DeckStore {
     }
     
     public func fetchAllDecks() throws -> [Deck] {
-        return try dbPool.read({ (db) -> [Deck] in
+        return try dbWriter.read({ (db) -> [Deck] in
             let records = try DeckRecord.fetchAll(db)
             
             let decks = try records.map({ (record) -> Deck in
@@ -72,7 +82,7 @@ public final class DeckStore {
         
         var updatedDeck = deck
         
-        return try dbPool.read({ (db) -> Deck in
+        return try dbWriter.read({ (db) -> Deck in
             guard let record = try DeckRecord.fetchOne(db: db, id: deck.id) else {
                 throw AHDatabaseError.deckNotFound(deck.id)
             }
@@ -98,7 +108,7 @@ public final class DeckStore {
         
         var updatedDeck = deck
         
-        return try dbPool.read({ (db) -> Deck in
+        return try dbWriter.write({ (db) -> Deck in
             let record: DeckCardRecord
             
             if let retrieved = try DeckCardRecord.fetchOne(db: db, deckId: deck.id, cardId: card.id) {

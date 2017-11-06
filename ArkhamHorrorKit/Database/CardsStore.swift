@@ -11,18 +11,18 @@ import GRDB
 import TBSwiftKit
 
 public final class CardsStore {
-    private let dbPool: DatabasePool
+    private let dbWriter: DatabaseWriter
     private let cardCycles: [String: CardCycle]
     private let cardPacks: [String: CardPack]
     public let investigators: [Int: Investigator]
     
     public private(set) var cardsCache = Cache<Int, Card>(maxItems: 50)
     
-    public init(dbPool: DatabasePool,
+    public init(dbWriter: DatabaseWriter,
          cycles: [String: CardCycle],
          packs: [String: CardPack],
          investigators: [Int: Investigator]) {
-        self.dbPool = dbPool
+        self.dbWriter = dbWriter
         self.cardCycles = cycles
         self.cardPacks = packs
         self.investigators = investigators
@@ -30,7 +30,7 @@ public final class CardsStore {
     
     // MARK:- Public Interface
     public func fetchCard(id: Int) throws -> Card {
-        return try dbPool.read({ (db) -> Card in
+        return try dbWriter.read({ (db) -> Card in
             guard let record = try CardRecord.fetchOne(db: db, id: id) else {
                 throw AHDatabaseError.cardNotFound(id)
             }
@@ -50,7 +50,7 @@ public final class CardsStore {
             let whereClause = genWhereClause(filter)
             let sortByClause = genOrderByClause(sorting)
             
-            return try dbPool.read { db -> DatabaseCardStoreFetchResult in
+            return try dbWriter.read { db -> DatabaseCardStoreFetchResult in
                 let stmt = "SELECT * FROM Card \(joinClause) \(whereClause) \(sortByClause)"
                 let cards = try CardRecord.fetchAll(db, stmt).flatMap ({ (record) -> Card? in
                     let card = try makeCard(record: record)
