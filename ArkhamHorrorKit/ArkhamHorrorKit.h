@@ -17,5 +17,3 @@
 //// In this header, you should import all the public headers of your framework using statements like #import <ArkhamHorrorKit_iOS/PublicHeader.h>
 
 #import <Foundation/Foundation.h>
-
-
