@@ -11,7 +11,7 @@ import GRDB
 import SwiftyJSON
 
 final class CardRecord: Record {
-    private(set) var id: Int
+    public private(set) var id: Int
     var position: Int
     var level: Int
     var cost: Int

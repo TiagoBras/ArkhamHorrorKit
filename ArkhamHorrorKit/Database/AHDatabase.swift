@@ -22,14 +22,14 @@ enum AHDatabaseError: Error {
 }
 
 public final class AHDatabase {
-    private(set) var dbPool: DatabasePool
+    public private(set) var dbPool: DatabasePool
     
     private var _cardCycles: [String: CardCycle]?
     private var _cardPacks: [String: CardPack]?
     private var _investigators: [Int: Investigator]?
     
-    private(set) var cardStore: CardsStore!
-    private(set) var deckStore: DeckStore!
+    public private(set) var cardStore: CardsStore!
+    public private(set) var deckStore: DeckStore!
     
     public init(path: String) throws {
         dbPool = try DatabasePool(path: path)

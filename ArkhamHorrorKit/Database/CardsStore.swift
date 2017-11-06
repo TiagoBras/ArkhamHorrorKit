@@ -16,7 +16,7 @@ public final class CardsStore {
     private let cardPacks: [String: CardPack]
     public let investigators: [Int: Investigator]
     
-    private(set) var cardsCache = Cache<Int, Card>(maxItems: 50)
+    public private(set) var cardsCache = Cache<Int, Card>(maxItems: 50)
     
     public init(dbPool: DatabasePool,
          cycles: [String: CardCycle],

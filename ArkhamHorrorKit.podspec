@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "ArkhamHorrorKit"
-  s.version      = "0.0.6"
+  s.version      = "0.0.7"
   s.summary      = "Arhkahm Horror SDK"
   s.description  = <<-DESC
   A module with Arkham Horror LCG cards database and related helper classes.
