@@ -10,7 +10,7 @@ public struct CardsSortingDescriptor {
     public enum CardColumn {
         case faction, type, pack, level, assetSlot, name
         
-        var name: String {
+        public var name: String {
             switch self {
             case .faction: return "Faction"
             case .type: return "Type"

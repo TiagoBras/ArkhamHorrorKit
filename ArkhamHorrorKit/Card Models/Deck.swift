@@ -11,7 +11,7 @@ public protocol DeckOption {
 }
 
 extension Set where Element == DeckCard {
-    func index(of element: Card) -> Set<DeckCard>.Index? {
+    public func index(of element: Card) -> Set<DeckCard>.Index? {
         return index(where: { $0.card.id == element.id })
     }
 }
@@ -87,7 +87,7 @@ public struct Deck: Equatable {
     }
     
     public struct DeckValidationResult {
-        var isValid: Bool
-        var message: String?
+        public var isValid: Bool
+        public var message: String?
     }
 }

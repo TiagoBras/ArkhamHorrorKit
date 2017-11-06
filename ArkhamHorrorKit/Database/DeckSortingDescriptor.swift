@@ -12,7 +12,7 @@ public struct DeckSortingDescriptor: Equatable {
     public enum Column {
         case updateDate, creationDate, faction, investigatorNumber
         
-        var name: String {
+        public var name: String {
             switch self {
             case .updateDate: return "Update Date"
             case .creationDate: return "Creation Date"

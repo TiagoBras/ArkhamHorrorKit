@@ -173,7 +173,7 @@ public final class AHDatabaseMigrator {
     public enum MigrationVersion: Int {
         case v1 = 1
         
-        var stringValue: String {
+        public var stringValue: String {
             return "v\(rawValue).0"
         }
     }
