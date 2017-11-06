@@ -20,6 +20,8 @@ public struct CardFilter: Equatable {
     public var fullTextSearchMatch: String? = nil
     public var onlyDeck: Deck? = nil
     
+    public init() { }
+    
     public static func ==(lhs: CardFilter, rhs: CardFilter) -> Bool {
         if lhs.cardIds != rhs.cardIds { return false }
         if lhs.types != rhs.types { return false }

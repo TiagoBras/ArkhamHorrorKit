@@ -7,13 +7,13 @@
 //
 
 public class DeckStats {
-    var deckSize: Int = 0
-    var numberOfCardsByType = [CardType: Int]()
-    var numberOfCardsByFaction = [CardFaction: Int]()
-    var numberOfCardsByCost = [Int: Int]()
-    var totalCardsCount = 0
-    var totalXp = 0
-    var totalCost = 0
+    public var deckSize: Int = 0
+    public var numberOfCardsByType = [CardType: Int]()
+    public var numberOfCardsByFaction = [CardFaction: Int]()
+    public var numberOfCardsByCost = [Int: Int]()
+    public var totalCardsCount = 0
+    public var totalXp = 0
+    public var totalCost = 0
     
     public subscript(key: CardType) -> Int {
         get {
@@ -47,7 +47,7 @@ public class DeckStats {
     
     private init() {}
     
-    static func fromDeck(_ deck: Deck) -> DeckStats {
+    public static func fromDeck(_ deck: Deck) -> DeckStats {
         let stats = DeckStats()
         stats.deckSize = 30
         

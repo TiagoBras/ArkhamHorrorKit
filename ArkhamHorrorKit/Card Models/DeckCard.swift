@@ -23,7 +23,7 @@ public struct DeckCard: Hashable {
         return lhs.card.id == rhs.card.id
     }
     
-    enum DeckCardError: Error {
+    public enum DeckCardError: Error {
         case cardNotFound(Int)
     }
 }

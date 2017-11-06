@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct DeckSortingDescriptor {
+public struct DeckSortingDescriptor: Equatable {
     public enum Column {
         case updateDate, creationDate, faction, investigatorNumber
         
@@ -28,5 +28,9 @@ public struct DeckSortingDescriptor {
     public init(column: Column, ascending: Bool = true) {
         self.column = column
         self.ascending = ascending
+    }
+    
+    public static func ==(lhs: DeckSortingDescriptor, rhs: DeckSortingDescriptor) -> Bool {
+        return lhs.column == rhs.column && lhs.ascending == rhs.ascending
     }
 }
