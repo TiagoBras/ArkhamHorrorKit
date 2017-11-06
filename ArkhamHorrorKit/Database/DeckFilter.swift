@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DeckFilter {
-    var factions: [CardFaction]?
-    var investigators: [Investigator]?
+public struct DeckFilter {
+    public var factions: [CardFaction]?
+    public var investigators: [Investigator]?
 }

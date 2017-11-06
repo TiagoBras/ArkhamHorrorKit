@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct DeckSortingDescriptor {
-    enum Column {
+public struct DeckSortingDescriptor {
+    public enum Column {
         case updateDate, creationDate, faction, investigatorNumber
         
         var name: String {
@@ -22,6 +22,6 @@ struct DeckSortingDescriptor {
         }
     }
     
-    var column: Column
-    var ascending: Bool
+    public var column: Column
+    public var ascending: Bool
 }
