@@ -42,7 +42,7 @@ class DeckStoreTests: XCTestCase {
         
         XCTAssertEqual(deck.numberOfCards, 3)
     
-        let recordsCountBeforeDelete = try! database.dbWriter.read { (db) -> Int in
+        let recordsCountBeforeDelete = try! database.dbQueue.read { (db) -> Int in
             return try DeckCardRecord.fetchCount(db)
         }
         
@@ -50,7 +50,7 @@ class DeckStoreTests: XCTestCase {
         
         try! database.deckStore.deleteDeck(deck)
         
-        let recordsCountAfterDelete = try! database.dbWriter.read { (db) -> Int in
+        let recordsCountAfterDelete = try! database.dbQueue.read { (db) -> Int in
             return try DeckCardRecord.fetchCount(db)
         }
         

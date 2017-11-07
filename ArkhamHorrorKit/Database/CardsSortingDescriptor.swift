@@ -6,7 +6,7 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
-public struct CardsSortingDescriptor {
+public struct CardsSortingDescriptor: Equatable {
     public enum CardColumn {
         case faction, type, pack, level, assetSlot, name
         
@@ -33,6 +33,10 @@ public struct CardsSortingDescriptor {
         CardsSortingDescriptor(column: .assetSlot, ascending: true),
         CardsSortingDescriptor(column: .name, ascending: true)
     ]
+    
+    public static func ==(lhs: CardsSortingDescriptor, rhs: CardsSortingDescriptor) -> Bool {
+        return lhs.column == rhs.column && lhs.ascending == rhs.ascending
+    }
 }
 
 public protocol CardStoreFetchResult {

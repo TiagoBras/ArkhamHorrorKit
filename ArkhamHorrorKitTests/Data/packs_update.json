@@ -1,0 +1,154 @@
+[
+  {
+    "code": "core",
+    "cycle_code": "core",
+    "date_release": "2016-10-08",
+    "name": "Core Set",
+    "position": 1,
+    "size": 184
+  },
+  {
+    "code": "dwl",
+    "cycle_code": "dwl",
+    "date_release": "2017-01-12",
+    "name": "The Dunwich Legacy",
+    "position": 1,
+    "size": 104
+  },
+  {
+    "code": "tmm",
+    "cycle_code": "dwl",
+    "date_release": "2017-02-16",
+    "name": "The Miskatonic Museum",
+    "position": 2,
+    "size": 42
+  },
+  {
+    "code": "tece",
+    "cycle_code": "dwl",
+    "date_release": "2017-03-16",
+    "name": "The Essex County Express",
+    "position": 3,
+    "size": 37
+  },
+  {
+    "code": "bota",
+    "cycle_code": "dwl",
+    "date_release": "2017-04-14",
+    "name": "Blood on the Altar",
+    "position": 4,
+    "size": 41
+  },
+  {
+    "code": "uau",
+    "cycle_code": "dwl",
+    "date_release": "2017-05-11",
+    "name": "Undimensioned and Unseen",
+    "position": 5,
+    "size": 35
+  },
+  {
+    "code": "wda",
+    "cycle_code": "dwl",
+    "date_release": "2017-06-08",
+    "name": "Where Doom Awaits",
+    "position": 6,
+    "size": 39
+  },
+  {
+    "code": "litas",
+    "cycle_code": "dwl",
+    "date_release": "2017-07-06",
+    "name": "Lost in Time and Space",
+    "position": 7,
+    "size": 35
+  },
+  {
+    "code": "ptc",
+    "cycle_code": "ptc",
+    "date_release": "2017-09-15",
+    "name": "The Path to Carcosa",
+    "position": 1,
+    "size": 120
+  },
+  {
+    "code": "eotp",
+    "cycle_code": "ptc",
+    "date_release": null,
+    "name": "Echoes of the Past",
+    "position": 2,
+    "size": 60
+  },
+  {
+    "code": "tuo",
+    "cycle_code": "ptc",
+    "date_release": null,
+    "name": "The Unspeakable Oath",
+    "position": 3,
+    "size": 60
+  },
+  {
+    "code": "apot",
+    "cycle_code": "ptc",
+    "date_release": null,
+    "name": "A Phantom of Truth",
+    "position": 4,
+    "size": 60
+  },
+  {
+    "code": "tpm",
+    "cycle_code": "ptc",
+    "date_release": null,
+    "name": "The Pallid Mask",
+    "position": 5,
+    "size": 60
+  },
+  {
+    "code": "bsr",
+    "cycle_code": "ptc",
+    "date_release": null,
+    "name": "Black Stars Rise",
+    "position": 6,
+    "size": 60
+  },
+  {
+    "code": "dca",
+    "cycle_code": "ptc",
+    "date_release": null,
+    "name": "Dim Carcosa",
+    "position": 7,
+    "size": 60
+  },
+  {
+    "code": "dp",
+    "cycle_code": "ptc",
+    "date_release": null,
+    "name": "Dummy Pack",
+    "position": 8,
+    "size": 60
+  },
+  {
+    "code": "cotr",
+    "cycle_code": "side_stories",
+    "date_release": "2016-11-18",
+    "name": "Curse of the Rougarou",
+    "position": 1,
+    "size": 36
+  },
+  {
+    "code": "coh",
+    "cycle_code": "side_stories",
+    "date_release": "2016-12-08",
+    "name": "Carnevale of Horrors",
+    "position": 2,
+    "size": 40
+  },
+  {
+    "code": "promo",
+    "cycle_code": "side_stories",
+    "date_release": "2016-12-14",
+    "name": "Promo",
+    "position": 20,
+    "size": 3
+  }
+]

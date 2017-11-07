@@ -57,7 +57,7 @@ public final class AHDatabaseMigrator {
         
         // Add a new entry in Database for cycles' file and its checksum
         let cyclesChecksum = CryptoHelper.sha256Hex(data: cyclesData)
-        try FileChecksumRecord(filename: Files.BaseData.cycles.name, hex: cyclesChecksum).insert(db)
+        try FileChecksumRecord(filename: Files.BaseData.cycles.name, hex: cyclesChecksum).save(db)
         
         // Load packs_v1.json
         let packsData = try Files.BaseData.packs.data()
@@ -65,30 +65,25 @@ public final class AHDatabaseMigrator {
         
         // Add a new entry in Database for packs' file and its checksum
         let packsChecksum = CryptoHelper.sha256Hex(data: packsData)
-        try FileChecksumRecord(filename: Files.BaseData.packs.name, hex: packsChecksum).insert(db)
+        try FileChecksumRecord(filename: Files.BaseData.packs.name, hex: packsChecksum).save(db)
         
-        let cardsAndInvestigatorsFiles: [Files.Basename] = [
-            Files.BaseData.core, Files.BaseData.dwl, Files.BaseData.ptc, Files.BaseData.promo
-        ]
-        
-        for file in cardsAndInvestigatorsFiles {
-            let fileData = try file.data()
-            let json = JSON(data: fileData)
-            
-            try InvestigatorRecord.loadJSONRecords(json: json, into: db)
-            try CardRecord.loadJSONRecords(json: json, into: db)
-        }
-        
-        let onlyCardsFiles: [Files.Basename] = [
+        let jsonFiles: [Files.Basename] = [
+            Files.BaseData.core, Files.BaseData.dwl, Files.BaseData.ptc, Files.BaseData.promo,
             Files.BaseData.apot, Files.BaseData.bota, Files.BaseData.eotp, Files.BaseData.litas,
             Files.BaseData.tece, Files.BaseData.tmm, Files.BaseData.tuo,
             Files.BaseData.uau, Files.BaseData.wda
         ]
         
-        for file in onlyCardsFiles {
+        for file in jsonFiles {
             let fileData = try file.data()
-
-            try CardRecord.loadJSONRecords(json: JSON(data: fileData), into: db)
+            let json = JSON(data: fileData)
+            
+            try InvestigatorRecord.loadJSONRecords(json: json, into: db)
+            try CardRecord.loadJSONRecords(json: json, into: db)
+            
+            let fileChecksum = CryptoHelper.sha256Hex(data: fileData)
+            
+            try FileChecksumRecord(filename: file.name, hex: fileChecksum).save(db)
         }
     }
     

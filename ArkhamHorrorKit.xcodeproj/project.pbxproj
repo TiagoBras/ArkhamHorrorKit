@@ -88,6 +88,20 @@
 		A557A7EA1FB0E65E007B9D6F /* DeckSortingDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */; };
 		A563C3701FB11D670060FE8C /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563C36F1FB11D670060FE8C /* CardStoreTests.swift */; };
 		A563C3711FB11D670060FE8C /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563C36F1FB11D670060FE8C /* CardStoreTests.swift */; };
+		A5653C031FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5653C021FB1FCDE00862AC1 /* AHDatabaseTests.swift */; };
+		A5653C041FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5653C021FB1FCDE00862AC1 /* AHDatabaseTests.swift */; };
+		A5653C051FB1FFCB00862AC1 /* base_core_updated.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653BFF1FB1FC5600862AC1 /* base_core_updated.json */; };
+		A5653C061FB1FFCC00862AC1 /* base_core_updated.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653BFF1FB1FC5600862AC1 /* base_core_updated.json */; };
+		A5653C081FB2037600862AC1 /* packs_update.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C071FB2037600862AC1 /* packs_update.json */; };
+		A5653C091FB2037600862AC1 /* packs_update.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C071FB2037600862AC1 /* packs_update.json */; };
+		A5653C0D1FB20EE200862AC1 /* cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C0B1FB20A1100862AC1 /* cycles.json */; };
+		A5653C0E1FB20EE200862AC1 /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C0C1FB20A1100862AC1 /* packs.json */; };
+		A5653C0F1FB20EE200862AC1 /* tuo.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C0A1FB20A1100862AC1 /* tuo.json */; };
+		A5653C131FB20EE300862AC1 /* cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C0B1FB20A1100862AC1 /* cycles.json */; };
+		A5653C141FB20EE300862AC1 /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C0C1FB20A1100862AC1 /* packs.json */; };
+		A5653C151FB20EE300862AC1 /* tuo.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C0A1FB20A1100862AC1 /* tuo.json */; };
+		A5653C171FB2174000862AC1 /* non_card_file.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C161FB2174000862AC1 /* non_card_file.json */; };
+		A5653C181FB2174000862AC1 /* non_card_file.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C161FB2174000862AC1 /* non_card_file.json */; };
 		A57E8EE41FAE6926008942B0 /* DeckCardRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */; };
 		A57E8EE51FAE6926008942B0 /* DeckCardRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */; };
 		A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */; };
@@ -198,6 +212,13 @@
 		A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckFilter.swift; sourceTree = "<group>"; };
 		A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckSortingDescriptor.swift; sourceTree = "<group>"; };
 		A563C36F1FB11D670060FE8C /* CardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreTests.swift; sourceTree = "<group>"; };
+		A5653BFF1FB1FC5600862AC1 /* base_core_updated.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_core_updated.json; sourceTree = "<group>"; };
+		A5653C021FB1FCDE00862AC1 /* AHDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHDatabaseTests.swift; sourceTree = "<group>"; };
+		A5653C071FB2037600862AC1 /* packs_update.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = packs_update.json; sourceTree = "<group>"; };
+		A5653C0A1FB20A1100862AC1 /* tuo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tuo.json; sourceTree = "<group>"; };
+		A5653C0B1FB20A1100862AC1 /* cycles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cycles.json; sourceTree = "<group>"; };
+		A5653C0C1FB20A1100862AC1 /* packs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = packs.json; sourceTree = "<group>"; };
+		A5653C161FB2174000862AC1 /* non_card_file.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = non_card_file.json; sourceTree = "<group>"; };
 		A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCardRecord.swift; sourceTree = "<group>"; };
 		A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTestSkillIcon.swift; sourceTree = "<group>"; };
 		A5BCA7B11FA24CE1001E6817 /* CardFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFilter.swift; sourceTree = "<group>"; };
@@ -367,6 +388,19 @@
 			name = "Base Data";
 			sourceTree = "<group>";
 		};
+		A5653BFD1FB1FBFC00862AC1 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				A5653BFF1FB1FC5600862AC1 /* base_core_updated.json */,
+				A5653C071FB2037600862AC1 /* packs_update.json */,
+				A5653C0B1FB20A1100862AC1 /* cycles.json */,
+				A5653C0C1FB20A1100862AC1 /* packs.json */,
+				A5653C0A1FB20A1100862AC1 /* tuo.json */,
+				A5653C161FB2174000862AC1 /* non_card_file.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		A5BCA7B91FA256B5001E6817 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +450,8 @@
 		A5DA6A601FA23B2900457F27 /* ArkhamHorrorKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				A5653BFD1FB1FBFC00862AC1 /* Data */,
+				A5653C021FB1FCDE00862AC1 /* AHDatabaseTests.swift */,
 				A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */,
 				A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */,
 				A5DA6A631FA23B2900457F27 /* Info.plist */,
@@ -629,8 +665,11 @@
 			files = (
 				A51A26A01FAF35D6004C6ED1 /* base_promo.json in Resources */,
 				A51A26A11FAF35D6004C6ED1 /* base_ptc.json in Resources */,
+				A5653C051FB1FFCB00862AC1 /* base_core_updated.json in Resources */,
 				A51A26A31FAF35D6004C6ED1 /* base_tmm.json in Resources */,
 				A51A269F1FAF35D6004C6ED1 /* base_litas.json in Resources */,
+				A5653C171FB2174000862AC1 /* non_card_file.json in Resources */,
+				A5653C0F1FB20EE200862AC1 /* tuo.json in Resources */,
 				A51A269E1FAF35D6004C6ED1 /* base_eotp.json in Resources */,
 				A51A26A41FAF35D6004C6ED1 /* base_tuo.json in Resources */,
 				A51A269A1FAF35D6004C6ED1 /* base_apot.json in Resources */,
@@ -641,8 +680,11 @@
 				A51A26A61FAF35D6004C6ED1 /* base_wda.json in Resources */,
 				A51A269C1FAF35D6004C6ED1 /* base_core.json in Resources */,
 				A51A26A21FAF35D6004C6ED1 /* base_tece.json in Resources */,
+				A5653C0D1FB20EE200862AC1 /* cycles.json in Resources */,
+				A5653C0E1FB20EE200862AC1 /* packs.json in Resources */,
 				A51A269B1FAF35D6004C6ED1 /* base_bota.json in Resources */,
 				A51A26981FAF35D6004C6ED1 /* base_cycles.json in Resources */,
+				A5653C081FB2037600862AC1 /* packs_update.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,8 +718,11 @@
 			files = (
 				A51A26B01FAF35D7004C6ED1 /* base_promo.json in Resources */,
 				A51A26B11FAF35D7004C6ED1 /* base_ptc.json in Resources */,
+				A5653C061FB1FFCC00862AC1 /* base_core_updated.json in Resources */,
 				A51A26B31FAF35D7004C6ED1 /* base_tmm.json in Resources */,
 				A51A26AF1FAF35D7004C6ED1 /* base_litas.json in Resources */,
+				A5653C181FB2174000862AC1 /* non_card_file.json in Resources */,
+				A5653C151FB20EE300862AC1 /* tuo.json in Resources */,
 				A51A26AE1FAF35D7004C6ED1 /* base_eotp.json in Resources */,
 				A51A26B41FAF35D7004C6ED1 /* base_tuo.json in Resources */,
 				A51A26AA1FAF35D7004C6ED1 /* base_apot.json in Resources */,
@@ -688,8 +733,11 @@
 				A51A26B61FAF35D7004C6ED1 /* base_wda.json in Resources */,
 				A51A26AC1FAF35D7004C6ED1 /* base_core.json in Resources */,
 				A51A26B21FAF35D7004C6ED1 /* base_tece.json in Resources */,
+				A5653C131FB20EE300862AC1 /* cycles.json in Resources */,
+				A5653C141FB20EE300862AC1 /* packs.json in Resources */,
 				A51A26AB1FAF35D7004C6ED1 /* base_bota.json in Resources */,
 				A51A26A81FAF35D7004C6ED1 /* base_cycles.json in Resources */,
+				A5653C091FB2037600862AC1 /* packs_update.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -921,6 +969,7 @@
 				A563C3701FB11D670060FE8C /* CardStoreTests.swift in Sources */,
 				A51A26511FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
 				A51A264F1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
+				A5653C031FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -965,6 +1014,7 @@
 				A563C3711FB11D670060FE8C /* CardStoreTests.swift in Sources */,
 				A51A26521FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
 				A51A26501FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
+				A5653C041FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

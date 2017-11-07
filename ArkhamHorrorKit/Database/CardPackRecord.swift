@@ -60,7 +60,7 @@ final class CardPackRecord: Record {
             
             let cycle = CardPackRecord(row: Row(dict))
             
-            try cycle.insert(db)
+            try cycle.save(db)
         }
     }
 }

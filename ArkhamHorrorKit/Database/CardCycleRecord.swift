@@ -57,7 +57,7 @@ final class CardCycleRecord: Record {
             
             let pack = CardCycleRecord(row: Row(dict))
             
-            try pack.insert(db)
+            try pack.save(db)
         }
     }
 }

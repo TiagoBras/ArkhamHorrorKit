@@ -90,6 +90,10 @@ final class InvestigatorRecord: Record {
     
     class func loadJSONRecords(json: JSON, into db: Database) throws {
         for obj in json.arrayValue {
+            guard obj["type_code"].string != nil else {
+                throw CardRecord.CardError.jsonDoesNotContainCards
+            }
+            
             guard obj["type_code"] == "investigator" else { continue }
             
             if let hidden = obj["hidden"].bool, hidden {
@@ -124,7 +128,7 @@ final class InvestigatorRecord: Record {
             
             let investigator = InvestigatorRecord(row: Row(dict))
             
-            try investigator.insert(db)
+            try investigator.save(db)
         }
     }
     

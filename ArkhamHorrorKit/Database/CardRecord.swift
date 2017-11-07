@@ -132,6 +132,10 @@ final class CardRecord: Record {
     
     class func loadJSONRecords(json: JSON, into db: Database) throws {
         for obj in json.arrayValue {
+            guard obj["type_code"].string != nil else {
+                throw CardError.jsonDoesNotContainCards
+            }
+            
             guard obj["type_code"] != "investigator" else { continue }
             
             if let hidden = obj["hidden"].bool, hidden {
@@ -224,7 +228,7 @@ final class CardRecord: Record {
             
             let card = CardRecord(row: Row(dict))
             
-            try card.insert(db)
+            try card.save(db)
         }
     }
     
@@ -234,6 +238,7 @@ final class CardRecord: Record {
         case invalidSubtypeCode(String)
         case invalidFactionCode(String)
         case invalidAssetSlotCode(String)
+        case jsonDoesNotContainCards
     }
     
     enum RowKeys: String {

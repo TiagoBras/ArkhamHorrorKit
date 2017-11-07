@@ -151,6 +151,8 @@ class DatabaseBaseValuesTests: XCTestCase {
             let wda = loadCardsJSONInMainBundle(filename: "base_wda.json")
             XCTAssertEqual(wda.count, 14)
             
+            XCTAssertEqual(try CardRecord.fetchCount(db), 251)
+            
             let card1 = try CardRecord.fetchOne(db: db, id: 2027)!
             
             XCTAssertEqual(card1.id, 2027)
