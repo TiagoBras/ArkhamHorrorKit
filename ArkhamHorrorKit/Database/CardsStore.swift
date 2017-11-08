@@ -41,47 +41,46 @@ public final class CardsStore {
             
             return card
         })
-        
     }
     
-    public func fetchCards(filter: CardFilter?, sorting: [CardsSortingDescriptor]?, groupResults: Bool) -> DatabaseCardStoreFetchResult? {
-        do {
+    public func fetchCards(filter: CardFilter?, sorting: [CardsSortingDescriptor]?) -> [Card] {
+        guard let cards = try? dbWriter.read({ db -> [Card] in
             let joinClause = genJoinClause(filter)
             let whereClause = genWhereClause(filter)
             let sortByClause = genOrderByClause(sorting)
             
-            return try dbWriter.read { db -> DatabaseCardStoreFetchResult in
-                let stmt = "SELECT * FROM Card \(joinClause) \(whereClause) \(sortByClause)"
-                let cards = try CardRecord.fetchAll(db, stmt).flatMap ({ (record) -> Card? in
-                    let card = try makeCard(record: record)
-                    
-                    return card
-                })
+            let stmt = "SELECT * FROM Card \(joinClause) \(whereClause) \(sortByClause)"
+            return try CardRecord.fetchAll(db, stmt).flatMap ({ (record) -> Card? in
+                let card = try makeCard(record: record)
                 
-                print(stmt)
-                
-                let result: DatabaseCardStoreFetchResult
-                
-                // Group results using the first sorting descriptor
-                if let groupBy = sorting?.first, groupResults {
-                    let groupedCards = group(cards: cards, by: groupBy.column)
-                    
-                    let sectionNames = sectionsNames(cards: cards, using: groupBy.column)
-                    
-                    result = DatabaseCardStoreFetchResult(
-                        cards: groupedCards,
-                        sectionsNames: sectionNames)
-                } else {
-                    result = DatabaseCardStoreFetchResult(cards: [cards], sectionsNames: [])
-                }
-                
-                return result
-            }
-        } catch let error {
-            print(error)
-            
-            return nil
+                return card
+            })
+        }) else {
+            return [Card]()
         }
+        
+        return cards
+    }
+    
+    public func fetchCards(filter: CardFilter?, sorting: [CardsSortingDescriptor]?, groupResults: Bool) -> DatabaseCardStoreFetchResult? {
+        let cards = fetchCards(filter: filter, sorting: sorting)
+                
+        let result: DatabaseCardStoreFetchResult
+        
+        // Group results using the first sorting descriptor
+        if let groupBy = sorting?.first, groupResults {
+            let groupedCards = group(cards: cards, by: groupBy.column)
+            
+            let sectionNames = sectionsNames(cards: cards, using: groupBy.column)
+            
+            result = DatabaseCardStoreFetchResult(
+                cards: groupedCards,
+                sectionsNames: sectionNames)
+        } else {
+            result = DatabaseCardStoreFetchResult(cards: [cards], sectionsNames: [])
+        }
+        
+        return result
     }
     
     private func makeCard(record: CardRecord) throws -> Card? {
@@ -148,7 +147,7 @@ public final class CardsStore {
                         illustrator: record.illustrator,
                         enemyFight: record.enemyFight,
                         enemyEvade: record.enemyEvade,
-                        enemyHealth: record.health,
+                        enemyHealth: record.enemyHealth,
                         enemyDamage: record.enemyDamage,
                         enemyHorror: record.enemyHorror,
                         enemyHealthPerInvestigator: record.enemyHealthPerInvestigator)

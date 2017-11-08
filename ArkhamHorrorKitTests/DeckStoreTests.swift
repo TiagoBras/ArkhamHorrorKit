@@ -43,7 +43,7 @@ class DeckStoreTests: XCTestCase {
         deck = DatabaseTestsHelper.update(deck: deck, cardId: 1011, quantity: 1, in: database)
         
         XCTAssertEqual(deck.numberOfCards, 3)
-    
+        
         let recordsCountBeforeDelete = try! database.dbQueue.read { (db) -> Int in
             return try DeckCardRecord.fetchCount(db)
         }
@@ -57,5 +57,49 @@ class DeckStoreTests: XCTestCase {
         }
         
         XCTAssertEqual(recordsCountAfterDelete, 0)
+    }
+    
+    func testFetchDeck() {
+        let deck = DatabaseTestsHelper.createDeck(name: "Roland Shotguns",
+                                                  investigator: roland,
+                                                  in: database)
+        
+        let deckId = try! database.dbQueue.read({ (db) -> Int in
+            return try DeckRecord.fetchAll(db).first!.id!
+        })
+        
+        let fetchedDeck = try! database.deckStore.fetchDeck(id: deckId)!
+        
+        XCTAssertEqual(fetchedDeck.name, deck.name)
+    }
+    
+    func testFetchAllDecks() {
+        let cardIdQuantities: [DatabaseTestsHelper.CardIdQuantityPair] = [
+            (1021, 2), (1022, 1), (1023, 2), (1024, 2)
+        ]
+        
+        for i in 0..<10 {
+            DatabaseTestsHelper.createDeck(
+                name: "Roland Nr: \(i)",
+                investigator: roland,
+                cards: cardIdQuantities,
+                in: database)
+        }
+        
+        let decks = try! database.deckStore.fetchAllDecks()
+        
+        XCTAssertEqual(decks.count, 10)
+    }
+    
+    func testChangeDeckName() {
+        let deck = DatabaseTestsHelper.createDeck(name: "Roland Shotguns",
+                                                  investigator: roland,
+                                                  in: database)
+        
+        _ = try! database.deckStore.changeDeckName(deck: deck, to: "Zombie Killer")
+        
+        let fetchedDeck = try! database.deckStore.fetchDeck(id: deck.id)!
+        
+        XCTAssertEqual(fetchedDeck.name, "Zombie Killer")
     }
 }

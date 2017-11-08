@@ -28,6 +28,7 @@ final class DatabaseTestsHelper {
         return try! database.deckStore.createDeck(name: "The God Killer", investigator: investigator)
     }
     
+    @discardableResult
     static func createDeck(name: String, investigator: Investigator, cards: [CardIdQuantityPair], in database: AHDatabase) -> Deck {
         var deck = DatabaseTestsHelper.createDeck(name: name, investigator: investigator, in: database)
         

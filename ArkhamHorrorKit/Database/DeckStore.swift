@@ -38,35 +38,40 @@ public final class DeckStore {
     }
     
     public func fetchDeck(id: Int) throws -> Deck? {
-        return try dbWriter.read({ (db) -> Deck? in
-            guard let record = try DeckRecord.fetchOne(db: db, id: id) else {
-                return nil
-            }
-            
-            let deckCards = try fetchAllDeckCards(forDeckId: record.id!, db: db)
-            
-            return try makeDeck(record: record, deckCards: deckCards)
-        })
+        guard let record = try dbWriter.read({ (db) -> DeckRecord? in
+            return try DeckRecord.fetchOne(db: db, id: id)
+        }) else { return nil }
+        
+        let deckCards = try fetchAllDeckCards(forDeckId: record.id!)
+        
+        return try makeDeck(record: record, deckCards: deckCards)
     }
     
     public func fetchAllDecks() throws -> [Deck] {
-        return try dbWriter.read({ (db) -> [Deck] in
-            let records = try DeckRecord.fetchAll(db)
-            
-            let decks = try records.map({ (record) -> Deck in
-                let deckCards = try fetchAllDeckCards(forDeckId: record.id!, db: db)
-                
-                let deck = try makeDeck(record: record, deckCards: deckCards)
-                
-                return deck
-            })
-            
-            return decks
+        let records = try dbWriter.read({ (db) -> [DeckRecord] in
+            return try DeckRecord.fetchAll(db)
         })
+        
+        let decks = try records.map({ (record) -> Deck in
+            let deckCards = try fetchAllDeckCards(forDeckId: record.id!)
+            
+            let deck = try makeDeck(record: record, deckCards: deckCards)
+            
+            return deck
+        })
+        
+        return decks
     }
     
-    private func fetchAllDeckCards(forDeckId id: Int, db: Database) throws -> Set<DeckCard> {
-        let records = try DeckCardRecord.fetchAll(db: db, deckId: id)
+    func fetchAllDeckCards(forDeckId id: Int) throws -> Set<DeckCard> {
+        let records = try dbWriter.read({ (db) -> [DeckCardRecord] in
+            return try DeckCardRecord.fetchAll(db: db, deckId: id)
+        })
+        
+//        var cardFilter = CardFilter()
+//        cardFilter.cardIds = Set<Int>(records.map({ $0.cardId }))
+//        
+//        let cards = cardStore.fetchCards(filter: cardFilter, sorting: nil, groupResults: false)
         
         let deckCards = try records.map { (record) -> DeckCard in
             let card = try cardStore.fetchCard(id: record.cardId)
@@ -82,7 +87,7 @@ public final class DeckStore {
         
         var updatedDeck = deck
         
-        return try dbWriter.read({ (db) -> Deck in
+        return try dbWriter.write({ (db) -> Deck in
             guard let record = try DeckRecord.fetchOne(db: db, id: deck.id) else {
                 throw AHDatabaseError.deckNotFound(deck.id)
             }
