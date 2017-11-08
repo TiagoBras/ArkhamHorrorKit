@@ -21,4 +21,33 @@ final class DatabaseTestsHelper {
             try handler(db)
         })
     }
+    
+    typealias CardIdQuantityPair = (cardId: Int, quantity: Int)
+    
+    static func createDeck(name: String, investigator: Investigator,  in database: AHDatabase) -> Deck {
+        return try! database.deckStore.createDeck(name: "The God Killer", investigator: investigator)
+    }
+    
+    static func createDeck(name: String, investigator: Investigator, cards: [CardIdQuantityPair], in database: AHDatabase) -> Deck {
+        var deck = DatabaseTestsHelper.createDeck(name: name, investigator: investigator, in: database)
+        
+        for (cardId, quantity) in cards {
+            let card = try! database.cardStore.fetchCard(id: cardId)
+            
+            deck = try! database.deckStore.changeCardQuantity(deck: deck, card: card, quantity: quantity)
+        }
+        
+        return deck
+    }
+    
+    static func fetchCard(id: Int, in database: AHDatabase) -> Card {
+        return try! database.cardStore.fetchCard(id: id)
+    }
+    
+    static func update(deck: Deck, cardId: Int, quantity: Int, in database: AHDatabase) -> Deck {
+        return try! database.deckStore.changeCardQuantity(
+            deck: deck,
+            card: DatabaseTestsHelper.fetchCard(id: cardId, in: database),
+            quantity: quantity)
+    }
 }

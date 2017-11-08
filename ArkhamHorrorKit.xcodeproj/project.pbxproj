@@ -362,9 +362,9 @@
 		A563C3E31FB1298D0060FE8C /* Packs */ = {
 			isa = PBXGroup;
 			children = (
+				A51A26631FAF3468004C6ED1 /* base_core.json */,
 				A51A26541FAF3467004C6ED1 /* base_apot.json */,
 				A51A265A1FAF3467004C6ED1 /* base_bota.json */,
-				A51A26631FAF3468004C6ED1 /* base_core.json */,
 				A51A26621FAF3468004C6ED1 /* base_dwl.json */,
 				A51A265E1FAF3467004C6ED1 /* base_eotp.json */,
 				A51A26561FAF3467004C6ED1 /* base_litas.json */,

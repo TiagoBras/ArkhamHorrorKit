@@ -23,11 +23,27 @@ class CardStoreTests: XCTestCase {
         super.tearDown()
     }
     
-    func testFetchCards() {
+    func testFetchAllCards() {
         let result = database.cardStore.fetchCards(filter: nil, sorting: nil, groupResults: false)
         
         XCTAssertNotNil(result)
         
-        XCTAssertGreaterThan(result!.numberOfCards(inSection: 0), 100)
+        XCTAssertEqual(result!.numberOfCards(inSection: 0), 251)
+    }
+    
+    func testFetchAllCardsThatBelongToADeck() {
+        let cardIdQuantities: [DatabaseTestsHelper.CardIdQuantityPair] = [
+            (1021, 2), (1022, 1), (1023, 2)
+        ]
+        var filter = CardFilter()
+        filter.onlyDeck = DatabaseTestsHelper.createDeck(
+            name: "Roland",
+            investigator: try! database.investigatorsDictionary()[1001]!,
+            cards: cardIdQuantities, in: database)
+        let result = database.cardStore.fetchCards(filter: filter, sorting: nil, groupResults: false)
+
+        XCTAssertNotNil(result)
+
+        XCTAssertEqual(result!.numberOfCards(inSection: 0), 3)
     }
 }

@@ -32,13 +32,15 @@ class DeckStoreTests: XCTestCase {
     }
     
     func testCreateDeck() {
-        var deck = try! database.deckStore.createDeck(name: "The God Killer", investigator: roland)
+        var deck = DatabaseTestsHelper.createDeck(name: "The God Killer",
+                                                  investigator: roland,
+                                                  in: database)
         
         XCTAssertEqual(deck.name, "The God Killer")
         XCTAssertEqual(deck.numberOfCards, 0)
         
-        deck = update(deck: deck, cardId: 1010, quantity: 2)
-        deck = update(deck: deck, cardId: 1011, quantity: 1)
+        deck = DatabaseTestsHelper.update(deck: deck, cardId: 1010, quantity: 2, in: database)
+        deck = DatabaseTestsHelper.update(deck: deck, cardId: 1011, quantity: 1, in: database)
         
         XCTAssertEqual(deck.numberOfCards, 3)
     
@@ -55,16 +57,5 @@ class DeckStoreTests: XCTestCase {
         }
         
         XCTAssertEqual(recordsCountAfterDelete, 0)
-    }
-    
-    // MARK:- Helper functions
-    private func fetchCard(id: Int) -> Card {
-        return try! database.cardStore.fetchCard(id: id)
-    }
-    
-    private func update(deck: Deck, cardId: Int, quantity: Int) -> Deck {
-        return try! database.deckStore.changeCardQuantity(deck: deck,
-                                                          card: fetchCard(id: cardId),
-                                                          quantity: quantity)
     }
 }

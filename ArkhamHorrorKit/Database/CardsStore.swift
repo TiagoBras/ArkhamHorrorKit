@@ -161,7 +161,7 @@ public final class CardsStore {
     private func genJoinClause(_ filter: CardFilter?) -> String {
         guard filter?.onlyDeck != nil else { return "" }
         
-        return "INNER JOIN DeckCard ON DeckCard.card_id = CardExtendedView.id"
+        return "INNER JOIN DeckCard ON DeckCard.card_id = Card.id"
     }
     
     private func genWhereClause(_ filter: CardFilter?) -> String {
