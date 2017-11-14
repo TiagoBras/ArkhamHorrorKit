@@ -39,7 +39,6 @@ public final class AHDatabase {
         try migrateToLastVersion()
     }
     
-    
     /// Creates an in-memory database
     ///
     /// - Throws: AHDatabaseError

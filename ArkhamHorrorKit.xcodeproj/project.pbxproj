@@ -102,14 +102,42 @@
 		A5653C151FB20EE300862AC1 /* tuo.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C0A1FB20A1100862AC1 /* tuo.json */; };
 		A5653C171FB2174000862AC1 /* non_card_file.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C161FB2174000862AC1 /* non_card_file.json */; };
 		A5653C181FB2174000862AC1 /* non_card_file.json in Resources */ = {isa = PBXBuildFile; fileRef = A5653C161FB2174000862AC1 /* non_card_file.json */; };
+		A5779C2C1FB603F000DB9DAD /* ChaosBagDifficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5779C2B1FB603F000DB9DAD /* ChaosBagDifficulty.swift */; };
+		A5779C2E1FB606E100DB9DAD /* ChaosToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5779C2D1FB606E100DB9DAD /* ChaosToken.swift */; };
+		A5779C2F1FB608A400DB9DAD /* ChaosToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5779C2D1FB606E100DB9DAD /* ChaosToken.swift */; };
+		A5779C301FB608A700DB9DAD /* ChaosBagDifficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5779C2B1FB603F000DB9DAD /* ChaosBagDifficulty.swift */; };
+		A5779C321FB60B6800DB9DAD /* ChaosBagDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5779C311FB60B6800DB9DAD /* ChaosBagDatabase.swift */; };
+		A5779C331FB60C1400DB9DAD /* ChaosBagDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5779C311FB60B6800DB9DAD /* ChaosBagDatabase.swift */; };
+		A5779C391FB60DA700DB9DAD /* ChaosBagDatabaseMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5779C381FB60DA700DB9DAD /* ChaosBagDatabaseMigrator.swift */; };
+		A5779C3A1FB60DA700DB9DAD /* ChaosBagDatabaseMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5779C381FB60DA700DB9DAD /* ChaosBagDatabaseMigrator.swift */; };
+		A5779C3C1FB6120A00DB9DAD /* ScenarioChaosBagRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5779C3B1FB6120A00DB9DAD /* ScenarioChaosBagRecord.swift */; };
+		A5779C3D1FB6120A00DB9DAD /* ScenarioChaosBagRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5779C3B1FB6120A00DB9DAD /* ScenarioChaosBagRecord.swift */; };
 		A57E8EE41FAE6926008942B0 /* DeckCardRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */; };
 		A57E8EE51FAE6926008942B0 /* DeckCardRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */; };
+		A57FFB431FB5FE7500B16FE6 /* CampaignRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57FFB421FB5FE7500B16FE6 /* CampaignRecord.swift */; };
+		A57FFB441FB5FE7500B16FE6 /* CampaignRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57FFB421FB5FE7500B16FE6 /* CampaignRecord.swift */; };
+		A57FFB461FB5FE7F00B16FE6 /* ScenarioRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57FFB451FB5FE7F00B16FE6 /* ScenarioRecord.swift */; };
+		A57FFB471FB5FE7F00B16FE6 /* ScenarioRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57FFB451FB5FE7F00B16FE6 /* ScenarioRecord.swift */; };
+		A57FFB491FB5FE8B00B16FE6 /* ChaosBagRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57FFB481FB5FE8B00B16FE6 /* ChaosBagRecord.swift */; };
+		A57FFB4A1FB5FE8B00B16FE6 /* ChaosBagRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57FFB481FB5FE8B00B16FE6 /* ChaosBagRecord.swift */; };
+		A59FCA511FB71B2F00DF4994 /* chaos_bags.json in Resources */ = {isa = PBXBuildFile; fileRef = A5D8B7291FB64A6800DAC40F /* chaos_bags.json */; };
+		A59FCA521FB71B3000DF4994 /* chaos_bags.json in Resources */ = {isa = PBXBuildFile; fileRef = A5D8B7291FB64A6800DAC40F /* chaos_bags.json */; };
 		A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */; };
 		A5BCA7B01FA24C74001E6817 /* CardTestSkillIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */; };
 		A5BCA7B21FA24CE1001E6817 /* CardFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7B11FA24CE1001E6817 /* CardFilter.swift */; };
 		A5BCA7B31FA24CF3001E6817 /* CardFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7B11FA24CE1001E6817 /* CardFilter.swift */; };
 		A5BCA80D1FA282EF001E6817 /* DeckRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */; };
 		A5BCA80E1FA282EF001E6817 /* DeckRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */; };
+		A5D8B7221FB619C200DAC40F /* ChaosBagDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7211FB619C200DAC40F /* ChaosBagDatabaseTests.swift */; };
+		A5D8B7231FB624FB00DAC40F /* ChaosBagDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7211FB619C200DAC40F /* ChaosBagDatabaseTests.swift */; };
+		A5D8B7271FB6337300DAC40F /* TableInfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7241FB6317000DAC40F /* TableInfoRecord.swift */; };
+		A5D8B7281FB6337300DAC40F /* TableInfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7241FB6317000DAC40F /* TableInfoRecord.swift */; };
+		A5D8B72B1FB64B1E00DAC40F /* Campaign.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B72A1FB64B1E00DAC40F /* Campaign.swift */; };
+		A5D8B72C1FB64B1E00DAC40F /* Campaign.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B72A1FB64B1E00DAC40F /* Campaign.swift */; };
+		A5D8B72E1FB64B3000DAC40F /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B72D1FB64B3000DAC40F /* Scenario.swift */; };
+		A5D8B72F1FB64B3000DAC40F /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B72D1FB64B3000DAC40F /* Scenario.swift */; };
+		A5D8B7311FB64B3B00DAC40F /* ChaosBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7301FB64B3B00DAC40F /* ChaosBag.swift */; };
+		A5D8B7321FB64B3B00DAC40F /* ChaosBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7301FB64B3B00DAC40F /* ChaosBag.swift */; };
 		A5DA6A5D1FA23B2900457F27 /* ArkhamHorrorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5DA6A531FA23B2900457F27 /* ArkhamHorrorKit.framework */; };
 		A5DA6A641FA23B2900457F27 /* ArkhamHorrorKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A5DA6A561FA23B2900457F27 /* ArkhamHorrorKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5DA6A7B1FA23C4C00457F27 /* ArkhamHorrorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5DA6A721FA23C4B00457F27 /* ArkhamHorrorKit.framework */; };
@@ -219,10 +247,24 @@
 		A5653C0B1FB20A1100862AC1 /* cycles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cycles.json; sourceTree = "<group>"; };
 		A5653C0C1FB20A1100862AC1 /* packs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = packs.json; sourceTree = "<group>"; };
 		A5653C161FB2174000862AC1 /* non_card_file.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = non_card_file.json; sourceTree = "<group>"; };
+		A5779C2B1FB603F000DB9DAD /* ChaosBagDifficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaosBagDifficulty.swift; sourceTree = "<group>"; };
+		A5779C2D1FB606E100DB9DAD /* ChaosToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaosToken.swift; sourceTree = "<group>"; };
+		A5779C311FB60B6800DB9DAD /* ChaosBagDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaosBagDatabase.swift; sourceTree = "<group>"; };
+		A5779C381FB60DA700DB9DAD /* ChaosBagDatabaseMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaosBagDatabaseMigrator.swift; sourceTree = "<group>"; };
+		A5779C3B1FB6120A00DB9DAD /* ScenarioChaosBagRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioChaosBagRecord.swift; sourceTree = "<group>"; };
 		A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCardRecord.swift; sourceTree = "<group>"; };
+		A57FFB421FB5FE7500B16FE6 /* CampaignRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignRecord.swift; sourceTree = "<group>"; };
+		A57FFB451FB5FE7F00B16FE6 /* ScenarioRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScenarioRecord.swift; path = "../Cards Database/ScenarioRecord.swift"; sourceTree = "<group>"; };
+		A57FFB481FB5FE8B00B16FE6 /* ChaosBagRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChaosBagRecord.swift; path = "../Cards Database/ChaosBagRecord.swift"; sourceTree = "<group>"; };
 		A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTestSkillIcon.swift; sourceTree = "<group>"; };
 		A5BCA7B11FA24CE1001E6817 /* CardFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFilter.swift; sourceTree = "<group>"; };
 		A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckRecord.swift; sourceTree = "<group>"; };
+		A5D8B7211FB619C200DAC40F /* ChaosBagDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaosBagDatabaseTests.swift; sourceTree = "<group>"; };
+		A5D8B7241FB6317000DAC40F /* TableInfoRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableInfoRecord.swift; sourceTree = "<group>"; };
+		A5D8B7291FB64A6800DAC40F /* chaos_bags.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = chaos_bags.json; sourceTree = "<group>"; };
+		A5D8B72A1FB64B1E00DAC40F /* Campaign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Campaign.swift; sourceTree = "<group>"; };
+		A5D8B72D1FB64B3000DAC40F /* Scenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
+		A5D8B7301FB64B3B00DAC40F /* ChaosBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaosBag.swift; sourceTree = "<group>"; };
 		A5DA6A531FA23B2900457F27 /* ArkhamHorrorKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArkhamHorrorKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5DA6A561FA23B2900457F27 /* ArkhamHorrorKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArkhamHorrorKit.h; sourceTree = "<group>"; };
 		A5DA6A571FA23B2900457F27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -318,7 +360,7 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
-		A557A7DD1FAFCB21007B9D6F /* Database */ = {
+		A557A7DD1FAFCB21007B9D6F /* Cards Database */ = {
 			isa = PBXGroup;
 			children = (
 				A5DA6ACD1FA246C000457F27 /* AHDatabase.swift */,
@@ -331,19 +373,13 @@
 				A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */,
 				A557A7E31FAFCBCF007B9D6F /* Models */,
 			);
-			path = Database;
+			path = "Cards Database";
 			sourceTree = "<group>";
 		};
 		A557A7E31FAFCBCF007B9D6F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A5DA6ABD1FA2460B00457F27 /* CardRecord.swift */,
-				A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */,
-				A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */,
-				A5DA6AC01FA2460C00457F27 /* InvestigatorRecord.swift */,
-				A5DA6ABF1FA2460B00457F27 /* CardCycleRecord.swift */,
-				A5DA6ABE1FA2460B00457F27 /* CardPackRecord.swift */,
-				A5DA6AC91FA2468900457F27 /* FileChecksumRecord.swift */,
+				A57FFB401FB5FE3500B16FE6 /* Cards */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -397,8 +433,56 @@
 				A5653C0C1FB20A1100862AC1 /* packs.json */,
 				A5653C0A1FB20A1100862AC1 /* tuo.json */,
 				A5653C161FB2174000862AC1 /* non_card_file.json */,
+				A5D8B7291FB64A6800DAC40F /* chaos_bags.json */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		A56F7E971FB6022100BCDF44 /* Chaos Bag Models */ = {
+			isa = PBXGroup;
+			children = (
+				A5779C2B1FB603F000DB9DAD /* ChaosBagDifficulty.swift */,
+				A5779C2D1FB606E100DB9DAD /* ChaosToken.swift */,
+				A5D8B72A1FB64B1E00DAC40F /* Campaign.swift */,
+				A5D8B72D1FB64B3000DAC40F /* Scenario.swift */,
+				A5D8B7301FB64B3B00DAC40F /* ChaosBag.swift */,
+			);
+			path = "Chaos Bag Models";
+			sourceTree = "<group>";
+		};
+		A56F7E991FB6028300BCDF44 /* Chaos Bag Database */ = {
+			isa = PBXGroup;
+			children = (
+				A5779C311FB60B6800DB9DAD /* ChaosBagDatabase.swift */,
+				A5779C381FB60DA700DB9DAD /* ChaosBagDatabaseMigrator.swift */,
+				A56F7E9A1FB6029F00BCDF44 /* Models */,
+			);
+			path = "Chaos Bag Database";
+			sourceTree = "<group>";
+		};
+		A56F7E9A1FB6029F00BCDF44 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A57FFB421FB5FE7500B16FE6 /* CampaignRecord.swift */,
+				A57FFB451FB5FE7F00B16FE6 /* ScenarioRecord.swift */,
+				A57FFB481FB5FE8B00B16FE6 /* ChaosBagRecord.swift */,
+				A5779C3B1FB6120A00DB9DAD /* ScenarioChaosBagRecord.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		A57FFB401FB5FE3500B16FE6 /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				A5DA6ABD1FA2460B00457F27 /* CardRecord.swift */,
+				A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */,
+				A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */,
+				A5DA6AC01FA2460C00457F27 /* InvestigatorRecord.swift */,
+				A5DA6ABF1FA2460B00457F27 /* CardCycleRecord.swift */,
+				A5DA6ABE1FA2460B00457F27 /* CardPackRecord.swift */,
+				A5DA6AC91FA2468900457F27 /* FileChecksumRecord.swift */,
+			);
+			name = Cards;
 			sourceTree = "<group>";
 		};
 		A5BCA7B91FA256B5001E6817 /* Frameworks */ = {
@@ -440,8 +524,10 @@
 			children = (
 				A5DA6A561FA23B2900457F27 /* ArkhamHorrorKit.h */,
 				A563C3E21FB129720060FE8C /* Resources */,
-				A557A7DD1FAFCB21007B9D6F /* Database */,
+				A557A7DD1FAFCB21007B9D6F /* Cards Database */,
 				A5DA6A8B1FA2440900457F27 /* Card Models */,
+				A56F7E991FB6028300BCDF44 /* Chaos Bag Database */,
+				A56F7E971FB6022100BCDF44 /* Chaos Bag Models */,
 				A5DA6A571FA23B2900457F27 /* Info.plist */,
 			);
 			path = ArkhamHorrorKit;
@@ -457,6 +543,8 @@
 				A5DA6A631FA23B2900457F27 /* Info.plist */,
 				A524FB7D1FB0F05B00123949 /* DeckStoreTests.swift */,
 				A563C36F1FB11D670060FE8C /* CardStoreTests.swift */,
+				A5D8B7211FB619C200DAC40F /* ChaosBagDatabaseTests.swift */,
+				A5D8B7241FB6317000DAC40F /* TableInfoRecord.swift */,
 			);
 			path = ArkhamHorrorKitTests;
 			sourceTree = "<group>";
@@ -666,6 +754,7 @@
 				A51A26A01FAF35D6004C6ED1 /* base_promo.json in Resources */,
 				A51A26A11FAF35D6004C6ED1 /* base_ptc.json in Resources */,
 				A5653C051FB1FFCB00862AC1 /* base_core_updated.json in Resources */,
+				A59FCA521FB71B3000DF4994 /* chaos_bags.json in Resources */,
 				A51A26A31FAF35D6004C6ED1 /* base_tmm.json in Resources */,
 				A51A269F1FAF35D6004C6ED1 /* base_litas.json in Resources */,
 				A5653C171FB2174000862AC1 /* non_card_file.json in Resources */,
@@ -719,6 +808,7 @@
 				A51A26B01FAF35D7004C6ED1 /* base_promo.json in Resources */,
 				A51A26B11FAF35D7004C6ED1 /* base_ptc.json in Resources */,
 				A5653C061FB1FFCC00862AC1 /* base_core_updated.json in Resources */,
+				A59FCA511FB71B2F00DF4994 /* chaos_bags.json in Resources */,
 				A51A26B31FAF35D7004C6ED1 /* base_tmm.json in Resources */,
 				A51A26AF1FAF35D7004C6ED1 /* base_litas.json in Resources */,
 				A5653C181FB2174000862AC1 /* non_card_file.json in Resources */,
@@ -932,17 +1022,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5DA6AA11FA244C300457F27 /* CardPack.swift in Sources */,
+				A5779C2C1FB603F000DB9DAD /* ChaosBagDifficulty.swift in Sources */,
 				A5DA6AA21FA244C300457F27 /* CardsSortingDescriptor.swift in Sources */,
 				A5DA6AA81FA244C300457F27 /* DeckStats.swift in Sources */,
 				A5DA6AC31FA2461300457F27 /* CardCycleRecord.swift in Sources */,
+				A5779C391FB60DA700DB9DAD /* ChaosBagDatabaseMigrator.swift in Sources */,
 				A5DA6AA71FA244C300457F27 /* DeckCard.swift in Sources */,
+				A5D8B72E1FB64B3000DAC40F /* Scenario.swift in Sources */,
 				A5DA6AA31FA244C300457F27 /* CardSubtype.swift in Sources */,
 				A5DA6AC21FA2461300457F27 /* InvestigatorRecord.swift in Sources */,
 				A5DA6AC11FA2461300457F27 /* CardRecord.swift in Sources */,
 				A5DA6AA51FA244C300457F27 /* CardType.swift in Sources */,
+				A57FFB431FB5FE7500B16FE6 /* CampaignRecord.swift in Sources */,
 				A5BCA7B21FA24CE1001E6817 /* CardFilter.swift in Sources */,
 				A557A7EA1FB0E65E007B9D6F /* DeckSortingDescriptor.swift in Sources */,
 				A5DA6A9E1FA244C300457F27 /* CardCycle.swift in Sources */,
+				A57FFB461FB5FE7F00B16FE6 /* ScenarioRecord.swift in Sources */,
 				A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */,
 				A57E8EE41FAE6926008942B0 /* DeckCardRecord.swift in Sources */,
 				A5BCA80D1FA282EF001E6817 /* DeckRecord.swift in Sources */,
@@ -950,10 +1045,16 @@
 				A5DA6AD31FA246DC00457F27 /* CardsStore.swift in Sources */,
 				A5DA6ACA1FA2468900457F27 /* FileChecksumRecord.swift in Sources */,
 				A5DA6A9D1FA244C300457F27 /* CardAssetSlot.swift in Sources */,
+				A57FFB491FB5FE8B00B16FE6 /* ChaosBagRecord.swift in Sources */,
+				A5D8B7311FB64B3B00DAC40F /* ChaosBag.swift in Sources */,
 				A5DA6A9F1FA244C300457F27 /* CardFaction.swift in Sources */,
+				A5D8B72B1FB64B1E00DAC40F /* Campaign.swift in Sources */,
+				A5779C3C1FB6120A00DB9DAD /* ScenarioChaosBagRecord.swift in Sources */,
 				A5DA6AD11FA246DC00457F27 /* AHDatabase.swift in Sources */,
 				A5DA6AD41FA246DC00457F27 /* DeckStore.swift in Sources */,
+				A5779C2E1FB606E100DB9DAD /* ChaosToken.swift in Sources */,
 				A5DA6AAB1FA244C300457F27 /* Investigator.swift in Sources */,
+				A5779C321FB60B6800DB9DAD /* ChaosBagDatabase.swift in Sources */,
 				A557A7E71FB0E63A007B9D6F /* DeckFilter.swift in Sources */,
 				A5DA6AD21FA246DC00457F27 /* AHDatabaseMigrator.swift in Sources */,
 				A5DA6AA61FA244C300457F27 /* Deck.swift in Sources */,
@@ -966,7 +1067,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A524FB7E1FB0F05B00123949 /* DeckStoreTests.swift in Sources */,
+				A5D8B7271FB6337300DAC40F /* TableInfoRecord.swift in Sources */,
 				A563C3701FB11D670060FE8C /* CardStoreTests.swift in Sources */,
+				A5D8B7221FB619C200DAC40F /* ChaosBagDatabaseTests.swift in Sources */,
 				A51A26511FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
 				A51A264F1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
 				A5653C031FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */,
@@ -977,8 +1080,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5779C2F1FB608A400DB9DAD /* ChaosToken.swift in Sources */,
+				A5779C301FB608A700DB9DAD /* ChaosBagDifficulty.swift in Sources */,
 				A5DA6AB11FA244C400457F27 /* CardPack.swift in Sources */,
 				A5DA6AB21FA244C400457F27 /* CardsSortingDescriptor.swift in Sources */,
+				A57FFB4A1FB5FE8B00B16FE6 /* ChaosBagRecord.swift in Sources */,
 				A5DA6AB81FA244C400457F27 /* DeckStats.swift in Sources */,
 				A5BCA7B01FA24C74001E6817 /* CardTestSkillIcon.swift in Sources */,
 				A5DA6AC71FA2461300457F27 /* CardCycleRecord.swift in Sources */,
@@ -990,18 +1096,26 @@
 				A5BCA7B31FA24CF3001E6817 /* CardFilter.swift in Sources */,
 				A5DA6AAE1FA244C400457F27 /* CardCycle.swift in Sources */,
 				A5DA6AC81FA2461300457F27 /* CardPackRecord.swift in Sources */,
+				A57FFB471FB5FE7F00B16FE6 /* ScenarioRecord.swift in Sources */,
 				A57E8EE51FAE6926008942B0 /* DeckCardRecord.swift in Sources */,
 				A5BCA80E1FA282EF001E6817 /* DeckRecord.swift in Sources */,
 				A5DA6AD71FA246DD00457F27 /* CardsStore.swift in Sources */,
+				A5779C3A1FB60DA700DB9DAD /* ChaosBagDatabaseMigrator.swift in Sources */,
 				A5DA6ACB1FA2468900457F27 /* FileChecksumRecord.swift in Sources */,
 				A5DA6AAD1FA244C400457F27 /* CardAssetSlot.swift in Sources */,
+				A5D8B7321FB64B3B00DAC40F /* ChaosBag.swift in Sources */,
+				A5D8B72C1FB64B1E00DAC40F /* Campaign.swift in Sources */,
 				A5DA6AAF1FA244C400457F27 /* CardFaction.swift in Sources */,
 				A5DA6AD51FA246DD00457F27 /* AHDatabase.swift in Sources */,
+				A5779C3D1FB6120A00DB9DAD /* ScenarioChaosBagRecord.swift in Sources */,
 				A5DA6AD81FA246DD00457F27 /* DeckStore.swift in Sources */,
 				A5DA6ABB1FA244C400457F27 /* Investigator.swift in Sources */,
 				A557A7E81FB0E641007B9D6F /* DeckFilter.swift in Sources */,
 				A5DA6AD61FA246DD00457F27 /* AHDatabaseMigrator.swift in Sources */,
 				A5DA6AB61FA244C400457F27 /* Deck.swift in Sources */,
+				A57FFB441FB5FE7500B16FE6 /* CampaignRecord.swift in Sources */,
+				A5D8B72F1FB64B3000DAC40F /* Scenario.swift in Sources */,
+				A5779C331FB60C1400DB9DAD /* ChaosBagDatabase.swift in Sources */,
 				A5DA6AAC1FA244C400457F27 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1011,7 +1125,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A524FB7F1FB0F05B00123949 /* DeckStoreTests.swift in Sources */,
+				A5D8B7281FB6337300DAC40F /* TableInfoRecord.swift in Sources */,
 				A563C3711FB11D670060FE8C /* CardStoreTests.swift in Sources */,
+				A5D8B7231FB624FB00DAC40F /* ChaosBagDatabaseTests.swift in Sources */,
 				A51A26521FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
 				A51A26501FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
 				A5653C041FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */,

@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Night of the Zealot",
+    "scenarios": [
+      {
+        "name": "Night of the Zealot",
+        "easy": {
+          "p1": 2, "zero": 3, "m1": 3, "m2": 2,
+          "skull": 2, "cultist": 1, "tablet": 1, "eldersign": 1, "autofail": 1
+        },
+        "normal": {
+          "p1": 1, "zero": 2, "m1": 3, "m2": 2, "m3": 1, "m4": 1,
+          "skull": 2, "cultist": 1, "tablet": 1, "eldersign": 1, "autofail": 1
+        },
+        "hard": {
+          "zero": 3, "m1": 2, "m2": 2, "m3": 1, "m4": 1, "m5": 1,
+          "skull": 2, "cultist": 1, "tablet": 1, "eldersign": 1, "autofail": 1
+        },
+        "expert": {
+          "zero": 1, "m1": 2, "m2": 2, "m3": 2, "m4": 2, "m5": 1, "m6": 1, "m8": 1,
+          "skull": 2, "cultist": 1, "tablet": 1, "eldersign": 1, "autofail": 1
+        }
+      } 
+    ]
+  },
+  {
+    "name": "Dunwich Legacy",
+    "scenarios": [
+      {
+        "name": "Dunwich Legacy",
+        "easy": {
+          "p1": 2, "zero": 3, "m1": 3, "m2": 2,
+          "skull": 2, "cultist": 1, "eldersign": 1, "autofail": 1
+        },
+        "normal": {
+          "p1": 1, "zero": 2, "m1": 3, "m2": 2, "m3": 1, "m4": 1,
+          "skull": 2, "cultist": 1, "eldersign": 1, "autofail": 1
+        },
+        "hard": {
+          "zero": 3, "m1": 2, "m2": 2, "m3": 1, "m4": 1, "m5": 1,
+          "skull": 2, "cultist": 1, "eldersign": 1, "autofail": 1
+        },
+        "expert": {
+          "zero": 1, "m1": 2, "m2": 2, "m3": 2, "m4": 2, "m5": 1, "m6": 1, "m8": 1,
+          "skull": 2, "cultist": 1, "eldersign": 1, "autofail": 1
+        }
+      },
+      {
+        "name": "Miskatonic Museum Standalone",
+        "standalone": {
+          "p1": 1, "zero": 2, "m1": 3, "m2": 2, "m3": 1, "m4": 1,
+          "skull": 2, "cultist": 1, "eldersign": 1, "autofail": 1, "elderthing": 1
+        }
+      }
+    ]
+  }
+]
