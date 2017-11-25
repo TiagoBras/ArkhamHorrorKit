@@ -3,7 +3,7 @@ GRDB 2 [![Swift](https://img.shields.io/badge/swift-4-orange.svg?style=flat)](ht
 
 ### A toolkit for SQLite databases, with a focus on application development
 
-**Latest release**: November 5, 2017 • version 2.3.0 • [CHANGELOG](CHANGELOG.md)
+**Latest release**: November 8, 2017 • version 2.3.1 • [CHANGELOG](CHANGELOG.md)
 
 **Requirements**: iOS 8.0+ / OSX 10.9+ / watchOS 2.0+ &bull; Swift 4.0 / Xcode 9+
 
@@ -14,7 +14,7 @@ GRDB 2 [![Swift](https://img.shields.io/badge/swift-4-orange.svg?style=flat)](ht
 | Swift 3       | [v1.0](https://github.com/groue/GRDB.swift/tree/v1.0)       |
 | Swift 3.1     | [v1.3.0](https://github.com/groue/GRDB.swift/tree/v1.3.0)   |
 | Swift 3.2     | [v1.3.0](https://github.com/groue/GRDB.swift/tree/v1.3.0)   |
-| **Swift 4**   | **v2.3.0**                                                  |
+| **Swift 4**   | **v2.3.1**                                                  |
 
 Follow [@groue](http://twitter.com/groue) on Twitter for release announcements and usage tips.
 
@@ -265,7 +265,7 @@ The [Swift Package Manager](https://swift.org/package-manager/) automates the di
 ```swift
 let package = Package(
     dependencies: [
-        .package(url: "https://github.com/groue/GRDB.swift.git", from: "2.3.0")
+        .package(url: "https://github.com/groue/GRDB.swift.git", from: "2.3.1")
     ]
 )
 ```
@@ -282,7 +282,7 @@ If you decide to use Carthage despite this warning, and get any Carthage-related
 
 ## Manually
 
-1. [Download](https://github.com/groue/GRDB.swift/releases/tag/v2.3.0) a copy of GRDB, or clone its repository and make sure you use the latest tagged version with the `git checkout v2.3.0` command.
+1. [Download](https://github.com/groue/GRDB.swift/releases/tag/v2.3.1) a copy of GRDB, or clone its repository and make sure you use the latest tagged version with the `git checkout v2.3.1` command.
 
 2. Embed the `GRDB.xcodeproj` project in your own project.
 
@@ -2439,15 +2439,18 @@ try player.insert(db)
 GRDB provides default implementations for [`RowConvertible.init(row:)`](#rowconvertible-protocol) and [`Persistable.encode(to:)`](#persistable-protocol) for record types that also adopt an archival protocol (`Codable`, `Encodable` or `Decodable`). When all their properties are themselves codable, Swift generates the archiving methods, and you don't need to write them down:
 
 ```swift
-// This is just enough...
-struct Player: RowConvertible, Persistable, Codable {
-    static let databaseTableName = "players"
-    
+// Declare a plain Codable struct or class...
+struct Player: Codable {
     let name: String
     let score: Int
 }
 
-// ... so that you can save and fetch players:
+// Adopt Record protocols...
+extension Player: RowConvertible, Persistable {
+    static let databaseTableName = "players"
+}
+
+// ...and you can save and fetch players:
 try dbQueue.inDatabase { db in
     try Player(name: "Arthur", score: 100).insert(db)
     let players = try Player.fetchAll(db)
@@ -2462,22 +2465,20 @@ struct Place: RowConvertible, Persistable, Codable {
     static let databaseTableName = "places"
     
     var title: String
-    var coordinate: CLLocationCoordinate2D // <- Not a simple value
+    var coordinate: CLLocationCoordinate2D // <- Not a simple value!
 }
 ```
 
 Make it flat, as below, and you'll be granted with all Codable and GRDB advantages:
 
 ```swift
-struct Place: RowConvertible, Persistable, Codable {
-    static let databaseTableName = "places"
-    
-    // Stored properties are all plain values:
+struct Place: Codable {
+    // Stored properties are plain values:
     var title: String
     var latitude: CLLocationDegrees
     var longitude: CLLocationDegrees
     
-    // Complex properties are computed properties:
+    // Complex property is computed:
     var coordinate: CLLocationCoordinate2D {
         get {
             return CLLocationCoordinate2D(
@@ -2490,19 +2491,26 @@ struct Place: RowConvertible, Persistable, Codable {
         }
     }
 }
+
+// Free database support!
+extension Place: RowConvertible, Persistable {
+    static let databaseTableName = "places"
+}
 ```
 
-As documented with the [Persistable](#persistable-protocol) protocol, have you struct records use MutablePersistable instead of Persistable when they store their automatically incremented row id:
+As documented with the [Persistable](#persistable-protocol) protocol, have your struct records use MutablePersistable instead of Persistable when they store their automatically incremented row id:
 
 ```swift
-struct Place: RowConvertible, MutablePersistable, Codable {
-    static let databaseTableName = "places"
-    
+struct Place: Codable {
     var id: Int64?      // <- the row id
     var title: String
     var latitude: CLLocationDegrees
     var longitude: CLLocationDegrees
     var coordinate: CLLocationCoordinate2D { ... }
+}
+
+extension Place: RowConvertible, MutablePersistable {
+    static let databaseTableName = "places"
     
     mutating func didInsert(with rowID: Int64, for column: String?) {
         // Update id after insertion
@@ -4496,19 +4504,6 @@ try dbQueue.inTransaction { db in
 }
 ```
 
-> :point_up: **Note**: for SQLite, empty [deferred](#transaction-kinds) transactions are no transaction at all. In this case, the transaction callback is never executed:
-> 
-> ```swift
-> // Empty deferred transaction
-> dbQueue.inTransaction { db in
->     db.afterNextTransactionCommit { db in
->         // Never executed
->         print("success")
->     }
->     return .commit
-> }
-> ```
-
 
 ### TransactionObserver Protocol
 
@@ -4627,15 +4622,6 @@ do {
 > :point_up: **Note**: all callbacks are called in a protected dispatch queue, and serialized with all database updates.
 >
 > :point_up: **Note**: the databaseDidChange(with:) and databaseWillCommit() callbacks must not touch the SQLite database. This limitation does not apply to databaseDidCommit and databaseDidRollback which can use their database argument.
->
-> :point_up: **Note**: for SQLite, empty [deferred](#transaction-kinds) transactions are no transaction at all. In this case, transaction observers are not notified:
-> 
-> ```swift
-> // Empty deferred transaction does not notify transaction observers
-> dbQueue.inTransaction { db in
->     return .commit
-> }
-> ```
 
 
 [FetchedRecordsController](#fetchedrecordscontroller) and [RxGRDB](http://github.com/RxSwiftCommunity/RxGRDB) are based on the TransactionObserver protocol.
@@ -4737,16 +4723,6 @@ dbQueue.inDatabase { db in
 
 - `.databaseLifetime` has the database retain and notify the observer until the database connection is closed.
 
-> :point_up: **Note**: for SQLite, empty [deferred](#transaction-kinds) transactions are no transaction at all. In this case, an observer added with the `.nextTransaction` extent is never notified of any transaction:
-> 
-> ```swift
-> // Empty deferred transaction
-> dbQueue.inTransaction { db in
->     // Observer is never notified of any transaction
->     db.add(transactionObserver: observer, extent: .nextTransaction)
->     return .commit
-> }
-> ```
 
 #### Support for SQLite Pre-Update Hooks
 
@@ -5118,7 +5094,7 @@ Alternatively, perform a manual installation of GRDB and SQLCipher:
     
     ```sh
     cd [GRDB directory]
-    git checkout v2.3.0
+    git checkout v2.3.1
     git submodule update --init SQLCipher/src
     ```
     

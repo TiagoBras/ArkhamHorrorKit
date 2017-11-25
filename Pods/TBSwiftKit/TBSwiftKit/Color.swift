@@ -18,8 +18,8 @@ public class Color: Equatable, CustomStringConvertible {
     public let blue: CGFloat
     public let alpha: CGFloat
     
-    static let white: Color = Color(red: 1.0, green: 1, blue: 1, alpha: 1)
-    static let black: Color = Color(red: 0, green: 0, blue: 0, alpha: 1.0)
+    public static let white: Color = Color(red: 1.0, green: 1, blue: 1, alpha: 1)
+    public static let black: Color = Color(red: 0, green: 0, blue: 0, alpha: 1.0)
     
     public init(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
         self.red = red
