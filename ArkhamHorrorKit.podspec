@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "ArkhamHorrorKit"
-  s.version      = "0.0.16"
+  s.version      = "0.0.18"
   s.summary      = "Arhkahm Horror SDK"
   s.description  = <<-DESC
   A module with Arkham Horror LCG cards database and related helper classes.
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
 
   s.source       = { :git => "https://tiagobras@bitbucket.org/tiagobras/arkhamhorrorkit.git", :tag => s.version.to_s }
-  s.source_files  = "ArkhamHorrorKit/*.h", "ArkhamHorrorKit/Database", "ArkhamHorrorKit/Card Models"
+  s.source_files  = "ArkhamHorrorKit/*.h", "ArkhamHorrorKit/**/*.swift"
 
   s.resources = "ArkhamHorrorKit/Resources/*.{xcassets,json,sql}"
   s.dependency 'Zip', '~> 1.0'
