@@ -88,6 +88,7 @@ CREATE TABLE Card (
 
     flavor_text TEXT,
     illustrator TEXT,
+    double_sided INTEGER NOT NULL DEFAULT 0,
 
     enemy_fight INTEGER NOT NULL DEFAULT 0,
     enemy_evade INTEGER NOT NULL DEFAULT 0,
@@ -95,6 +96,8 @@ CREATE TABLE Card (
     enemy_damage INTEGER NOT NULL DEFAULT 0,
     enemy_horror INTEGER NOT NULL DEFAULT 0,
     enemy_health_per_investigator INTEGER NOT NULL DEFAULT 0,
+
+    internal_code TEXT NOT NULL,
 
     FOREIGN KEY (pack_id) REFERENCES Pack(id),
     FOREIGN KEY (investigator_id) REFERENCES Investigator(id)

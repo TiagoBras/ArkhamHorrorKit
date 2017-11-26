@@ -39,6 +39,7 @@ class CardStoreTests: XCTestCase {
         XCTAssertEqual(card.type, CardType.enemy)
         XCTAssertEqual(card.subtype!, CardSubtype.weakness)
         XCTAssertEqual(card.faction, CardFaction.neutral)
+        XCTAssertEqual(card.doubleSided, false)
         
         let pack = try! database.cardPacksDictionary()["ptc"]!
         
@@ -64,6 +65,8 @@ class CardStoreTests: XCTestCase {
         XCTAssertEqual(card.enemyDamage, 1)
         XCTAssertEqual(card.enemyHorror, 1)
         XCTAssertEqual(card.enemyHealthPerInvestigator, false)
+        XCTAssertEqual(card.frontImageName, "03017.jpeg")
+        XCTAssert(card.backImageName == nil)
     }
     
     func testFetchCards() {

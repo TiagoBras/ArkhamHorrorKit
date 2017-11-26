@@ -123,6 +123,12 @@ public final class CardsStore {
         }
         
         let card = cardsCache.getCachedValue(record.id, defaultValue: { () -> Card? in
+            var backImageName: String?
+            
+            if record.doubleSided {
+                backImageName = "\(record.internalCode)b.jpeg"
+            }
+            
             return Card(id: record.id,
                         name: record.name,
                         subname: record.subname,
@@ -145,12 +151,15 @@ public final class CardsStore {
                         flavorText: record.flavorText,
                         traits: record.traits,
                         illustrator: record.illustrator,
+                        doubleSided: record.doubleSided,
                         enemyFight: record.enemyFight,
                         enemyEvade: record.enemyEvade,
                         enemyHealth: record.enemyHealth,
                         enemyDamage: record.enemyDamage,
                         enemyHorror: record.enemyHorror,
-                        enemyHealthPerInvestigator: record.enemyHealthPerInvestigator)
+                        enemyHealthPerInvestigator: record.enemyHealthPerInvestigator,
+                        frontImageName: "\(record.internalCode).jpeg",
+                        backImageName: backImageName)
         })
         
         return card

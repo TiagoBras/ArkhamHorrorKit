@@ -86,6 +86,10 @@
 		A557A7E71FB0E63A007B9D6F /* DeckFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */; };
 		A557A7E81FB0E641007B9D6F /* DeckFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */; };
 		A557A7EA1FB0E65E007B9D6F /* DeckSortingDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */; };
+		A55DEB391FCA3D5700141FED /* CardImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55DEB381FCA3D5700141FED /* CardImageStore.swift */; };
+		A55DEB3A1FCA3D5700141FED /* CardImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55DEB381FCA3D5700141FED /* CardImageStore.swift */; };
+		A55DEB3C1FCA4A7500141FED /* CardImageStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55DEB3B1FCA4A7500141FED /* CardImageStoreTests.swift */; };
+		A55DEB3D1FCA4A7500141FED /* CardImageStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55DEB3B1FCA4A7500141FED /* CardImageStoreTests.swift */; };
 		A563C3701FB11D670060FE8C /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563C36F1FB11D670060FE8C /* CardStoreTests.swift */; };
 		A563C3711FB11D670060FE8C /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A563C36F1FB11D670060FE8C /* CardStoreTests.swift */; };
 		A5653C031FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5653C021FB1FCDE00862AC1 /* AHDatabaseTests.swift */; };
@@ -234,11 +238,13 @@
 		A51A26621FAF3468004C6ED1 /* base_dwl.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_dwl.json; sourceTree = "<group>"; };
 		A51A26631FAF3468004C6ED1 /* base_core.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_core.json; sourceTree = "<group>"; };
 		A524FB7D1FB0F05B00123949 /* DeckStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckStoreTests.swift; sourceTree = "<group>"; };
-		A52F52021FAFC12900CEFA18 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
+		A52F52021FAFC12900CEFA18 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A52F52041FAFC39C00CEFA18 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		A52F52051FAFC3BC00CEFA18 /* ArkhamHorrorKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = ArkhamHorrorKit.podspec; sourceTree = SOURCE_ROOT; };
 		A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckFilter.swift; sourceTree = "<group>"; };
 		A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckSortingDescriptor.swift; sourceTree = "<group>"; };
+		A55DEB381FCA3D5700141FED /* CardImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImageStore.swift; sourceTree = "<group>"; };
+		A55DEB3B1FCA4A7500141FED /* CardImageStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImageStoreTests.swift; sourceTree = "<group>"; };
 		A563C36F1FB11D670060FE8C /* CardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreTests.swift; sourceTree = "<group>"; };
 		A5653BFF1FB1FC5600862AC1 /* base_core_updated.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = base_core_updated.json; sourceTree = "<group>"; };
 		A5653C021FB1FCDE00862AC1 /* AHDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHDatabaseTests.swift; sourceTree = "<group>"; };
@@ -371,6 +377,7 @@
 				A5DA6ACE1FA246C000457F27 /* DeckStore.swift */,
 				A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */,
 				A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */,
+				A55DEB381FCA3D5700141FED /* CardImageStore.swift */,
 				A557A7E31FAFCBCF007B9D6F /* Models */,
 			);
 			path = "Cards Database";
@@ -545,6 +552,7 @@
 				A563C36F1FB11D670060FE8C /* CardStoreTests.swift */,
 				A5D8B7211FB619C200DAC40F /* ChaosBagDatabaseTests.swift */,
 				A5D8B7241FB6317000DAC40F /* TableInfoRecord.swift */,
+				A55DEB3B1FCA4A7500141FED /* CardImageStoreTests.swift */,
 			);
 			path = ArkhamHorrorKitTests;
 			sourceTree = "<group>";
@@ -1037,6 +1045,7 @@
 				A5BCA7B21FA24CE1001E6817 /* CardFilter.swift in Sources */,
 				A557A7EA1FB0E65E007B9D6F /* DeckSortingDescriptor.swift in Sources */,
 				A5DA6A9E1FA244C300457F27 /* CardCycle.swift in Sources */,
+				A55DEB391FCA3D5700141FED /* CardImageStore.swift in Sources */,
 				A57FFB461FB5FE7F00B16FE6 /* ScenarioRecord.swift in Sources */,
 				A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */,
 				A57E8EE41FAE6926008942B0 /* DeckCardRecord.swift in Sources */,
@@ -1067,6 +1076,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A524FB7E1FB0F05B00123949 /* DeckStoreTests.swift in Sources */,
+				A55DEB3C1FCA4A7500141FED /* CardImageStoreTests.swift in Sources */,
 				A5D8B7271FB6337300DAC40F /* TableInfoRecord.swift in Sources */,
 				A563C3701FB11D670060FE8C /* CardStoreTests.swift in Sources */,
 				A5D8B7221FB619C200DAC40F /* ChaosBagDatabaseTests.swift in Sources */,
@@ -1098,6 +1108,7 @@
 				A5DA6AC81FA2461300457F27 /* CardPackRecord.swift in Sources */,
 				A57FFB471FB5FE7F00B16FE6 /* ScenarioRecord.swift in Sources */,
 				A57E8EE51FAE6926008942B0 /* DeckCardRecord.swift in Sources */,
+				A55DEB3A1FCA3D5700141FED /* CardImageStore.swift in Sources */,
 				A5BCA80E1FA282EF001E6817 /* DeckRecord.swift in Sources */,
 				A5DA6AD71FA246DD00457F27 /* CardsStore.swift in Sources */,
 				A5779C3A1FB60DA700DB9DAD /* ChaosBagDatabaseMigrator.swift in Sources */,
@@ -1125,6 +1136,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A524FB7F1FB0F05B00123949 /* DeckStoreTests.swift in Sources */,
+				A55DEB3D1FCA4A7500141FED /* CardImageStoreTests.swift in Sources */,
 				A5D8B7281FB6337300DAC40F /* TableInfoRecord.swift in Sources */,
 				A563C3711FB11D670060FE8C /* CardStoreTests.swift in Sources */,
 				A5D8B7231FB624FB00DAC40F /* ChaosBagDatabaseTests.swift in Sources */,

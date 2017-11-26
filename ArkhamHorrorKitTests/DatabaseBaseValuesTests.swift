@@ -181,12 +181,14 @@ class DatabaseBaseValuesTests: XCTestCase {
             XCTAssertEqual(card1.investigatorId, nil)
             XCTAssertEqual(card1.flavorText, "")
             XCTAssertEqual(card1.illustrator, "Mike Capprotti")
+            XCTAssertEqual(card1.doubleSided, false)
             XCTAssertEqual(card1.enemyFight, 0)
             XCTAssertEqual(card1.enemyEvade, 0)
             XCTAssertEqual(card1.enemyHealth, 0)
             XCTAssertEqual(card1.enemyDamage, 0)
             XCTAssertEqual(card1.enemyHorror, 0)
             XCTAssertEqual(card1.enemyHealthPerInvestigator, false)
+            XCTAssertEqual(card1.internalCode, "02027")
             
             let card2 = try CardRecord.fetchOne(db: db, id: 3012)!
             
@@ -216,12 +218,14 @@ class DatabaseBaseValuesTests: XCTestCase {
             XCTAssertEqual(card2.investigatorId, 3003)
             XCTAssertEqual(card2.flavorText, "")
             XCTAssertEqual(card2.illustrator, "Andreia Ugrai")
+            XCTAssertEqual(card2.doubleSided, false)
             XCTAssertEqual(card2.enemyFight, 0)
             XCTAssertEqual(card2.enemyEvade, 0)
             XCTAssertEqual(card2.enemyHealth, 0)
             XCTAssertEqual(card2.enemyDamage, 0)
             XCTAssertEqual(card2.enemyHorror, 0)
             XCTAssertEqual(card2.enemyHealthPerInvestigator, false)
+            XCTAssertEqual(card2.internalCode, "03012")
             
             let card3 = try CardRecord.fetchOne(db: db, id: 3017)!
             
@@ -251,12 +255,14 @@ class DatabaseBaseValuesTests: XCTestCase {
             XCTAssertEqual(card3.investigatorId, 3005)
             XCTAssertEqual(card3.flavorText, "\"Hell is empty and all the devils are here.\"\n - William Shakespeare, The Tempest")
             XCTAssertEqual(card3.illustrator, "Mike Capprotti")
+            XCTAssertEqual(card3.doubleSided, false)
             XCTAssertEqual(card3.enemyFight, 3)
             XCTAssertEqual(card3.enemyEvade, 2)
             XCTAssertEqual(card3.enemyHealth, 3)
             XCTAssertEqual(card3.enemyDamage, 1)
             XCTAssertEqual(card3.enemyHorror, 1)
             XCTAssertEqual(card3.enemyHealthPerInvestigator, false)
+            XCTAssertEqual(card3.internalCode, "03017")
         })
     }
     

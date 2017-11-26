@@ -33,10 +33,13 @@ public struct Card {
     public var flavorText: String
     public var traits: String
     public var illustrator: String
+    public var doubleSided: Bool
     public var enemyFight: Int
     public var enemyEvade: Int
     public var enemyHealth: Int
     public var enemyDamage: Int
     public var enemyHorror: Int
     public var enemyHealthPerInvestigator: Bool
+    public var frontImageName: String
+    public var backImageName: String?
 }

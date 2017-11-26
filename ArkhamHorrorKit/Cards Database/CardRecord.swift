@@ -37,12 +37,14 @@ final class CardRecord: Record {
     var investigatorId: Int?
     var flavorText: String
     var illustrator: String
+    var doubleSided: Bool
     var enemyFight: Int
     var enemyEvade: Int
     var enemyHealth: Int
     var enemyDamage: Int
     var enemyHorror: Int
     var enemyHealthPerInvestigator: Bool
+    var internalCode: String
     
     override class var databaseTableName: String {
         return "Card"
@@ -81,12 +83,14 @@ final class CardRecord: Record {
         investigatorId = row[RowKeys.investigatorId.rawValue]
         flavorText = row[RowKeys.flavorText.rawValue]
         illustrator = row[RowKeys.illustrator.rawValue]
+        doubleSided = row[RowKeys.doubleSided.rawValue]
         enemyFight = row[RowKeys.enemyFight.rawValue]
         enemyEvade = row[RowKeys.enemyEvade.rawValue]
         enemyHealth = row[RowKeys.enemyHealth.rawValue]
         enemyDamage = row[RowKeys.enemyDamage.rawValue]
         enemyHorror = row[RowKeys.enemyHorror.rawValue]
         enemyHealthPerInvestigator = row[RowKeys.enemyHealthPerInvestigator.rawValue]
+        internalCode = row[RowKeys.internalCode.rawValue]
         
         super.init(row: row)
     }
@@ -118,12 +122,14 @@ final class CardRecord: Record {
         container[RowKeys.investigatorId.rawValue] = investigatorId
         container[RowKeys.flavorText.rawValue] = flavorText
         container[RowKeys.illustrator.rawValue] = illustrator
+        container[RowKeys.doubleSided.rawValue] = doubleSided
         container[RowKeys.enemyFight.rawValue] = enemyFight
         container[RowKeys.enemyEvade.rawValue] = enemyEvade
         container[RowKeys.enemyHealth.rawValue] = enemyHealth
         container[RowKeys.enemyDamage.rawValue] = enemyDamage
         container[RowKeys.enemyHorror.rawValue] = enemyHorror
         container[RowKeys.enemyHealthPerInvestigator.rawValue] = enemyHealthPerInvestigator
+        container[RowKeys.internalCode.rawValue] = internalCode
     }
     
     class func fetchOne(db: Database, id: Int) throws -> CardRecord? {
@@ -144,6 +150,7 @@ final class CardRecord: Record {
             
             var dict = [String: DatabaseValueConvertible?]()
             dict[RowKeys.id.rawValue] = Int(obj["code"].stringValue)
+            dict[RowKeys.internalCode.rawValue] = obj["code"].stringValue
             dict[RowKeys.position.rawValue] = obj["position"].intValue
             dict[RowKeys.level.rawValue] = obj["xp"].intValue
             dict[RowKeys.cost.rawValue] = obj["cost"].intValue
@@ -213,6 +220,7 @@ final class CardRecord: Record {
             
             dict[RowKeys.flavorText.rawValue] = obj["flavor"].stringValue
             dict[RowKeys.illustrator.rawValue] = obj["illustrator"].stringValue
+            dict[RowKeys.doubleSided.rawValue] = obj["double_sided"].boolValue
             dict[RowKeys.enemyFight.rawValue] = obj["enemy_fight"].intValue
             dict[RowKeys.enemyEvade.rawValue] = obj["enemy_evade"].intValue
             
@@ -268,45 +276,13 @@ final class CardRecord: Record {
         case investigatorId = "investigator_id"
         case flavorText = "flavor_text"
         case illustrator = "illustrator"
+        case doubleSided = "double_sided"
         case enemyFight = "enemy_fight"
         case enemyEvade = "enemy_evade"
         case enemyHealth = "enemy_health"
         case enemyDamage = "enemy_damage"
         case enemyHorror = "enemy_horror"
         case enemyHealthPerInvestigator = "enemy_health_per_investigator"
-    }
-    
-    enum JSONKeys: String {
-        case id = "id"
-        case position = "position"
-        case level = "level"
-        case cost = "cost"
-        case quantity = "quantity"
-        case deckLimit = "deck_limit"
-        case name = "name"
-        case subname = "subname"
-        case isUnique = "is_unique"
-        case text = "text"
-        case typeId = "type_id"
-        case subtypeId = "subtype_id"
-        case factionId = "faction_id"
-        case packId = "pack_id"
-        case assetSlotId = "asset_slot_id"
-        case skillAgility = "skill_agility"
-        case skillCombat = "skill_combat"
-        case skillIntellect = "skill_intellect"
-        case skillWillpower = "skill_willpower"
-        case skillWild = "skill_wild"
-        case health = "health"
-        case sanity = "sanity"
-        case investigatorId = "investigator_id"
-        case flavorText = "flavor_text"
-        case illustrator = "illustrator"
-        case enemyFight = "enemy_fight"
-        case enemyEvade = "enemy_evade"
-        case enemyHealth = "enemy_health"
-        case enemyDamage = "enemy_damage"
-        case enemyHorror = "enemy_horror"
-        case enemyHealthPerInvestigator = "enemy_health_per_investigator"
+        case internalCode = "internal_code"
     }
 }
