@@ -32,11 +32,11 @@ class DatabaseBaseValuesTests: XCTestCase {
         let version = AHDatabaseMigrator.MigrationVersion.v1
         
         try! DatabaseTestsHelper.inReadOnly(dbVersion: version, { (db) in
-            XCTAssertEqual(try CardCycleRecord.fetchCount(db), 4)
+            XCTAssertEqual(try CardCycleRecord.fetchCount(db), 5)
             
-            let cycles = loadJSONInMainBundle(filename: "base_cycles.json").arrayValue
+            let cycles = loadJSONInMainBundle(filename: "cycles.json").arrayValue
             
-            XCTAssertEqual(cycles.count, 4)
+            XCTAssertEqual(cycles.count, 5)
 
             XCTAssertEqual(cycles[1]["code"].stringValue, "dwl")
             XCTAssertEqual(cycles[1]["name"].stringValue, "The Dunwich Legacy")
@@ -49,11 +49,11 @@ class DatabaseBaseValuesTests: XCTestCase {
         let version = AHDatabaseMigrator.MigrationVersion.v1
         
         try! DatabaseTestsHelper.inReadOnly(dbVersion: version, { (db) in
-            XCTAssertEqual(try CardPackRecord.fetchCount(db), 18)
+            XCTAssertEqual(try CardPackRecord.fetchCount(db), 14)
             
-            let packs = loadJSONInMainBundle(filename: "base_packs.json").arrayValue
+            let packs = loadJSONInMainBundle(filename: "packs.json").arrayValue
             
-            XCTAssertEqual(packs.count, 18)
+            XCTAssertEqual(packs.count, 19)
             
             XCTAssertEqual(packs[4]["code"].stringValue, "bota")
             XCTAssertEqual(packs[4]["cycle_code"].stringValue, "dwl")
@@ -67,23 +67,23 @@ class DatabaseBaseValuesTests: XCTestCase {
         let version = AHDatabaseMigrator.MigrationVersion.v1
         
         try! DatabaseTestsHelper.inReadOnly(dbVersion: version, { (db) in
-            let core = loadInvestigatorsJSONInMainBundle(filename: "base_core.json")
+            let core = loadInvestigatorsJSONInMainBundle(filename: "core.json")
             
             XCTAssertEqual(core.count, 5)
             
-            let dwl = loadInvestigatorsJSONInMainBundle(filename: "base_dwl.json")
+            let dwl = loadInvestigatorsJSONInMainBundle(filename: "dwl.json")
             
             XCTAssertEqual(dwl.count, 5)
             
-            let ptc = loadInvestigatorsJSONInMainBundle(filename: "base_ptc.json")
+            let ptc = loadInvestigatorsJSONInMainBundle(filename: "ptc.json")
             
             XCTAssertEqual(ptc.count, 6)
             
-            let promo = loadInvestigatorsJSONInMainBundle(filename: "base_promo.json")
+            let promo = loadInvestigatorsJSONInMainBundle(filename: "promo.json")
             
             XCTAssertEqual(promo.count, 1)
             
-            XCTAssertEqual(try InvestigatorRecord.fetchCount(db), 17)
+            XCTAssertEqual(try InvestigatorRecord.fetchCount(db), 16)
             
             let investigator = try InvestigatorRecord.fetchOne(db: db, id: 3004)!
             
@@ -112,46 +112,43 @@ class DatabaseBaseValuesTests: XCTestCase {
         let version = AHDatabaseMigrator.MigrationVersion.v1
         
         try! DatabaseTestsHelper.inReadOnly(dbVersion: version, { (db) in
-            let apot = loadCardsJSONInMainBundle(filename: "base_apot.json")
-            XCTAssertEqual(apot.count, 2)
-            
-            let bota = loadCardsJSONInMainBundle(filename: "base_bota.json")
+            let bota = loadCardsJSONInMainBundle(filename: "bota.json")
             XCTAssertEqual(bota.count, 11)
             
-            let core = loadCardsJSONInMainBundle(filename: "base_core.json")
+            let core = loadCardsJSONInMainBundle(filename: "core.json")
             XCTAssertEqual(core.count, 98)
             
-            let dwl = loadCardsJSONInMainBundle(filename: "base_dwl.json")
+            let dwl = loadCardsJSONInMainBundle(filename: "dwl.json")
             XCTAssertEqual(dwl.count, 34)
             
-            let eotp = loadCardsJSONInMainBundle(filename: "base_eotp.json")
-            XCTAssertEqual(eotp.count, 2)
+            let eotp = loadCardsJSONInMainBundle(filename: "eotp.json")
+            XCTAssertEqual(eotp.count, 14)
             
-            let litas = loadCardsJSONInMainBundle(filename: "base_litas.json")
+            let litas = loadCardsJSONInMainBundle(filename: "litas.json")
             XCTAssertEqual(litas.count, 12)
             
-            let promo = loadCardsJSONInMainBundle(filename: "base_promo.json")
+            let promo = loadCardsJSONInMainBundle(filename: "promo.json")
             XCTAssertEqual(promo.count, 2)
             
-            let ptc = loadCardsJSONInMainBundle(filename: "base_ptc.json")
+            let ptc = loadCardsJSONInMainBundle(filename: "ptc.json")
             XCTAssertEqual(ptc.count, 36)
             
-            let tece = loadCardsJSONInMainBundle(filename: "base_tece.json")
+            let tece = loadCardsJSONInMainBundle(filename: "tece.json")
             XCTAssertEqual(tece.count, 12)
             
-            let tmm = loadCardsJSONInMainBundle(filename: "base_tmm.json")
+            let tmm = loadCardsJSONInMainBundle(filename: "tmm.json")
             XCTAssertEqual(tmm.count, 13)
             
-            let tuo = loadCardsJSONInMainBundle(filename: "base_tuo.json")
-            XCTAssertEqual(tuo.count, 4)
+            let tuo = loadCardsJSONInMainBundle(filename: "tuo.json")
+            XCTAssertEqual(tuo.count, 12)
             
-            let uau = loadCardsJSONInMainBundle(filename: "base_uau.json")
+            let uau = loadCardsJSONInMainBundle(filename: "uau.json")
             XCTAssertEqual(uau.count, 11)
             
-            let wda = loadCardsJSONInMainBundle(filename: "base_wda.json")
+            let wda = loadCardsJSONInMainBundle(filename: "wda.json")
             XCTAssertEqual(wda.count, 14)
             
-            XCTAssertEqual(try CardRecord.fetchCount(db), 251)
+            XCTAssertEqual(try CardRecord.fetchCount(db), 255)
             
             let card1 = try CardRecord.fetchOne(db: db, id: 2027)!
             

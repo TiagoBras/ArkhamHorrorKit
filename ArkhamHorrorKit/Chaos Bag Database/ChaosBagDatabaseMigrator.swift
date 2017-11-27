@@ -148,7 +148,7 @@ public final class ChaosBagDatabaseMigrator {
             static let bundle = Bundle(for: AHDatabaseMigrator.self)
             
             private init() { }
-            static let cycles = Basename(stem: "base_cycles", ext: "json", bundle: BaseData.bundle)
+            static let cycles = Basename(stem: "cycles", ext: "json", bundle: BaseData.bundle)
         }
     }
     

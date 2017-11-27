@@ -44,46 +44,57 @@ public final class AHDatabaseMigrator {
     private var migrator = DatabaseMigrator()
     
     private static func v1(_ db: Database) throws {
-        let url = try Files.Schemas.v1.url()
+        let thisBundle = Bundle(for: self)
         
-        let sql = try String(contentsOf: url)
+        guard let schemaSQL = thisBundle.url(forResource: "schema_v1", withExtension: "sql") else {
+            throw CardsDatabaseMigratorError.fileNotFound("schema_v1.sql")
+        }
+        
+        let sql = try String(contentsOf: schemaSQL)
         
         // Create schema
         try db.execute(AHDatabaseMigrator.cleanUp(sql: sql))
         
-        // Load cycles_v1.json
-        let cyclesData = try Files.BaseData.cycles.data()
+        // Load cycles.json
+        guard let cyclesURL = thisBundle.url(forResource: "cycles", withExtension: "json") else {
+            throw CardsDatabaseMigratorError.fileNotFound("cycles.json")
+        }
+        let cyclesData = try Data(contentsOf: cyclesURL)
         try CardCycleRecord.loadJSONRecords(json: JSON(data: cyclesData), into: db)
         
         // Add a new entry in Database for cycles' file and its checksum
         let cyclesChecksum = CryptoHelper.sha256Hex(data: cyclesData)
-        try FileChecksumRecord(filename: Files.BaseData.cycles.name, hex: cyclesChecksum).save(db)
+        try FileChecksumRecord(filename: "cycles.json", hex: cyclesChecksum).save(db)
         
-        // Load packs_v1.json
-        let packsData = try Files.BaseData.packs.data()
-        try CardPackRecord.loadJSONRecords(json: JSON(data: packsData), into: db)
+        // Load packs.json
+        guard let packsURL = thisBundle.url(forResource: "packs", withExtension: "json") else {
+            throw CardsDatabaseMigratorError.fileNotFound("packs.json")
+        }
+        let packsData = try Data(contentsOf: packsURL)
+        let packs = try CardPackRecord.loadJSONRecords(json: JSON(data: packsData), into: db)
         
         // Add a new entry in Database for packs' file and its checksum
         let packsChecksum = CryptoHelper.sha256Hex(data: packsData)
-        try FileChecksumRecord(filename: Files.BaseData.packs.name, hex: packsChecksum).save(db)
+        try FileChecksumRecord(filename: "packs.json", hex: packsChecksum).save(db)
         
-        let jsonFiles: [Files.Basename] = [
-            Files.BaseData.core, Files.BaseData.dwl, Files.BaseData.ptc, Files.BaseData.promo,
-            Files.BaseData.apot, Files.BaseData.bota, Files.BaseData.eotp, Files.BaseData.litas,
-            Files.BaseData.tece, Files.BaseData.tmm, Files.BaseData.tuo,
-            Files.BaseData.uau, Files.BaseData.wda
-        ]
-        
-        for file in jsonFiles {
-            let fileData = try file.data()
-            let json = JSON(data: fileData)
+        for pack in packs {
+            let ignoreFiles = Set<String>(["cotr"])
+            
+            guard !ignoreFiles.contains(pack.id) else { return }
+            
+            guard let url = thisBundle.url(forResource: pack.id, withExtension: "json") else {
+                throw CardsDatabaseMigratorError.fileNotFound("\(pack.id).json in '\(String(describing: thisBundle.bundleIdentifier))'")
+            }
+            
+            let data = try Data(contentsOf: url)
+            let json = JSON(data: data)
             
             try InvestigatorRecord.loadJSONRecords(json: json, into: db)
             try CardRecord.loadJSONRecords(json: json, into: db)
             
-            let fileChecksum = CryptoHelper.sha256Hex(data: fileData)
+            let fileChecksum = CryptoHelper.sha256Hex(data: data)
             
-            try FileChecksumRecord(filename: file.name, hex: fileChecksum).save(db)
+            try FileChecksumRecord(filename: "\(pack.id).json", hex: fileChecksum).save(db)
         }
     }
     
@@ -138,23 +149,22 @@ public final class AHDatabaseMigrator {
             static let bundle = Bundle(for: AHDatabaseMigrator.self)
 
             private init() { }
-            static let cycles = Basename(stem: "base_cycles", ext: "json", bundle: BaseData.bundle)
-            static let packs = Basename(stem: "base_packs", ext: "json", bundle: BaseData.bundle)
+            static let cycles = Basename(stem: "cycles", ext: "json", bundle: BaseData.bundle)
+            static let packs = Basename(stem: "packs", ext: "json", bundle: BaseData.bundle)
             
-            static let core = Basename(stem: "base_core", ext: "json", bundle: BaseData.bundle)
-            static let dwl = Basename(stem: "base_dwl", ext: "json", bundle: BaseData.bundle)
+            static let core = Basename(stem: "core", ext: "json", bundle: BaseData.bundle)
+            static let dwl = Basename(stem: "dwl", ext: "json", bundle: BaseData.bundle)
             
-            static let apot = Basename(stem: "base_apot", ext: "json", bundle: BaseData.bundle)
-            static let bota = Basename(stem: "base_bota", ext: "json", bundle: BaseData.bundle)
-            static let eotp = Basename(stem: "base_eotp", ext: "json", bundle: BaseData.bundle)
-            static let litas = Basename(stem: "base_litas", ext: "json", bundle: BaseData.bundle)
-            static let promo = Basename(stem: "base_promo", ext: "json", bundle: BaseData.bundle)
-            static let ptc = Basename(stem: "base_ptc", ext: "json", bundle: BaseData.bundle)
-            static let tece = Basename(stem: "base_tece", ext: "json", bundle: BaseData.bundle)
-            static let tmm = Basename(stem: "base_tmm", ext: "json", bundle: BaseData.bundle)
-            static let tuo = Basename(stem: "base_tuo", ext: "json", bundle: BaseData.bundle)
-            static let uau = Basename(stem: "base_uau", ext: "json", bundle: BaseData.bundle)
-            static let wda = Basename(stem: "base_wda", ext: "json", bundle: BaseData.bundle)
+            static let bota = Basename(stem: "bota", ext: "json", bundle: BaseData.bundle)
+            static let eotp = Basename(stem: "eotp", ext: "json", bundle: BaseData.bundle)
+            static let litas = Basename(stem: "litas", ext: "json", bundle: BaseData.bundle)
+            static let promo = Basename(stem: "promo", ext: "json", bundle: BaseData.bundle)
+            static let ptc = Basename(stem: "ptc", ext: "json", bundle: BaseData.bundle)
+            static let tece = Basename(stem: "tece", ext: "json", bundle: BaseData.bundle)
+            static let tmm = Basename(stem: "tmm", ext: "json", bundle: BaseData.bundle)
+            static let tuo = Basename(stem: "tuo", ext: "json", bundle: BaseData.bundle)
+            static let uau = Basename(stem: "uau", ext: "json", bundle: BaseData.bundle)
+            static let wda = Basename(stem: "wda", ext: "json", bundle: BaseData.bundle)
         }
     }
     

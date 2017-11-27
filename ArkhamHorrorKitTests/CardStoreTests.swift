@@ -72,7 +72,7 @@ class CardStoreTests: XCTestCase {
     func testFetchCards() {
         let cards = database.cardStore.fetchCards(filter: nil, sorting: nil)
         
-        XCTAssertEqual(cards.count, 251)
+        XCTAssertEqual(cards.count, 255)
     }
     
     func testFetchAllCards() {
@@ -81,7 +81,7 @@ class CardStoreTests: XCTestCase {
         XCTAssertNotNil(result)
         
         XCTAssertEqual(result!.sectionsNames.count, 0)
-        XCTAssertEqual(result!.numberOfCards(inSection: 0), 251)
+        XCTAssertEqual(result!.numberOfCards(inSection: 0), 255)
     }
     
     func testFetchAllCardsThatBelongToADeck() {

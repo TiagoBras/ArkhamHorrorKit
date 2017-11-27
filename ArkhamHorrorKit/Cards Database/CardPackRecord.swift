@@ -49,8 +49,13 @@ final class CardPackRecord: Record {
         return try CardPackRecord.fetchOne(db, key: ["id": id])
     }
     
-    class func loadJSONRecords(json: JSON, into db: Database) throws {
+    @discardableResult
+    class func loadJSONRecords(json: JSON, into db: Database) throws -> [CardPackRecord] {
+        var packs = [CardPackRecord]()
+        
         for obj in json.arrayValue {
+            guard obj["date_release"].string != nil else { continue }
+            
             var dict = [String: DatabaseValueConvertible?]()
             dict["id"] = obj["code"].stringValue
             dict["name"] = obj["name"].stringValue
@@ -58,9 +63,13 @@ final class CardPackRecord: Record {
             dict["size"] = obj["size"].intValue
             dict["cycle_id"] = obj["cycle_code"].stringValue
             
-            let cycle = CardPackRecord(row: Row(dict))
+            let pack = CardPackRecord(row: Row(dict))
             
-            try cycle.save(db)
+            try pack.save(db)
+            
+            packs.append(pack)
         }
+        
+        return packs
     }
 }

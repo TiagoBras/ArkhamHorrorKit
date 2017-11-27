@@ -27,7 +27,7 @@ class AHDatabaseTests: XCTestCase {
         
         var roland = db.cardStore.investigators[1001]
         
-        XCTAssertNotNil(roland)
+        XCTAssert(roland != nil)
         XCTAssertEqual(roland!.name, "Roland Banks")
         
         try! db.loadCardsAndInvestigatorsFromJSON(at: url)
@@ -58,29 +58,31 @@ class AHDatabaseTests: XCTestCase {
         let documentsDir = fm.urls(for: .documentDirectory, in: .userDomainMask).first!
         let filesDir = documentsDir.appendingPathComponent("ah_files")
         
-        if !fm.fileExists(atPath: filesDir.path) {
-            try! fm.createDirectory(atPath: filesDir.path,
-                                    withIntermediateDirectories: false,
-                                    attributes: nil)
+        if fm.fileExists(atPath: filesDir.path) {
+            try! fm.removeItem(at: filesDir)
         }
         
-        let bundleCycles = Bundle(for: type(of: self)).url(forResource: "cycles", withExtension: "json")!
-        let bundlePacks = Bundle(for: type(of: self)).url(forResource: "packs", withExtension: "json")!
-        let bundleTuo = Bundle(for: type(of: self)).url(forResource: "tuo", withExtension: "json")!
+        try! fm.createDirectory(atPath: filesDir.path,
+                                withIntermediateDirectories: false,
+                                attributes: nil)
+        
+        let bundleCycles = Bundle(for: type(of: self)).url(forResource: "cyclesV1", withExtension: "json")!
+        let bundlePacks = Bundle(for: type(of: self)).url(forResource: "packsV1", withExtension: "json")!
+        let bundleTuo = Bundle(for: type(of: self)).url(forResource: "eotpV1", withExtension: "json")!
         
         try! fm.copyItem(at: bundleCycles, to: filesDir.appendingPathComponent("cycles.json"))
         try! fm.copyItem(at: bundlePacks, to: filesDir.appendingPathComponent("packs.json"))
-        try! fm.copyItem(at: bundleTuo, to: filesDir.appendingPathComponent("tuo"))
+        try! fm.copyItem(at: bundleTuo, to: filesDir.appendingPathComponent("eotp.json"))
         
         XCTAssertNil(try! db.cardCyclesDictionary()["ttd"])
         XCTAssertNil(try! db.cardPacksDictionary()["tmd"])
-        XCTAssertEqual(try! db.cardStore.fetchCard(id: 3149).sanity, 2)
+        XCTAssertEqual(try! db.cardStore.fetchCard(id: 3111).sanity, 1)
         
         try! db.updateDatabaseFromJSONFilesInDirectory(url: filesDir)
 
         XCTAssertEqual(try! db.cardCyclesDictionary()["ttd"]!.name, "The Test Dummy")
         XCTAssertEqual(try! db.cardPacksDictionary()["tmd"]!.name, "The Master Dummy")
-        XCTAssertEqual(try! db.cardStore.fetchCard(id: 3149).sanity, 4)
+        XCTAssertEqual(try! db.cardStore.fetchCard(id: 3111).sanity, 4)
         
         try! fm.removeItem(at: filesDir)
     }
