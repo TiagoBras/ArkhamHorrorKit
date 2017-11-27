@@ -275,7 +275,7 @@ public final class CardsStore {
                 .union(CharacterSet.whitespaces)
                 .union(CharacterSet(charactersIn: "_"))
             
-            let filtered = s.characters.filter({ (c) -> Bool in
+            let filtered = s.filter({ (c) -> Bool in
                 return String(c).rangeOfCharacter(from: whitelist) != nil
             })
             
@@ -285,7 +285,7 @@ public final class CardsStore {
         if let match = filter.fullTextSearchMatch {
             let filteredMatch = removeAllNonAlphanumericCharacters(match)
             
-            if !filteredMatch.characters.isEmpty {
+            if !filteredMatch.isEmpty {
                 whereInClauses.append("id IN (SELECT id FROM CardFTS WHERE CardFTS MATCH \"\(filteredMatch)*\" ORDER BY bm25(CardFTS, 11, 10, 9, 8, 7, 6, 5, 2))")
             }
         }
