@@ -108,7 +108,7 @@ CREATE INDEX idx_card_investigator_id ON Card(investigator_id);
 
 -- Table: CardFTS
 CREATE VIRTUAL TABLE IF NOT EXISTS CardFTS USING fts4 (
-    id, name, type, faction, traits, slot, keywords, text, tokenize = 'porter'
+    id, keywords, tokenize = 'porter'
 );
 
 CREATE TABLE IF NOT EXISTS Deck (
@@ -199,3 +199,4 @@ CREATE TABLE IF NOT EXISTS CampaignScenario (
 );
 CREATE INDEX IF NOT EXISTS idx_campaign_scenario_campaign_id ON CampaignScenario(campaign_id);
 CREATE INDEX IF NOT EXISTS idx_campaign_scenario_scenario_id ON CampaignScenario(scenario_id);
+

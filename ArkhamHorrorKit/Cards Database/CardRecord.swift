@@ -176,11 +176,11 @@ final class CardRecord: Record {
             } else {
                 dict[RowKeys.subtypeId.rawValue] = nil
             }
-
+            
             guard let factionId = CardFaction(code: obj["faction_code"].stringValue)?.rawValue else {
                 throw CardError.invalidFactionCode(obj["type_code"].stringValue)
             }
-        
+            
             dict[RowKeys.factionId.rawValue] = factionId
             dict[RowKeys.packId.rawValue] = obj["pack_code"].stringValue
             
@@ -237,6 +237,82 @@ final class CardRecord: Record {
             let card = CardRecord(row: Row(dict))
             
             try card.save(db)
+            
+            try CardRecord.updateCardFTS(db, card: card)
+        }
+    }
+    
+    class private func updateCardFTS(_ db: Database, card: CardRecord) throws {
+        var keywords = [String]()
+        keywords.append(String(card.id))
+        keywords.append(card.name)
+        
+        if let type = CardType(rawValue: card.typeId)?.name {
+            keywords.append(type)
+            keywords.append("type:\(type)")
+        }
+        
+        if let faction = CardFaction(rawValue: card.factionId)?.name {
+            keywords.append(faction)
+            keywords.append("faction:\(faction)")
+        }
+        
+        if card.traits.count > 0 {
+            let dotsRemoved = card.traits.replacingOccurrences(of: ".", with: "")
+            let traits = dotsRemoved.components(separatedBy: " ").map({ "trait:\($0)" })
+            
+            keywords.append(traits.joined(separator: " "))
+        }
+        
+        if let slotId = card.assetSlotId {
+            if let slot = CardAssetSlot(rawValue: slotId)?.name {
+                keywords.append(slot)
+                keywords.append("slot:\(slot)")
+            }
+        }
+        
+        if card.isUnique {
+            keywords.append("unique")
+        }
+        if card.sanity > 0 {
+            keywords.append("sanity:\(card.sanity)")
+        }
+        if card.health > 0 {
+            keywords.append("health:\(card.health)")
+        }
+        if card.skillWillpower > 0 {
+            keywords.append("willpower:\(card.skillWillpower)")
+        }
+        if card.skillIntellect > 0 {
+            keywords.append("intellect:\(card.skillIntellect)")
+        }
+        if card.skillCombat > 0 {
+            keywords.append("combat:\(card.skillCombat)")
+        }
+        if card.skillAgility > 0 {
+            keywords.append("agility:\(card.skillAgility)")
+        }
+        if card.skillWild > 0 {
+            keywords.append("wild:\(card.skillWild)")
+        }
+        
+        let keywordsString = keywords.joined(separator: " ").replacingOccurrences(of: ".", with: "")
+        
+        if let count = try Int.fetchOne(db, "SELECT Count(*) FROM CardFTS WHERE id = \(card.id)") {
+            if count > 0 {
+                let sql = """
+                INSERT OR REPLACE INTO CardFTS
+                (rowid, id, keywords)
+                SELECT CardFTS.rowid, ?, ? FROM CardFTS
+                WHERE id = ?
+                """
+                
+                try db.execute(sql, arguments: [card.id, keywordsString, card.id])
+            } else {
+                let sql = "INSERT INTO CardFTS (id, keywords) VALUES (?, ?)"
+                
+                try db.execute(sql, arguments: [card.id, keywordsString])
+            }
         }
     }
     

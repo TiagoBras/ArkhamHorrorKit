@@ -50,6 +50,7 @@ public final class CardsStore {
             let sortByClause = genOrderByClause(sorting)
             
             let stmt = "SELECT * FROM Card \(joinClause) \(whereClause) \(sortByClause)"
+            print(stmt)
             return try CardRecord.fetchAll(db, stmt).flatMap ({ (record) -> Card? in
                 let card = try makeCard(record: record)
                 
@@ -273,7 +274,7 @@ public final class CardsStore {
         func removeAllNonAlphanumericCharacters(_ s: String) -> String {
             let whitelist = CharacterSet.alphanumerics
                 .union(CharacterSet.whitespaces)
-                .union(CharacterSet(charactersIn: "_"))
+                .union(CharacterSet(charactersIn: "_:"))
             
             let filtered = s.filter({ (c) -> Bool in
                 return String(c).rangeOfCharacter(from: whitelist) != nil
@@ -286,7 +287,7 @@ public final class CardsStore {
             let filteredMatch = removeAllNonAlphanumericCharacters(match)
             
             if !filteredMatch.isEmpty {
-                whereInClauses.append("id IN (SELECT id FROM CardFTS WHERE CardFTS MATCH \"\(filteredMatch)*\" ORDER BY bm25(CardFTS, 11, 10, 9, 8, 7, 6, 5, 2))")
+                whereInClauses.append("id IN (SELECT id FROM CardFTS WHERE CardFTS MATCH \"\(filteredMatch)*\")")
             }
         }
         

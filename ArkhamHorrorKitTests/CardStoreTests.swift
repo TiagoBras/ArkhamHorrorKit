@@ -99,4 +99,21 @@ class CardStoreTests: XCTestCase {
 
         XCTAssertEqual(result!.numberOfCards(inSection: 0), 3)
     }
+    
+    func testFetchCardsUsingFTS() {
+        var filter = CardFilter()
+        filter.fullTextSearchMatch = "45"
+        let cards1 = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        XCTAssertEqual(cards1.count, 2)
+        
+        filter = CardFilter()
+        filter.fullTextSearchMatch = "faction:seeker"
+        let cards2 = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        XCTAssertEqual(cards2.count, 37)
+        
+        filter = CardFilter()
+        filter.fullTextSearchMatch = "Percep"
+        let cards3 = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        XCTAssertEqual(cards3.count, 1)
+    }
 }

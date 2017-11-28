@@ -85,6 +85,8 @@
 		A53E36DA1FCCA2810002F85A /* cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CC1FCC97A20002F85A /* cycles.json */; };
 		A53E36DF1FCCACFE0002F85A /* eotpV1.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36DE1FCCACFE0002F85A /* eotpV1.json */; };
 		A53E36E01FCCACFE0002F85A /* eotpV1.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36DE1FCCACFE0002F85A /* eotpV1.json */; };
+		A53E370E1FCDBA080002F85A /* CardFTSRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E370D1FCDBA080002F85A /* CardFTSRecord.swift */; };
+		A53E370F1FCDBA080002F85A /* CardFTSRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E370D1FCDBA080002F85A /* CardFTSRecord.swift */; };
 		A557A7E71FB0E63A007B9D6F /* DeckFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */; };
 		A557A7E81FB0E641007B9D6F /* DeckFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */; };
 		A557A7EA1FB0E65E007B9D6F /* DeckSortingDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */; };
@@ -242,6 +244,7 @@
 		A53E36CD1FCC97A20002F85A /* packs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = packs.json; sourceTree = "<group>"; };
 		A53E36D21FCC98C70002F85A /* books.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = books.json; sourceTree = "<group>"; };
 		A53E36DE1FCCACFE0002F85A /* eotpV1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = eotpV1.json; sourceTree = "<group>"; };
+		A53E370D1FCDBA080002F85A /* CardFTSRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFTSRecord.swift; sourceTree = "<group>"; };
 		A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckFilter.swift; sourceTree = "<group>"; };
 		A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckSortingDescriptor.swift; sourceTree = "<group>"; };
 		A55DEB381FCA3D5700141FED /* CardImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImageStore.swift; sourceTree = "<group>"; };
@@ -488,6 +491,7 @@
 				A5DA6ABF1FA2460B00457F27 /* CardCycleRecord.swift */,
 				A5DA6ABE1FA2460B00457F27 /* CardPackRecord.swift */,
 				A5DA6AC91FA2468900457F27 /* FileChecksumRecord.swift */,
+				A53E370D1FCDBA080002F85A /* CardFTSRecord.swift */,
 			);
 			name = Cards;
 			sourceTree = "<group>";
@@ -1049,6 +1053,7 @@
 				A57FFB461FB5FE7F00B16FE6 /* ScenarioRecord.swift in Sources */,
 				A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */,
 				A57E8EE41FAE6926008942B0 /* DeckCardRecord.swift in Sources */,
+				A53E370E1FCDBA080002F85A /* CardFTSRecord.swift in Sources */,
 				A5BCA80D1FA282EF001E6817 /* DeckRecord.swift in Sources */,
 				A5DA6AC41FA2461300457F27 /* CardPackRecord.swift in Sources */,
 				A5DA6AD31FA246DC00457F27 /* CardsStore.swift in Sources */,
@@ -1098,6 +1103,7 @@
 				A5DA6AB81FA244C400457F27 /* DeckStats.swift in Sources */,
 				A5BCA7B01FA24C74001E6817 /* CardTestSkillIcon.swift in Sources */,
 				A5DA6AC71FA2461300457F27 /* CardCycleRecord.swift in Sources */,
+				A53E370F1FCDBA080002F85A /* CardFTSRecord.swift in Sources */,
 				A5DA6AB71FA244C400457F27 /* DeckCard.swift in Sources */,
 				A5DA6AB31FA244C400457F27 /* CardSubtype.swift in Sources */,
 				A5DA6AC61FA2461300457F27 /* InvestigatorRecord.swift in Sources */,
