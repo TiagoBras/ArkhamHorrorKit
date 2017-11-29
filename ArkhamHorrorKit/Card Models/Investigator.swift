@@ -77,6 +77,12 @@ public struct Investigator: Equatable {
         case 2003: return Image.inMainBundle("jenny_barnes_the_dilettante")
         case 2004: return Image.inMainBundle("jim_culver_the_musician")
         case 2005: return Image.inMainBundle("ashcan_pete_the_drifter")
+        case 3001: return Image.inMainBundle("mark_harrigan_the_soldier")
+        case 3002: return Image.inMainBundle("minh_thi_phan_the_secretary")
+        case 3003: return Image.inMainBundle("sefina_rousseau_the_painter")
+        case 3004: return Image.inMainBundle("akachi_onyele_the_shaman")
+        case 3005: return Image.inMainBundle("william_yorick_the_gravedigger")
+        case 3006: return Image.inMainBundle("lola_hayes_the_actress")
         default: return Image.inMainBundle("unknown")
         }
     }
