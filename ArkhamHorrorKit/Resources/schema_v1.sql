@@ -98,6 +98,7 @@ CREATE TABLE Card (
     enemy_health_per_investigator INTEGER NOT NULL DEFAULT 0,
 
     internal_code TEXT NOT NULL,
+    uses_charges INTEGER NOT NULL DEFAULT 0,
 
     FOREIGN KEY (pack_id) REFERENCES Pack(id),
     FOREIGN KEY (investigator_id) REFERENCES Investigator(id)
@@ -105,6 +106,20 @@ CREATE TABLE Card (
 
 CREATE INDEX idx_card_pack_id ON Card(pack_id);
 CREATE INDEX idx_card_investigator_id ON Card(investigator_id);
+
+-- Table: Trait
+CREATE TABLE Trait (
+    name TEXT COLLATE NOCASE PRIMARY KEY
+);
+
+-- Table: Trait
+CREATE TABLE CardTrait (
+    card_id INTEGER,
+    trait_name TEXT,
+    PRIMARY KEY(card_id, trait_name),
+    FOREIGN KEY(card_id) REFERENCES Card(id),
+    FOREIGN KEY(trait_name) REFERENCES Trait(name)
+);
 
 -- Table: CardFTS
 CREATE VIRTUAL TABLE IF NOT EXISTS CardFTS USING fts4 (

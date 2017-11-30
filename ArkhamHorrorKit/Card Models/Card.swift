@@ -6,7 +6,7 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
-public struct Card {
+public struct Card: Equatable {
     public var id: Int
     public var name: String
     public var subname: String
@@ -31,7 +31,7 @@ public struct Card {
     public var health: Int
     public var sanity: Int
     public var flavorText: String
-    public var traits: String
+    public var traits: [String]
     public var illustrator: String
     public var doubleSided: Bool
     public var enemyFight: Int
@@ -42,4 +42,8 @@ public struct Card {
     public var enemyHealthPerInvestigator: Bool
     public var frontImageName: String
     public var backImageName: String?
+    
+    public static func ==(lhs: Card, rhs: Card) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

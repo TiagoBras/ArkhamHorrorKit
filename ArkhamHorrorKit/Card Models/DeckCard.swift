@@ -6,7 +6,15 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
-public struct DeckCard: Hashable {
+public struct DeckCard: Hashable, Comparable {
+    public static func <(lhs: DeckCard, rhs: DeckCard) -> Bool {
+        if lhs.card == rhs.card {
+            return lhs.quantity < rhs.quantity
+        } else {
+            return lhs.card.id < rhs.card.id
+        }
+    }
+    
     public let card: Card
     public let quantity: Int
 

@@ -28,6 +28,7 @@ public final class AHDatabase {
     
     private var _cardCycles: [String: CardCycle]?
     private var _cardPacks: [String: CardPack]?
+    private var _traits: Set<String>?
     private var _investigators: [Int: Investigator]?
     
     public private(set) var cardStore: CardsStore!
@@ -88,7 +89,7 @@ public final class AHDatabase {
             try CardPackRecord.loadJSONRecords(json: json, into: db)
         })
     }
- 
+    
     /// Loads cards and investigators from a json file
     ///
     /// *Note*: Throws an error when trying to load a card from a pack that doesn't exist.
@@ -106,11 +107,13 @@ public final class AHDatabase {
         // Invalidate cached values
         _cardCycles = nil
         _cardPacks = nil
+        _traits = nil
         _investigators = nil
         
         cardStore = CardsStore(dbWriter: dbQueue,
                                cycles: try cardCyclesDictionary(),
                                packs: try cardPacksDictionary(),
+                               traits: try traitsSet(),
                                investigators: try investigatorsDictionary())
         deckStore = DeckStore(dbWriter: dbQueue, cardStore: cardStore)
     }
@@ -183,17 +186,38 @@ public final class AHDatabase {
         return Array(try cardPacksDictionary().values)
     }
     
+    // MARK:- Traits
+    public func traitsSet() throws -> Set<String> {
+        if _traits == nil {
+            _traits = try dbQueue.read({ (db) -> Set<String> in
+                let records = try TraitRecord.fetchAll(db)
+                
+                var traits = Set<String>()
+                
+                records.forEach({ (record) in
+                    traits.insert(record.name)
+                })
+                
+                return traits
+            })
+        }
+        
+        return _traits!
+    }
+    
+    public func traits() throws -> [String] {
+        return try traitsSet().sorted()
+    }
+    
     // MARK:- Investigator
     public func investigatorsDictionary() throws -> [Int: Investigator] {
         if _investigators == nil {
             var packs = try cardPacksDictionary()
             
-            _investigators = try dbQueue.read({ (db) -> [Int: Investigator] in
+            var investigators = try dbQueue.read({ (db) -> [Investigator] in
                 let records = try InvestigatorRecord.fetchAll(db)
                 
-                var investigators = [Int: Investigator]()
-                
-                try records.forEach({ (record) in
+                return try records.map({ (record) in
                     guard let faction = CardFaction(rawValue: record.factionId) else {
                         throw AHDatabaseError.invalidCardFactionId(record.factionId)
                     }
@@ -219,12 +243,52 @@ public final class AHDatabase {
                                                     traits: record.traits,
                                                     frontFlavor: record.frontFlavor,
                                                     backFlavor: record.backFlavor,
-                                                    illustrator: record.illustrator)
+                                                    illustrator: record.illustrator,
+                                                    requiredCards: [])
                     
-                    investigators[investigator.id] = investigator
+                    return investigator
                 })
+            })
+            
+            try dbQueue.read({ (db) -> () in
+                let packs = try cardPacksDictionary()
                 
-                return investigators
+                for i in 0..<investigators.count {
+                    let requiredIds = Investigator.requiredCardsIds(investigatorId: investigators[i].id)
+                    
+                    let cardRecords = try CardRecord.fetchAll(db: db, ids: requiredIds.keys.sorted())
+                    
+                    let cards = try cardRecords.flatMap({ (record) -> DeckCard? in
+                        guard let pack = packs[record.packId] else {
+                            throw AHDatabaseError.packNotFound(record.packId)
+                        }
+                        
+                        let traits = try CardTraitRecord.fetchCardTraits(
+                            db: db,
+                            cardId: record.id).map({ $0.traitName })
+                        
+                        if let card = try CardsStore.makeCard(record: record,
+                                                              pack: pack,
+                                                              traits: traits,
+                                                              investigator: investigators[i],
+                                                              cardsCache: nil),
+                            let quantity = requiredIds[card.id] {
+                            
+                            return DeckCard(card: card, quantity: quantity)
+                        } else {
+                            return nil
+                        }
+                    })
+                    
+                    investigators[i].requiredCards = cards
+                }
+                
+            })
+            
+            _investigators = [Int: Investigator]()
+            
+            investigators.forEach({ (investigator) in
+                _investigators![investigator.id] = investigator
             })
         }
         

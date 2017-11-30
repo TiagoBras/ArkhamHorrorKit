@@ -86,4 +86,43 @@ class AHDatabaseTests: XCTestCase {
         
         try! fm.removeItem(at: filesDir)
     }
+    
+    func testInvestigators() {
+        let investigators = try! db.investigators()
+        
+        XCTAssertEqual(investigators.count, 16)
+    }
+    
+    // TODO: test ALL required cards
+    func testInvestigatorRequiredCards() {
+        testRequiredCards(for: 1001, requiredCards: [1006: 1, 1007: 1])
+        testRequiredCards(for: 1002, requiredCards: [1008: 1, 1009: 1])
+        testRequiredCards(for: 1003, requiredCards: [1010: 1, 1011: 1])
+        testRequiredCards(for: 1004, requiredCards: [1012: 1, 1013: 1])
+        testRequiredCards(for: 1005, requiredCards: [1014: 1, 1015: 1])
+        testRequiredCards(for: 2001, requiredCards: [2006: 1, 2007: 1])
+        testRequiredCards(for: 2002, requiredCards: [2008: 1, 2009: 1])
+        testRequiredCards(for: 2003, requiredCards: [2010: 1, 2011: 1])
+        testRequiredCards(for: 2004, requiredCards: [2012: 1, 2013: 1])
+        testRequiredCards(for: 2005, requiredCards: [2014: 1, 2015: 1])
+        testRequiredCards(for: 3001, requiredCards: [3007: 1, 3008: 1, 3009: 1])
+        testRequiredCards(for: 3002, requiredCards: [3010: 1, 3011: 1])
+        testRequiredCards(for: 3003, requiredCards: [3012: 3, 3013: 1])
+        testRequiredCards(for: 3004, requiredCards: [3014: 1, 3015: 1])
+        testRequiredCards(for: 3005, requiredCards: [3016: 1, 3017: 1])
+        testRequiredCards(for: 3006, requiredCards: [3018: 2, 3019: 2])
+    }
+    
+    private func testRequiredCards(for investigatorId: Int, requiredCards: [Int: Int]) {
+        let investigators = try! db.investigatorsDictionary()
+        
+        let investigator = investigators[investigatorId]!
+        let expected = requiredCards.map { (id, quantity) -> DeckCard in
+            let card = DatabaseTestsHelper.fetchCard(id: id, in: db)
+            
+            return DeckCard(card: card, quantity: quantity)
+        }.sorted()
+
+        XCTAssertEqual(investigator.requiredCards.sorted(), expected)
+    }
 }

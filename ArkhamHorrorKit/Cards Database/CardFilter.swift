@@ -16,11 +16,42 @@ public struct CardFilter: Equatable {
     public var levels = Set<Int>()
     public var skillTestIcons = Set<CardSkillTestIcon>()
     public var investigatorOnly: Investigator? = nil
-    public var hideRestrictedCards: Bool = true
+    public var hideRestrictedCards: Bool? = true
     public var fullTextSearchMatch: String? = nil
     public var onlyDeck: Deck? = nil
+    public var traits = Set<String>()
+    public var usesCharges: Bool? = nil
+    public var hideWeaknesses: Bool? = nil
     
     public init() { }
+    
+    public init(factions: [CardFaction], fromLevel: Int, toLevel: Int) {
+        assert(fromLevel <= toLevel)
+        
+        self.factions = Set(factions)
+        self.levels = Set(Array(fromLevel...toLevel))
+    }
+    
+    public init(factions: [CardFaction], level: Int) {
+        self.init(factions: factions, fromLevel: level, toLevel: level)
+    }
+    
+    public init(traits: [String], level: Int) {
+        self.traits = Set(traits)
+        self.levels = Set([level])
+    }
+    
+    public init(usesCharges: Bool, fromLevel: Int, toLevel: Int) {
+        self.usesCharges = usesCharges
+        self.levels = Set(Array(fromLevel...toLevel))
+    }
+    
+    public static func basicWeaknesses() -> CardFilter {
+        var filter = CardFilter()
+        filter.subtypes.insert(CardSubtype.basicweakness)
+        
+        return filter
+    }
     
     public static func ==(lhs: CardFilter, rhs: CardFilter) -> Bool {
         if lhs.cardIds != rhs.cardIds { return false }
@@ -35,7 +66,32 @@ public struct CardFilter: Equatable {
         if lhs.hideRestrictedCards != rhs.hideRestrictedCards { return false }
         if lhs.fullTextSearchMatch != rhs.fullTextSearchMatch { return false }
         if lhs.onlyDeck != rhs.onlyDeck { return false }
+        if lhs.subfilters.count != rhs.subfilters.count { return false }
+        
+        for (s1, s2) in zip(lhs.subfilters, rhs.subfilters) {
+            guard s1.op == s2.op else { return false }
+            guard s1.filter == s2.filter else { return false }
+        }
         
         return true
+    }
+    
+    public enum Operator: String {
+        case and = "AND", or = "OR"
+    }
+    
+    public struct CardSubFilter {
+        var op: Operator
+        var filter: CardFilter
+    }
+    
+    public var subfilters: [CardSubFilter] = []
+    
+    public mutating func and(_ filter: CardFilter) {
+        subfilters.append(CardSubFilter(op: .and, filter: filter))
+    }
+    
+    public mutating func or(_ filter: CardFilter) {
+        subfilters.append(CardSubFilter(op: .or, filter: filter))
     }
 }

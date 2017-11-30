@@ -27,42 +27,108 @@ public struct Investigator: Equatable {
     public var frontFlavor: String
     public var backFlavor: String
     public var illustrator: String
+    public var requiredCards: [DeckCard]
     
     public static func ==(lhs: Investigator, rhs: Investigator) -> Bool {
         return lhs.id == rhs.id
     }
 
     public var deckSize: Int {
-        return 30
+        if id == 3003 {
+            return 33
+        } else if id == 3006 {
+            return 35
+        } else {
+            return 30
+        }
     }
     
-    // FIXME: find another way of doing this
-    // TODO: add 2nd expansion investigators
-    public var availableFactions: [CardFaction] {
-        var factions: [CardFaction] = []
+    public var availableCardsFilter: CardFilter {
+        var filter = CardFilter()
         
+        let allFactions = Set<CardFaction>(CardFaction.allValues)
+
         switch id {
         case 1001:
-            factions.append(contentsOf: [.guardian, .seeker])
+            filter = CardFilter(factions: [.guardian, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: [.seeker], fromLevel: 0, toLevel: 2))
         case 1002:
-            factions.append(contentsOf: [.seeker, .mystic])
+            filter = CardFilter(factions: [.seeker, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: [.mystic], fromLevel: 0, toLevel: 2))
         case 1003:
-            factions.append(contentsOf: [.rogue, .guardian])
+            filter = CardFilter(factions: [.rogue, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: [.guardian], fromLevel: 0, toLevel: 2))
         case 1004:
-            factions.append(contentsOf: [.mystic, .survivor])
+            filter = CardFilter(factions: [.mystic, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: [.survivor], fromLevel: 0, toLevel: 2))
         case 1005:
-            factions.append(contentsOf: [.survivor, .rogue])
-        case 2001...2005:
-            factions.append(contentsOf:
-                [.guardian, .seeker, .mystic, .rogue, .survivor])
-        default:
-            factions.append(contentsOf:
-                [.guardian, .seeker, .mystic, .rogue, .survivor])
+            filter = CardFilter(factions: [.survivor, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: [.rogue], fromLevel: 0, toLevel: 2))
+        case 2001:
+            filter = CardFilter(factions: [.guardian, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
+        case 2002:
+            filter = CardFilter(factions: [.seeker, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
+        case 2003:
+            filter = CardFilter(factions: [.rogue, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
+        case 2004:
+            filter = CardFilter(factions: [.mystic, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
+        case 2005:
+            filter = CardFilter(factions: [.survivor, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
+        case 3001:
+            filter = CardFilter(factions: [.guardian, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(traits: ["Tactic"], level: 0))
+        case 3002:
+            filter = CardFilter(factions: [.seeker, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: [.survivor], fromLevel: 0, toLevel: 2))
+        case 3003:
+            filter = CardFilter(factions: [.rogue, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: [.mystic], fromLevel: 0, toLevel: 2))
+        case 3004:
+            filter = CardFilter(factions: [.mystic, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(usesCharges: true, fromLevel: 0, toLevel: 4))
+        case 3005:
+            filter = CardFilter(factions: [.survivor, .neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: [.guardian], fromLevel: 0, toLevel: 2))
+        case 3006:
+            filter = CardFilter(
+                factions: Array(allFactions.subtracting([CardFaction.neutral])),
+                fromLevel: 0,
+                toLevel: 3)
+            filter.or(CardFilter(factions: [.neutral], fromLevel: 0, toLevel: 5))
+        default: break
         }
         
-        factions.append(.neutral)
-        
-        return factions
+        return filter
+    }
+    
+    typealias CardId = Int
+    typealias CardQuantity = Int
+    
+    static func requiredCardsIds(investigatorId: Int) -> [CardId: CardQuantity] {
+        switch investigatorId {
+        case 1001:  return [1006: 1, 1007: 1]
+        case 1002:  return [1008: 1, 1009: 1]
+        case 1003:  return [1010: 1, 1011: 1]
+        case 1004:  return [1012: 1, 1013: 1]
+        case 1005:  return [1014: 1, 1015: 1]
+        case 2001:  return [2006: 1, 2007: 1]
+        case 2002:  return [2008: 1, 2009: 1]
+        case 2003:  return [2010: 1, 2011: 1]
+        case 2004:  return [2012: 1, 2013: 1]
+        case 2005:  return [2014: 1, 2015: 1]
+        case 3001:  return [3007: 1, 3008: 1, 3009: 1]
+        case 3002:  return [3010: 1, 3011: 1]
+        case 3003:  return [3012: 3, 3013: 1]
+        case 3004:  return [3014: 1, 3015: 1]
+        case 3005:  return [3016: 1, 3017: 1]
+        case 3006:  return [3018: 2, 3019: 2]
+        default: return [:]
+        }
     }
     
     public var avatar: Image {

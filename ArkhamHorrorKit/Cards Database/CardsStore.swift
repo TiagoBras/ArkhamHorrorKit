@@ -14,17 +14,20 @@ public final class CardsStore {
     private let dbWriter: DatabaseWriter
     private let cardCycles: [String: CardCycle]
     private let cardPacks: [String: CardPack]
+    private let traits: Set<String>
     public let investigators: [Int: Investigator]
     
     public private(set) var cardsCache = Cache<Int, Card>(maxItems: 50)
     
     public init(dbWriter: DatabaseWriter,
-         cycles: [String: CardCycle],
-         packs: [String: CardPack],
-         investigators: [Int: Investigator]) {
+                cycles: [String: CardCycle],
+                packs: [String: CardPack],
+                traits: Set<String>,
+                investigators: [Int: Investigator]) {
         self.dbWriter = dbWriter
         self.cardCycles = cycles
         self.cardPacks = packs
+        self.traits = traits
         self.investigators = investigators
     }
     
@@ -35,7 +38,10 @@ public final class CardsStore {
                 throw AHDatabaseError.cardNotFound(id)
             }
             
-            guard let card = try makeCard(record: record) else {
+            let traits = try CardTraitRecord.fetchCardTraits(db: db, cardId: id)
+                .map({ $0.traitName })
+            
+            guard let card = try makeCard(record: record, traits: traits) else {
                 throw AHDatabaseError.couldNotMakeCardFromRecord(id)
             }
             
@@ -49,10 +55,14 @@ public final class CardsStore {
             let whereClause = genWhereClause(filter)
             let sortByClause = genOrderByClause(sorting)
             
-            let stmt = "SELECT * FROM Card \(joinClause) \(whereClause) \(sortByClause)"
+            let stmt = "SELECT * FROM Card \(joinClause) WHERE \(whereClause) ORDER BY \(sortByClause)"
             print(stmt)
             return try CardRecord.fetchAll(db, stmt).flatMap ({ (record) -> Card? in
-                let card = try makeCard(record: record)
+                let traits = try CardTraitRecord.fetchCardTraits(
+                    db: db,
+                    cardId: record.id).map({ $0.traitName })
+                
+                let card = try makeCard(record: record, traits: traits)
                 
                 return card
             })
@@ -65,7 +75,7 @@ public final class CardsStore {
     
     public func fetchCards(filter: CardFilter?, sorting: [CardsSortingDescriptor]?, groupResults: Bool) -> DatabaseCardStoreFetchResult? {
         let cards = fetchCards(filter: filter, sorting: sorting)
-                
+        
         let result: DatabaseCardStoreFetchResult
         
         // Group results using the first sorting descriptor
@@ -84,7 +94,11 @@ public final class CardsStore {
         return result
     }
     
-    private func makeCard(record: CardRecord) throws -> Card? {
+    class func makeCard(record: CardRecord,
+                        pack: CardPack,
+                        traits: [String] = [],
+                        investigator: Investigator? = nil,
+                        cardsCache: Cache<Int, Card>?) throws -> Card? {
         guard let faction = CardFaction(rawValue: record.factionId) else {
             throw AHDatabaseError.invalidCardFactionId(record.factionId)
         }
@@ -101,10 +115,6 @@ public final class CardsStore {
             subtype = sub
         }
         
-        guard let pack = cardPacks[record.packId] else {
-            throw AHDatabaseError.packNotFound(record.packId)
-        }
-        
         var assetSlot: CardAssetSlot?
         if let slotId = record.assetSlotId {
             guard let slot = CardAssetSlot(rawValue: slotId) else {
@@ -114,16 +124,7 @@ public final class CardsStore {
             assetSlot = slot
         }
         
-        var investigator: Investigator?
-        if let id = record.investigatorId {
-            guard let inv = investigators[id] else {
-                throw AHDatabaseError.investigatorNotFound(id)
-            }
-            
-            investigator = inv
-        }
-        
-        let card = cardsCache.getCachedValue(record.id, defaultValue: { () -> Card? in
+        let getCard = { () -> Card? in
             var backImageName: String?
             
             if record.doubleSided {
@@ -150,7 +151,7 @@ public final class CardsStore {
                         health: record.health,
                         sanity: record.sanity,
                         flavorText: record.flavorText,
-                        traits: record.traits,
+                        traits: traits,
                         illustrator: record.illustrator,
                         doubleSided: record.doubleSided,
                         enemyFight: record.enemyFight,
@@ -160,10 +161,35 @@ public final class CardsStore {
                         enemyHorror: record.enemyHorror,
                         enemyHealthPerInvestigator: record.enemyHealthPerInvestigator,
                         frontImageName: "\(record.internalCode).jpeg",
-                        backImageName: backImageName)
-        })
+                backImageName: backImageName)
+        }
         
-        return card
+        if let cache = cardsCache {
+            return cache.getCachedValue(record.id, defaultValue: getCard)
+        } else {
+            return getCard()
+        }
+    }
+    
+    private func makeCard(record: CardRecord, traits: [String] = []) throws -> Card? {
+        guard let pack = cardPacks[record.packId] else {
+            throw AHDatabaseError.packNotFound(record.packId)
+        }
+        
+        var investigator: Investigator?
+        if let id = record.investigatorId {
+            guard let inv = investigators[id] else {
+                throw AHDatabaseError.investigatorNotFound(id)
+            }
+            
+            investigator = inv
+        }
+        
+        return try CardsStore.makeCard(record: record,
+                                       pack: pack,
+                                       traits: traits,
+                                       investigator: investigator,
+                                       cardsCache: self.cardsCache)
     }
     
     // MARK:- Private Interface
@@ -174,12 +200,16 @@ public final class CardsStore {
     }
     
     private func genWhereClause(_ filter: CardFilter?) -> String {
-        guard let filter = filter else { return "" }
+        guard let filter = filter else { return "1" }
         
         var whereInClauses: [String] = []
         
-        if filter.hideRestrictedCards {
-            whereInClauses.append("restricted = 0")
+        if let hide = filter.hideRestrictedCards, hide {
+            whereInClauses.append("investigator_id IS NULL")
+        }
+        
+        if let hideWeaknesses = filter.hideWeaknesses, hideWeaknesses {
+            whereInClauses.append("subtype_id IS NULL")
         }
         
         if !filter.cardIds.isEmpty {
@@ -208,8 +238,6 @@ public final class CardsStore {
                 .map{ String($0.id) }
                 .joined(separator: ",")
             whereInClauses.append("subtype_id IN (\(ids))")
-        } else {
-            whereInClauses.append("subtype_id IS NULL")
         }
         
         if !filter.packs.isEmpty {
@@ -248,6 +276,10 @@ public final class CardsStore {
             if !stmt.isEmpty {
                 whereInClauses.append("(\(stmt))")
             }
+        }
+        
+        if let usesCharges = filter.usesCharges {
+            whereInClauses.append("uses_charges = \(usesCharges ? 1 : 0)")
         }
         
         if let deckOptions = filter.investigatorOnly?.deckOptions {
@@ -291,16 +323,25 @@ public final class CardsStore {
             }
         }
         
+        var s = ""
         if !whereInClauses.isEmpty {
-            return "WHERE " + whereInClauses.joined(separator: " AND ")
+            s = "(\(whereInClauses.joined(separator: " AND ")))"
         } else {
-            return ""
+            s = "1"
         }
+        
+        for subfilter in filter.subfilters {
+            s = "\(s) \(subfilter.op.rawValue) \(genWhereClause(subfilter.filter))"
+        }
+        
+        print(s)
+        
+        return s
     }
     
     private func genOrderByClause(_ descriptors: [CardsSortingDescriptor]?) -> String {
         guard let descriptors = descriptors, !descriptors.isEmpty else {
-            return ""
+            return "id ASC"
         }
         
         func orderStmt(_ descriptor: CardsSortingDescriptor) -> String {
@@ -314,7 +355,7 @@ public final class CardsStore {
             }
         }
         
-        return "ORDER BY " + descriptors
+        return descriptors
             .map({ orderStmt($0) })
             .joined(separator: ", ")
     }

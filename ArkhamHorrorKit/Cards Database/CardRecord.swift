@@ -45,6 +45,7 @@ final class CardRecord: Record {
     var enemyHorror: Int
     var enemyHealthPerInvestigator: Bool
     var internalCode: String
+    var usesCharges: Bool
     
     override class var databaseTableName: String {
         return "Card"
@@ -91,6 +92,7 @@ final class CardRecord: Record {
         enemyHorror = row[RowKeys.enemyHorror.rawValue]
         enemyHealthPerInvestigator = row[RowKeys.enemyHealthPerInvestigator.rawValue]
         internalCode = row[RowKeys.internalCode.rawValue]
+        usesCharges = row[RowKeys.usesCharges.rawValue]
         
         super.init(row: row)
     }
@@ -130,10 +132,21 @@ final class CardRecord: Record {
         container[RowKeys.enemyHorror.rawValue] = enemyHorror
         container[RowKeys.enemyHealthPerInvestigator.rawValue] = enemyHealthPerInvestigator
         container[RowKeys.internalCode.rawValue] = internalCode
+        container[RowKeys.usesCharges.rawValue] = usesCharges
     }
     
     class func fetchOne(db: Database, id: Int) throws -> CardRecord? {
         return try CardRecord.fetchOne(db, key: ["id": id])
+    }
+    
+    class func fetchAll(db: Database, ids: [Int]) throws -> [CardRecord] {
+        guard ids.count > 0 else { return [] }
+        
+        let idsString = ids.map({ String($0) }).joined(separator: ", ")
+        
+        let sql = "SELECT * FROM \(CardRecord.databaseTableName) WHERE id IN (\(idsString))"
+        
+        return try CardRecord.fetchAll(db, sql)
     }
     
     class func loadJSONRecords(json: JSON, into db: Database) throws {
@@ -233,12 +246,15 @@ final class CardRecord: Record {
             dict[RowKeys.enemyDamage.rawValue] = obj["enemy_damage"].intValue
             dict[RowKeys.enemyHorror.rawValue] = obj["enemy_horror"].intValue
             dict[RowKeys.enemyHealthPerInvestigator.rawValue] = obj["health_per_investigator"].boolValue
+            dict[RowKeys.usesCharges.rawValue] = CardRecord.doesCardUsesCharges(obj["text"].stringValue)
             
             let card = CardRecord(row: Row(dict))
             
             try card.save(db)
             
             try CardRecord.updateCardFTS(db, card: card)
+            
+            try insertOrIgnoreTraitsIntoDatabase(db, card: card)
         }
     }
     
@@ -316,6 +332,28 @@ final class CardRecord: Record {
         }
     }
     
+    class private func insertOrIgnoreTraitsIntoDatabase(_ db: Database, card: CardRecord) throws {
+        let dotsRemoved = card.traits.replacingOccurrences(of: ".", with: "")
+        let traits = dotsRemoved.components(separatedBy: " ")
+        
+        for trait in traits {
+            let sql = "INSERT OR IGNORE INTO \(TraitRecord.databaseTableName) VALUES (?)"
+            
+            try db.execute(sql, arguments: [trait])
+            
+            try CardTraitRecord(cardId: card.id, traitName: trait).save(db)
+        }
+    }
+    
+    class private func doesCardUsesCharges(_ cardText: String) -> Bool {
+        let regex = "Uses \\(\\w+ charges?\\)"
+        
+        return cardText.range(of: regex,
+                              options: [.regularExpression, .caseInsensitive],
+                              range: nil,
+                              locale: nil) != nil
+    }
+    
     // MARK:- Enumerations
     enum CardError: Error {
         case invalidTypeCode(String)
@@ -360,5 +398,6 @@ final class CardRecord: Record {
         case enemyHorror = "enemy_horror"
         case enemyHealthPerInvestigator = "enemy_health_per_investigator"
         case internalCode = "internal_code"
+        case usesCharges = "uses_charges"
     }
 }

@@ -45,7 +45,7 @@ class CardStoreTests: XCTestCase {
         
         XCTAssertEqual(card.pack, pack)
         XCTAssertEqual(card.assetSlot, nil)
-        XCTAssertEqual(card.traits, "Humanoid. Monster. Ghoul.")
+        XCTAssertEqual(card.traits.sorted(), ["Ghoul", "Humanoid", "Monster"])
         XCTAssertEqual(card.skillAgility, 0)
         XCTAssertEqual(card.skillCombat, 0)
         XCTAssertEqual(card.skillIntellect, 0)
@@ -104,7 +104,7 @@ class CardStoreTests: XCTestCase {
         var filter = CardFilter()
         filter.fullTextSearchMatch = "45"
         let cards1 = database.cardStore.fetchCards(filter: filter, sorting: nil)
-        XCTAssertEqual(cards1.count, 2)
+        XCTAssertEqual(cards1.count, 1)
         
         filter = CardFilter()
         filter.fullTextSearchMatch = "faction:seeker"
@@ -115,5 +115,30 @@ class CardStoreTests: XCTestCase {
         filter.fullTextSearchMatch = "Percep"
         let cards3 = database.cardStore.fetchCards(filter: filter, sorting: nil)
         XCTAssertEqual(cards3.count, 1)
+    }
+    
+    func testFetchCardsUsingSubFilters() {
+        var filter = CardFilter()
+        filter.factions.insert(.guardian)
+        
+        let cards1 = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        XCTAssertEqual(cards1.count, 37)
+        
+        // This should return all cards because subfilter = ... WHERE (..) OR 1
+        filter.or(CardFilter())
+        let cards2 = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        XCTAssertEqual(cards2.count, 222)
+    }
+    
+    func testFetchingOnlyWeaknesses() {
+        var filter = CardFilter.basicWeaknesses()
+        
+        let cards1 = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        XCTAssertEqual(cards1.count, 14)
+        
+        filter.subtypes = Set([CardSubtype.weakness])
+        filter.hideRestrictedCards = false
+        let cards2 = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        XCTAssertEqual(cards2.count, 16)
     }
 }
