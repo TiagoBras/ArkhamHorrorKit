@@ -214,62 +214,38 @@ public struct Investigator: Equatable {
     }
     
     public var deckOptions: [DeckOption] {
-        var options: [DeckOption] = []
-        var factions: [CardFaction] = []
+        let allFactions = Set<CardFaction>(CardFaction.allValues).subtracting([CardFaction.neutral])
         
-        func genCoreDeckOptions(mainFaction: CardFaction,
-                                secondaryFaction: CardFaction) -> [DeckOption] {
-            return [
-                DeckOptionAllowedFactions([mainFaction, .neutral]),
-                DeckOptionAllowedFactions([secondaryFaction], levels: Array(0...2), maxQuantity: Int.max)
-            ]
-        }
-        
-        func genDunwichDeckOptions(mainFaction: CardFaction) -> [DeckOption] {
-            let allFactions: [CardFaction] = [.guardian, .seeker, .mystic, .rogue, .survivor]
-            let allButMainFaction = allFactions.filter({ $0.id != mainFaction.id })
-            
-            return [
-                DeckOptionAllowedFactions([mainFaction, .neutral]),
-                DeckOptionAllowedFactions(allButMainFaction, levels: [0], maxQuantity: 5)
-            ]
-        }
-        
+        var factions = Set<CardFaction>()
         switch InvestigatorId(rawValue: id)! {
-        case .rolandBanksTheFed: return genCoreDeckOptions(mainFaction: .guardian, secondaryFaction: .seeker)
-        case .daisyWalkerTheLibrarian: return genCoreDeckOptions(mainFaction: .seeker, secondaryFaction: .mystic)
-        case .skidsOTooleTheExCon: return genCoreDeckOptions(mainFaction: .rogue, secondaryFaction: .guardian)
-        case .agnesBakerTheWaitress: return genCoreDeckOptions(mainFaction: .mystic, secondaryFaction: .survivor)
-        case .wendyAdamsTheUrchin: return genCoreDeckOptions(mainFaction: .survivor, secondaryFaction: .rogue)
-        case .zoeySamarasTheChef: return genDunwichDeckOptions(mainFaction: .guardian)
-        case .rexMurphyTheReporter: return genDunwichDeckOptions(mainFaction: .seeker)
-        case .jennyBarnesTheDilettante: return genDunwichDeckOptions(mainFaction: .rogue)
-        case .jimCulverTheMusician: return genDunwichDeckOptions(mainFaction: .mystic)
-        case .ashcanPeteTheDrifter: return genDunwichDeckOptions(mainFaction: .survivor)
-        default:
-            let factions: [CardFaction] = [.neutral, .guardian, .seeker, .mystic, .rogue, .survivor]
-            
-            return [DeckOptionAllowedFactions(factions)]
+        case .zoeySamarasTheChef: factions = allFactions.subtracting([faction])
+        case .rexMurphyTheReporter: factions = allFactions.subtracting([faction])
+        case .jennyBarnesTheDilettante: factions = allFactions.subtracting([faction])
+        case .jimCulverTheMusician: factions = allFactions.subtracting([faction])
+        case .ashcanPeteTheDrifter: factions = allFactions.subtracting([faction])
+        default: return []
         }
+        
+        return [DeckOptionAllowedFactions(Array(factions), level: 0, maxQuantity: 5)]
     }
 }
 
 public struct DeckOptionAllowedFactions: DeckOption {
-    public var factions: [CardFaction]
+    public var factions: Set<CardFaction>
     public var maxQuantity: Int
-    public var levels: [Int]
+    public var level: Int
     
     public init(_ factions: [CardFaction],
-                levels: [Int] = [0, 1, 2, 3, 4, 5],
-                maxQuantity: Int = Int.max) {
-        self.factions = factions
+                level: Int = 0,
+                maxQuantity: Int = 5) {
+        self.factions = Set(factions)
         self.maxQuantity = maxQuantity
-        self.levels = levels
+        self.level = level
     }
     
     public func isDeckValid(_ deck: Deck) -> Deck.DeckValidationResult {
         let numOfValidCards = deck.cards.filter { (deckCard) -> Bool in
-            return contains(faction: deckCard.card.faction) && levels.contains(deckCard.card.level)
+            return factions.contains(deckCard.card.faction) && deckCard.card.level == self.level
             }.reduce(0) { (partialResult, deckCard) -> Int in
                 return partialResult + deckCard.quantity
         }
