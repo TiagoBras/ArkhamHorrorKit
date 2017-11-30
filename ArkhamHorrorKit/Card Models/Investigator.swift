@@ -43,6 +43,46 @@ public struct Investigator: Equatable {
         }
     }
     
+    public var availableFactions: [CardFaction] {
+        var factions: [CardFaction] = [.neutral]
+        
+        switch id {
+        case 1001:
+            factions.append(contentsOf: [.guardian, .seeker])
+        case 1002:
+            factions.append(contentsOf: [.seeker, .mystic])
+        case 1003:
+            factions.append(contentsOf: [.rogue, .guardian])
+        case 1004:
+            factions.append(contentsOf: [.mystic, .survivor])
+        case 1005:
+            factions.append(contentsOf: [.survivor, .rogue])
+        case 2001...2005:
+            factions.append(contentsOf:
+                [.guardian, .seeker, .mystic, .rogue, .survivor])
+        case 3001:
+            factions.append(contentsOf:
+                [.guardian, .seeker, .mystic, .rogue, .survivor])
+        case 3002:
+            factions.append(contentsOf: [.seeker, .survivor])
+        case 3003:
+            factions.append(contentsOf: [.rogue, .mystic])
+        case 3004:
+            factions.append(contentsOf:
+                [.guardian, .seeker, .mystic, .rogue, .survivor])
+        case 3005:
+            factions.append(contentsOf: [.survivor, .guardian])
+        case 3006:
+            factions.append(contentsOf:
+                [.guardian, .seeker, .mystic, .rogue, .survivor])
+        default:
+            factions.append(contentsOf:
+                [.guardian, .seeker, .mystic, .rogue, .survivor])
+        }
+        
+        return factions
+    }
+    
     public var availableCardsFilter: CardFilter {
         var filter = CardFilter()
         
