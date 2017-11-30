@@ -194,7 +194,7 @@ public final class CardsStore {
     
     // MARK:- Private Interface
     private func genJoinClause(_ filter: CardFilter?) -> String {
-        guard filter?.onlyDeck != nil else { return "" }
+        guard filter?.deckId != nil else { return "" }
         
         return "INNER JOIN DeckCard ON DeckCard.card_id = Card.id"
     }
@@ -282,25 +282,12 @@ public final class CardsStore {
             whereInClauses.append("uses_charges = \(usesCharges ? 1 : 0)")
         }
         
-        if let deckOptions = filter.investigatorOnly?.deckOptions {
-            var subClauses: [String] = []
-            
-            for case let option as DeckOptionAllowedFactions in deckOptions {
-                let ids = option.factions.map({ String($0.id) }).joined(separator: ",")
-                let levels = option.levels.map({ String($0) }).joined(separator: ", ")
-                
-                subClauses.append("(faction_id IN (\(ids)) AND level IN (\(levels)))")
-            }
-            
-            if !subClauses.isEmpty {
-                let subClause = subClauses.joined(separator: " OR ")
-                
-                whereInClauses.append("(\(subClause))")
-            }
+        if let investigatorId = filter.investigatorId {
+            whereInClauses.append("investigator_id = \(investigatorId)")
         }
         
-        if let deck = filter.onlyDeck {
-            whereInClauses.append("DeckCard.deck_id = \(deck.id)")
+        if let deckId = filter.deckId {
+            whereInClauses.append("DeckCard.deck_id = \(deckId)")
         }
         
         func removeAllNonAlphanumericCharacters(_ s: String) -> String {
@@ -331,7 +318,7 @@ public final class CardsStore {
         }
         
         for subfilter in filter.subfilters {
-            s = "\(s) \(subfilter.op.rawValue) \(genWhereClause(subfilter.filter))"
+            s = "\(s) \(subfilter.op.rawValue) (\(genWhereClause(subfilter.filter)))"
         }
         
         print(s)

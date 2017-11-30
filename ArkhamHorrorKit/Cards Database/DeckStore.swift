@@ -17,14 +17,18 @@ public final class DeckStore {
         self.cardStore = cardStore
     }
     
-    public func createDeck(name: String, investigator: Investigator) throws -> Deck {
+    func createDeck(name: String, investigatorId: Int) throws -> Deck {
         return try dbWriter.write({ (db) -> Deck in
-            let record = DeckRecord(investigatorId: investigator.id, name: name)
+            let record = DeckRecord(investigatorId: investigatorId, name: name)
             
             try record.save(db)
             
             return try makeDeck(record: record, deckCards: Set())
         })
+    }
+    
+    public func createDeck(name: String, investigator: Investigator) throws -> Deck {
+        return try createDeck(name: name, investigatorId: investigator.id)
     }
     
     public func deleteDeck(_ deck: Deck) throws {

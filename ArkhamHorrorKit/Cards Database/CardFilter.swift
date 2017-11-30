@@ -15,10 +15,10 @@ public struct CardFilter: Equatable {
     public var assetSlots = Set<CardAssetSlot>()
     public var levels = Set<Int>()
     public var skillTestIcons = Set<CardSkillTestIcon>()
-    public var investigatorOnly: Investigator? = nil
+    public var investigatorId: Int? = nil
     public var hideRestrictedCards: Bool? = nil
     public var fullTextSearchMatch: String? = nil
-    public var onlyDeck: Deck? = nil
+    public var deckId: Int? = nil
     public var traits = Set<String>()
     public var usesCharges: Bool? = nil
     public var hideWeaknesses: Bool? = nil
@@ -50,6 +50,14 @@ public struct CardFilter: Equatable {
         self.fullTextSearchMatch = fullSearchText
     }
     
+    public init(investigatorId: Int) {
+        self.investigatorId = investigatorId
+    }
+    
+    public init(deckId: Int) {
+        self.deckId = deckId
+    }
+    
     public static func basicWeaknesses() -> CardFilter {
         var filter = CardFilter()
         filter.subtypes.insert(CardSubtype.basicweakness)
@@ -66,10 +74,10 @@ public struct CardFilter: Equatable {
         if lhs.assetSlots != rhs.assetSlots { return false }
         if lhs.levels != rhs.levels { return false }
         if lhs.skillTestIcons != rhs.skillTestIcons { return false }
-        if lhs.investigatorOnly != rhs.investigatorOnly { return false }
+        if lhs.investigatorId != rhs.investigatorId { return false }
         if lhs.hideRestrictedCards != rhs.hideRestrictedCards { return false }
         if lhs.fullTextSearchMatch != rhs.fullTextSearchMatch { return false }
-        if lhs.onlyDeck != rhs.onlyDeck { return false }
+        if lhs.deckId != rhs.deckId { return false }
         if lhs.subfilters.count != rhs.subfilters.count { return false }
         
         for (s1, s2) in zip(lhs.subfilters, rhs.subfilters) {
@@ -109,12 +117,12 @@ public struct CardFilter: Equatable {
         }
     }
     
-    public mutating func setOnlyDeck(_ deck: Deck, applyToSubFilters: Bool) {
-        self.onlyDeck = deck
+    public mutating func setOnlyDeckId(_ deckId: Int, applyToSubFilters: Bool) {
+        self.deckId = deckId
         
         if applyToSubFilters {
             for i in 0..<subfilters.count {
-                subfilters[i].filter.setOnlyDeck(deck, applyToSubFilters: true)
+                subfilters[i].filter.setOnlyDeckId(deckId, applyToSubFilters: true)
             }
         }
     }

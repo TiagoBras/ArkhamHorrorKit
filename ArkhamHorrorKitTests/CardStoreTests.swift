@@ -13,6 +13,7 @@ import XCTest
 class CardStoreTests: XCTestCase {
     var database: AHDatabase!
     
+    typealias CardPair = DatabaseTestsHelper.CardIdQuantityPair
     
     override func setUp() {
         super.setUp()
@@ -85,14 +86,15 @@ class CardStoreTests: XCTestCase {
     }
     
     func testFetchAllCardsThatBelongToADeck() {
-        let cardIdQuantities: [DatabaseTestsHelper.CardIdQuantityPair] = [
-            (1021, 2), (1022, 1), (1023, 2)
+        
+        let cardIdQuantities: [CardPair] = [
+            CardPair(1021, 2), CardPair(1022, 1), CardPair(1023, 2)
         ]
         var filter = CardFilter()
-        filter.onlyDeck = DatabaseTestsHelper.createDeck(
+        filter.deckId = DatabaseTestsHelper.createDeck(
             name: "Roland",
             investigator: try! database.investigatorsDictionary()[1001]!,
-            cards: cardIdQuantities, in: database)
+            cards: cardIdQuantities, in: database).id
         let result = database.cardStore.fetchCards(filter: filter, sorting: nil, groupResults: false)
 
         XCTAssertNotNil(result)
@@ -155,5 +157,38 @@ class CardStoreTests: XCTestCase {
         
         let cards2 = database.cardStore.fetchCards(filter: filter2, sorting: nil)
         XCTAssertEqual(cards2.count, 0)
+    }
+    
+    func testFetchingOnlyInvestigatorsCards() {
+        let filter1 = CardFilter(investigatorId: 1001)
+        let cards1 = database.cardStore.fetchCards(filter: filter1, sorting: nil)
+        
+        XCTAssertEqual(cards1.count, 2)
+    }
+    
+    func testFetchingWithDeckId() {
+        let deck = DatabaseTestsHelper.createDeck(
+            name: "James Knife",
+            investigatorId: 1001,
+            cards: [CardPair(1020, 2), CardPair(1021, 1), CardPair(1022, 2)],
+            in: database)
+        
+        let filter1 = CardFilter(deckId: deck.id)
+        let cards1 = database.cardStore.fetchCards(filter: filter1, sorting: nil)
+        
+        XCTAssertEqual(cards1.count, 3)
+    }
+    
+    func testFetchingWithMultiplesSubFiltersAndFTS() {
+        let roland = try! database.investigatorsDictionary()[1001]!
+        
+        var mainFilter = CardFilter(fullSearchText: "beat")
+        mainFilter.hideWeaknesses = true
+        mainFilter.hideRestrictedCards = true
+        mainFilter.and(roland.availableCardsFilter)
+        
+        let cards1 = database.cardStore.fetchCards(filter: mainFilter, sorting: nil)
+        
+        XCTAssertEqual(cards1.count, 2)
     }
 }

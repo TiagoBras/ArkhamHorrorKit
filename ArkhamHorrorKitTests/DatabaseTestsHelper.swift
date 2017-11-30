@@ -22,23 +22,40 @@ final class DatabaseTestsHelper {
         })
     }
     
-    typealias CardIdQuantityPair = (cardId: Int, quantity: Int)
+    struct CardIdQuantityPair {
+        var cardId: Int
+        var quantity: Int
+        
+        init(_ cardId: Int, _ quantity: Int) {
+            self.cardId = cardId
+            self.quantity = quantity
+        }
+    }
+    
+    static func createDeck(name: String, investigatorId: Int, in database: AHDatabase) -> Deck {
+        return try! database.deckStore.createDeck(name: "The God Killer", investigatorId: investigatorId)
+    }
     
     static func createDeck(name: String, investigator: Investigator,  in database: AHDatabase) -> Deck {
-        return try! database.deckStore.createDeck(name: "The God Killer", investigator: investigator)
+        return createDeck(name: name, investigatorId: investigator.id, in: database)
+    }
+    
+    @discardableResult
+    static func createDeck(name: String, investigatorId: Int, cards: [CardIdQuantityPair], in database: AHDatabase) -> Deck {
+        var deck = DatabaseTestsHelper.createDeck(name: name, investigatorId: investigatorId, in: database)
+        
+        for c in cards {
+            let card = try! database.cardStore.fetchCard(id: c.cardId)
+            
+            deck = try! database.deckStore.changeCardQuantity(deck: deck, card: card, quantity: c.quantity)
+        }
+        
+        return deck
     }
     
     @discardableResult
     static func createDeck(name: String, investigator: Investigator, cards: [CardIdQuantityPair], in database: AHDatabase) -> Deck {
-        var deck = DatabaseTestsHelper.createDeck(name: name, investigator: investigator, in: database)
-        
-        for (cardId, quantity) in cards {
-            let card = try! database.cardStore.fetchCard(id: cardId)
-            
-            deck = try! database.deckStore.changeCardQuantity(deck: deck, card: card, quantity: quantity)
-        }
-        
-        return deck
+        return createDeck(name: name, investigatorId: investigator.id, cards: cards, in: database)
     }
     
     static func fetchCard(id: Int, in database: AHDatabase) -> Card {

@@ -11,6 +11,8 @@ import XCTest
 @testable import ArkhamHorrorKit
 
 class DeckStoreTests: XCTestCase {
+    typealias CardPair = DatabaseTestsHelper.CardIdQuantityPair
+    
     var database: AHDatabase!
     
     override func setUp() {
@@ -74,8 +76,8 @@ class DeckStoreTests: XCTestCase {
     }
     
     func testFetchAllDecks() {
-        let cardIdQuantities: [DatabaseTestsHelper.CardIdQuantityPair] = [
-            (1021, 2), (1022, 1), (1023, 2), (1024, 2)
+        let cardIdQuantities: [CardPair] = [
+            CardPair(1021, 2), CardPair(1022, 1), CardPair(1023, 2), CardPair(1024, 2)
         ]
         
         for i in 0..<10 {
