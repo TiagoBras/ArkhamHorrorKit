@@ -16,7 +16,7 @@ public struct CardFilter: Equatable {
     public var levels = Set<Int>()
     public var skillTestIcons = Set<CardSkillTestIcon>()
     public var investigatorOnly: Investigator? = nil
-    public var hideRestrictedCards: Bool? = true
+    public var hideRestrictedCards: Bool? = nil
     public var fullTextSearchMatch: String? = nil
     public var onlyDeck: Deck? = nil
     public var traits = Set<String>()
@@ -44,6 +44,10 @@ public struct CardFilter: Equatable {
     public init(usesCharges: Bool, fromLevel: Int, toLevel: Int) {
         self.usesCharges = usesCharges
         self.levels = Set(Array(fromLevel...toLevel))
+    }
+    
+    public init(fullSearchText: String) {
+        self.fullTextSearchMatch = fullSearchText
     }
     
     public static func basicWeaknesses() -> CardFilter {

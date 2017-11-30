@@ -7,7 +7,7 @@ def shared_pods
     pod 'Zip', '~> 1.0'
     pod 'SwiftyJSON', '~> 3.1.4'
     pod 'GRDB.swift', '~> 2.3.0'
-    pod 'TBSwiftKit', '~> 0.0.12'
+    pod 'TBSwiftKit', '~> 0.0.13'
 end
 
 target 'ArkhamHorrorKit iOS' do

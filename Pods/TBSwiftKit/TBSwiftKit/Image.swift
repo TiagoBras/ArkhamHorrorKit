@@ -12,13 +12,12 @@
     import Cocoa
 #endif
 
-public typealias BundleIdentifier = String
 public typealias ImageNameWithoutExtension = String
 public typealias ImageNameWithExtension = String
 
 public enum Image {
     case atURL(URL)
-    case inBundle(ImageNameWithoutExtension, BundleIdentifier)
+    case inBundle(ImageNameWithoutExtension, Bundle)
     case inMainBundle(ImageNameWithoutExtension)
     case inDocumentsDirectory(ImageNameWithExtension)
     
@@ -30,8 +29,8 @@ public enum Image {
             guard let data = try? Data(contentsOf: url) else { return nil }
             
             return UIImage(data: data)
-        case .inBundle(let name, let identifier):
-            return UIImage(named: name, in: Bundle(identifier: identifier), compatibleWith: nil)
+        case .inBundle(let name, let bundle):
+            return UIImage(named: name, in: bundle, compatibleWith: nil)
         case .inMainBundle(let name):
             return UIImage(named: name)
         case .inDocumentsDirectory(let name):
@@ -55,10 +54,8 @@ public enum Image {
             guard let data = try? Data(contentsOf: url) else { return nil }
             
             return NSImage(data: data)
-        case .inBundle(let name, let identifier):
-            let bundle = Bundle(identifier: identifier)
-    
-            return bundle?.image(forResource: NSImage.Name(rawValue: name))
+        case .inBundle(let name, let bundle):
+            return bundle.image(forResource: NSImage.Name(rawValue: name))
         case .inMainBundle(let name):
             return NSImage(named: NSImage.Name(rawValue: name))
         case .inDocumentsDirectory(let name):

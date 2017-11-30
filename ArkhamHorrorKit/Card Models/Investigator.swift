@@ -9,6 +9,8 @@
 import TBSwiftKit
 
 public struct Investigator: Equatable {
+    class Dummy {}
+    
     public var id: Int
     public var name: String
     public var subname: String
@@ -172,24 +174,25 @@ public struct Investigator: Equatable {
     }
     
     public var avatar: Image {
+        let bundle = Bundle(for: Investigator.Dummy.self)
         switch id {
-        case 1001: return Image.inMainBundle("roland_banks_the_fed")
-        case 1002: return Image.inMainBundle("daisy_walker_the_librarian")
-        case 1003: return Image.inMainBundle("skids_o_toole_the_ex_con")
-        case 1004: return Image.inMainBundle("agnes_baker_the_waitress")
-        case 1005: return Image.inMainBundle("wendy_adams_the_urchin")
-        case 2001: return Image.inMainBundle("zoey_samaras_the_chef")
-        case 2002: return Image.inMainBundle("rex_murphy_the_reporter")
-        case 2003: return Image.inMainBundle("jenny_barnes_the_dilettante")
-        case 2004: return Image.inMainBundle("jim_culver_the_musician")
-        case 2005: return Image.inMainBundle("ashcan_pete_the_drifter")
-        case 3001: return Image.inMainBundle("mark_harrigan_the_soldier")
-        case 3002: return Image.inMainBundle("minh_thi_phan_the_secretary")
-        case 3003: return Image.inMainBundle("sefina_rousseau_the_painter")
-        case 3004: return Image.inMainBundle("akachi_onyele_the_shaman")
-        case 3005: return Image.inMainBundle("william_yorick_the_gravedigger")
-        case 3006: return Image.inMainBundle("lola_hayes_the_actress")
-        default: return Image.inMainBundle("unknown")
+        case 1001: return Image.inBundle("roland_banks_the_fed", bundle)
+        case 1002: return Image.inBundle("daisy_walker_the_librarian", bundle)
+        case 1003: return Image.inBundle("skids_o_toole_the_ex_con", bundle)
+        case 1004: return Image.inBundle("agnes_baker_the_waitress", bundle)
+        case 1005: return Image.inBundle("wendy_adams_the_urchin", bundle)
+        case 2001: return Image.inBundle("zoey_samaras_the_chef", bundle)
+        case 2002: return Image.inBundle("rex_murphy_the_reporter", bundle)
+        case 2003: return Image.inBundle("jenny_barnes_the_dilettante", bundle)
+        case 2004: return Image.inBundle("jim_culver_the_musician", bundle)
+        case 2005: return Image.inBundle("ashcan_pete_the_drifter", bundle)
+        case 3001: return Image.inBundle("mark_harrigan_the_soldier", bundle)
+        case 3002: return Image.inBundle("minh_thi_phan_the_secretary", bundle)
+        case 3003: return Image.inBundle("sefina_rousseau_the_painter", bundle)
+        case 3004: return Image.inBundle("akachi_onyele_the_shaman", bundle)
+        case 3005: return Image.inBundle("william_yorick_the_gravedigger", bundle)
+        case 3006: return Image.inBundle("lola_hayes_the_actress", bundle)
+        default: return Image.inBundle("unknown", bundle)
         }
     }
     

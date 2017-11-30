@@ -104,7 +104,7 @@ class CardStoreTests: XCTestCase {
         var filter = CardFilter()
         filter.fullTextSearchMatch = "45"
         let cards1 = database.cardStore.fetchCards(filter: filter, sorting: nil)
-        XCTAssertEqual(cards1.count, 1)
+        XCTAssertEqual(cards1.count, 2)
         
         filter = CardFilter()
         filter.fullTextSearchMatch = "faction:seeker"
@@ -127,7 +127,7 @@ class CardStoreTests: XCTestCase {
         // This should return all cards because subfilter = ... WHERE (..) OR 1
         filter.or(CardFilter())
         let cards2 = database.cardStore.fetchCards(filter: filter, sorting: nil)
-        XCTAssertEqual(cards2.count, 222)
+        XCTAssertEqual(cards2.count, 255)
     }
     
     func testFetchingOnlyWeaknesses() {
@@ -140,5 +140,20 @@ class CardStoreTests: XCTestCase {
         filter.hideRestrictedCards = false
         let cards2 = database.cardStore.fetchCards(filter: filter, sorting: nil)
         XCTAssertEqual(cards2.count, 16)
+    }
+    
+    func testFetchingSubFiltersWithFTS() {
+        var filter1 = CardFilter(factions: [.seeker], fromLevel: 0, toLevel: 5)
+        filter1.and(CardFilter(fullSearchText: "hunc"))
+        
+        let cards1 = database.cardStore.fetchCards(filter: filter1, sorting: nil)
+        XCTAssertEqual(cards1.count, 1)
+        XCTAssertEqual(cards1[0].name, "Working a Hunch")
+        
+        var filter2 = CardFilter(factions: [.mystic], fromLevel: 0, toLevel: 5)
+        filter2.and(CardFilter(fullSearchText: "hunc"))
+        
+        let cards2 = database.cardStore.fetchCards(filter: filter2, sorting: nil)
+        XCTAssertEqual(cards2.count, 0)
     }
 }

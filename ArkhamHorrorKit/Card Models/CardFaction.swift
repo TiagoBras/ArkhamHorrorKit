@@ -9,6 +9,8 @@
 import TBSwiftKit
 
 public enum CardFaction: Int {
+    class Dummy {}
+    
     case guardian = 1, seeker, rogue, mystic, survivor, neutral
     
     public static var allValues: [CardFaction] = [.guardian, .seeker, .rogue, .mystic, .survivor, .neutral]
@@ -77,19 +79,21 @@ public enum CardFaction: Int {
     }
     
     public var titledButtonImage: (on: Image, off: Image) {
+        let bundle = Bundle(for: CardFaction.Dummy.self)
+        
         switch self {
-        case .guardian: return (on: Image.inMainBundle("btn_factions_guardian_ON"),
-                                off: Image.inMainBundle("btn_factions_guardian_OFF"))
-        case .seeker: return (on: Image.inMainBundle("btn_factions_seeker_ON"),
-                              off: Image.inMainBundle("btn_factions_seeker_OFF"))
-        case .rogue: return (on: Image.inMainBundle("btn_factions_rogue_ON"),
-                             off: Image.inMainBundle("btn_factions_rogue_OFF"))
-        case .mystic: return (on: Image.inMainBundle("btn_factions_mystic_ON"),
-                              off: Image.inMainBundle("btn_factions_mystic_OFF"))
-        case .survivor: return (on: Image.inMainBundle("btn_factions_survivor_ON"),
-                                off: Image.inMainBundle("btn_factions_survivor_OFF"))
-        case .neutral: return (on: Image.inMainBundle("btn_factions_neutral_ON"),
-                               off: Image.inMainBundle("btn_factions_neutral_OFF"))
+        case .guardian: return (on: Image.inBundle("btn_factions_guardian_ON", bundle),
+                                off: Image.inBundle("btn_factions_guardian_OFF", bundle))
+        case .seeker: return (on: Image.inBundle("btn_factions_seeker_ON", bundle),
+                              off: Image.inBundle("btn_factions_seeker_OFF", bundle))
+        case .rogue: return (on: Image.inBundle("btn_factions_rogue_ON", bundle),
+                             off: Image.inBundle("btn_factions_rogue_OFF", bundle))
+        case .mystic: return (on: Image.inBundle("btn_factions_mystic_ON", bundle),
+                              off: Image.inBundle("btn_factions_mystic_OFF", bundle))
+        case .survivor: return (on: Image.inBundle("btn_factions_survivor_ON", bundle),
+                                off: Image.inBundle("btn_factions_survivor_OFF", bundle))
+        case .neutral: return (on: Image.inBundle("btn_factions_neutral_ON", bundle),
+                               off: Image.inBundle("btn_factions_neutral_OFF", bundle))
         }
     }
 }
