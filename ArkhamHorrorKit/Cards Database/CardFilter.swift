@@ -85,8 +85,8 @@ public struct CardFilter: Equatable {
     }
     
     public struct CardSubFilter {
-        var op: Operator
-        var filter: CardFilter
+        public var op: Operator
+        public var filter: CardFilter
     }
     
     public var subfilters: [CardSubFilter] = []
@@ -97,5 +97,35 @@ public struct CardFilter: Equatable {
     
     public mutating func or(_ filter: CardFilter) {
         subfilters.append(CardSubFilter(op: .or, filter: filter))
+    }
+    
+    public mutating func setFullTextSearchMatch(_ text: String, applyToSubFilters: Bool) {
+        self.fullTextSearchMatch = text
+        
+        if applyToSubFilters {
+            for i in 0..<subfilters.count {
+                subfilters[i].filter.setFullTextSearchMatch(text, applyToSubFilters: true)
+            }
+        }
+    }
+    
+    public mutating func setOnlyDeck(_ deck: Deck, applyToSubFilters: Bool) {
+        self.onlyDeck = deck
+        
+        if applyToSubFilters {
+            for i in 0..<subfilters.count {
+                subfilters[i].filter.setOnlyDeck(deck, applyToSubFilters: true)
+            }
+        }
+    }
+    
+    public mutating func setHideWeaknesses(_ hide: Bool, applyToSubFilters: Bool) {
+        self.hideWeaknesses = hide
+        
+        if applyToSubFilters {
+            for i in 0..<subfilters.count {
+                subfilters[i].filter.setHideWeaknesses(hide, applyToSubFilters: true)
+            }
+        }
     }
 }

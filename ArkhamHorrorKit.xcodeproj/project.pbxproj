@@ -132,6 +132,8 @@
 		A5837B6B1FCF40040062FBFA /* CardTraitRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5837B691FCF40040062FBFA /* CardTraitRecord.swift */; };
 		A5837B6D1FCF411D0062FBFA /* CardTraitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5837B6C1FCF411D0062FBFA /* CardTraitsTests.swift */; };
 		A5837B6E1FCF411D0062FBFA /* CardTraitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5837B6C1FCF411D0062FBFA /* CardTraitsTests.swift */; };
+		A5837B7F1FD096F40062FBFA /* CardFiltersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5837B7E1FD096F40062FBFA /* CardFiltersTests.swift */; };
+		A5837B801FD096F40062FBFA /* CardFiltersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5837B7E1FD096F40062FBFA /* CardFiltersTests.swift */; };
 		A59FCA511FB71B2F00DF4994 /* chaos_bags.json in Resources */ = {isa = PBXBuildFile; fileRef = A5D8B7291FB64A6800DAC40F /* chaos_bags.json */; };
 		A59FCA521FB71B3000DF4994 /* chaos_bags.json in Resources */ = {isa = PBXBuildFile; fileRef = A5D8B7291FB64A6800DAC40F /* chaos_bags.json */; };
 		A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */; };
@@ -274,6 +276,7 @@
 		A5837B661FCF3E440062FBFA /* TraitRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraitRecord.swift; sourceTree = "<group>"; };
 		A5837B691FCF40040062FBFA /* CardTraitRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTraitRecord.swift; sourceTree = "<group>"; };
 		A5837B6C1FCF411D0062FBFA /* CardTraitsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTraitsTests.swift; sourceTree = "<group>"; };
+		A5837B7E1FD096F40062FBFA /* CardFiltersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFiltersTests.swift; sourceTree = "<group>"; };
 		A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTestSkillIcon.swift; sourceTree = "<group>"; };
 		A5BCA7B11FA24CE1001E6817 /* CardFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFilter.swift; sourceTree = "<group>"; };
 		A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckRecord.swift; sourceTree = "<group>"; };
@@ -569,6 +572,7 @@
 				A5D8B7241FB6317000DAC40F /* TableInfoRecord.swift */,
 				A55DEB3B1FCA4A7500141FED /* CardImageStoreTests.swift */,
 				A5837B6C1FCF411D0062FBFA /* CardTraitsTests.swift */,
+				A5837B7E1FD096F40062FBFA /* CardFiltersTests.swift */,
 			);
 			path = ArkhamHorrorKitTests;
 			sourceTree = "<group>";
@@ -1101,6 +1105,7 @@
 				A563C3701FB11D670060FE8C /* CardStoreTests.swift in Sources */,
 				A5D8B7221FB619C200DAC40F /* ChaosBagDatabaseTests.swift in Sources */,
 				A51A26511FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
+				A5837B7F1FD096F40062FBFA /* CardFiltersTests.swift in Sources */,
 				A51A264F1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
 				A5653C031FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */,
 			);
@@ -1165,6 +1170,7 @@
 				A563C3711FB11D670060FE8C /* CardStoreTests.swift in Sources */,
 				A5D8B7231FB624FB00DAC40F /* ChaosBagDatabaseTests.swift in Sources */,
 				A51A26521FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
+				A5837B801FD096F40062FBFA /* CardFiltersTests.swift in Sources */,
 				A51A26501FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
 				A5653C041FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */,
 			);
