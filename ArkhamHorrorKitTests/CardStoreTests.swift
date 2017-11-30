@@ -191,4 +191,12 @@ class CardStoreTests: XCTestCase {
         
         XCTAssertEqual(cards1.count, 2)
     }
+    
+    func testFetchingCardsThatUsesCharges() {
+        let filter = CardFilter(usesCharges: true, fromLevel: 0, toLevel: 5)
+        
+        let cards = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        
+        XCTAssertEqual(cards.count, 9)
+    }
 }

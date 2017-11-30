@@ -262,6 +262,7 @@ final class CardRecord: Record {
         var keywords = [String]()
         keywords.append(String(card.id))
         keywords.append(card.name)
+        keywords.append(card.subname)
         
         if let type = CardType(rawValue: card.typeId)?.name {
             keywords.append(type)
@@ -311,6 +312,13 @@ final class CardRecord: Record {
         if card.skillWild > 0 {
             keywords.append("wild:\(card.skillWild)")
         }
+        if card.subtypeId != nil {
+            keywords.append("weakness")
+        }
+        
+        keywords.append(card.text)
+        keywords.append(card.illustrator)
+        keywords.append(card.flavorText)
         
         let keywordsString = keywords.joined(separator: " ").replacingOccurrences(of: ".", with: "")
         
