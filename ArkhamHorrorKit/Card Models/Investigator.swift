@@ -9,6 +9,15 @@
 import TBSwiftKit
 
 public struct Investigator: Equatable {
+    public enum InvestigatorId: Int {
+        case rolandBanksTheFed = 1001, daisyWalkerTheLibrarian = 1002, skidsOTooleTheExCon = 1003
+        case agnesBakerTheWaitress = 1004, wendyAdamsTheUrchin = 1005, zoeySamarasTheChef = 2001
+        case rexMurphyTheReporter = 2002, jennyBarnesTheDilettante = 2003, jimCulverTheMusician = 2004
+        case ashcanPeteTheDrifter = 2005, markHarriganTheSoldier = 3001, minhThiPhanTheSecretary = 3002
+        case sefinaRousseauThePainter = 3003, akachiOnyeleTheShaman = 3004, williamYorickTheGravedigger = 3005
+        case lolaHayesTheActress = 3006
+    }
+    
     class Dummy {}
     
     public var id: Int
@@ -34,7 +43,7 @@ public struct Investigator: Equatable {
     public static func ==(lhs: Investigator, rhs: Investigator) -> Bool {
         return lhs.id == rhs.id
     }
-
+    
     public var deckSize: Int {
         if id == 3003 {
             return 33
@@ -48,33 +57,30 @@ public struct Investigator: Equatable {
     public var availableFactions: [CardFaction] {
         var factions: [CardFaction] = [.neutral]
         
-        switch id {
-        case 1001:
+        switch InvestigatorId(rawValue: id)! {
+        case .rolandBanksTheFed:
             factions.append(contentsOf: [.guardian, .seeker])
-        case 1002:
+        case .daisyWalkerTheLibrarian:
             factions.append(contentsOf: [.seeker, .mystic])
-        case 1003:
+        case .skidsOTooleTheExCon:
             factions.append(contentsOf: [.rogue, .guardian])
-        case 1004:
+        case .agnesBakerTheWaitress:
             factions.append(contentsOf: [.mystic, .survivor])
-        case 1005:
+        case .wendyAdamsTheUrchin:
             factions.append(contentsOf: [.survivor, .rogue])
-        case 2001...2005:
+        case .markHarriganTheSoldier:
             factions.append(contentsOf:
                 [.guardian, .seeker, .mystic, .rogue, .survivor])
-        case 3001:
-            factions.append(contentsOf:
-                [.guardian, .seeker, .mystic, .rogue, .survivor])
-        case 3002:
+        case .minhThiPhanTheSecretary:
             factions.append(contentsOf: [.seeker, .survivor])
-        case 3003:
+        case .sefinaRousseauThePainter:
             factions.append(contentsOf: [.rogue, .mystic])
-        case 3004:
+        case .akachiOnyeleTheShaman:
             factions.append(contentsOf:
                 [.guardian, .seeker, .mystic, .rogue, .survivor])
-        case 3005:
+        case .williamYorickTheGravedigger:
             factions.append(contentsOf: [.survivor, .guardian])
-        case 3006:
+        case .lolaHayesTheActress:
             factions.append(contentsOf:
                 [.guardian, .seeker, .mystic, .rogue, .survivor])
         default:
@@ -89,60 +95,60 @@ public struct Investigator: Equatable {
         var filter = CardFilter()
         
         let allFactions = Set<CardFaction>(CardFaction.allValues)
-
-        switch id {
-        case 1001:
+        
+        switch InvestigatorId(rawValue: id)! {
+        case .rolandBanksTheFed:
             filter = CardFilter(factions: [.guardian, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: [.seeker], fromLevel: 0, toLevel: 2))
-        case 1002:
+        case .daisyWalkerTheLibrarian:
             filter = CardFilter(factions: [.seeker, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: [.mystic], fromLevel: 0, toLevel: 2))
-        case 1003:
+        case .skidsOTooleTheExCon:
             filter = CardFilter(factions: [.rogue, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: [.guardian], fromLevel: 0, toLevel: 2))
-        case 1004:
+        case .agnesBakerTheWaitress:
             filter = CardFilter(factions: [.mystic, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: [.survivor], fromLevel: 0, toLevel: 2))
-        case 1005:
+        case .wendyAdamsTheUrchin:
             filter = CardFilter(factions: [.survivor, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: [.rogue], fromLevel: 0, toLevel: 2))
-        case 2001:
+        case .zoeySamarasTheChef:
             filter = CardFilter(factions: [.guardian, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
-        case 2002:
+        case .rexMurphyTheReporter:
             filter = CardFilter(factions: [.seeker, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
-        case 2003:
+        case .jennyBarnesTheDilettante:
             filter = CardFilter(factions: [.rogue, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
-        case 2004:
+        case .jimCulverTheMusician:
             filter = CardFilter(factions: [.mystic, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
-        case 2005:
+        case .ashcanPeteTheDrifter:
             filter = CardFilter(factions: [.survivor, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
-        case 3001:
+        case .markHarriganTheSoldier:
             filter = CardFilter(factions: [.guardian, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(traits: ["Tactic"], level: 0))
-        case 3002:
+        case .minhThiPhanTheSecretary:
             filter = CardFilter(factions: [.seeker, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: [.survivor], fromLevel: 0, toLevel: 2))
-        case 3003:
+        case .sefinaRousseauThePainter:
             filter = CardFilter(factions: [.rogue, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: [.mystic], fromLevel: 0, toLevel: 2))
-        case 3004:
+        case .akachiOnyeleTheShaman:
             filter = CardFilter(factions: [.mystic, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(usesCharges: true, fromLevel: 0, toLevel: 4))
-        case 3005:
+            filter.or(CardFilter(traits: ["Occult"], level: 0))
+        case .williamYorickTheGravedigger:
             filter = CardFilter(factions: [.survivor, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: [.guardian], fromLevel: 0, toLevel: 2))
-        case 3006:
+        case .lolaHayesTheActress:
             filter = CardFilter(
                 factions: Array(allFactions.subtracting([CardFaction.neutral])),
                 fromLevel: 0,
                 toLevel: 3)
             filter.or(CardFilter(factions: [.neutral], fromLevel: 0, toLevel: 5))
-        default: break
         }
         
         return filter
@@ -152,48 +158,59 @@ public struct Investigator: Equatable {
     typealias CardQuantity = Int
     
     static func requiredCardsIds(investigatorId: Int) -> [CardId: CardQuantity] {
-        switch investigatorId {
-        case 1001:  return [1006: 1, 1007: 1]
-        case 1002:  return [1008: 1, 1009: 1]
-        case 1003:  return [1010: 1, 1011: 1]
-        case 1004:  return [1012: 1, 1013: 1]
-        case 1005:  return [1014: 1, 1015: 1]
-        case 2001:  return [2006: 1, 2007: 1]
-        case 2002:  return [2008: 1, 2009: 1]
-        case 2003:  return [2010: 1, 2011: 1]
-        case 2004:  return [2012: 1, 2013: 1]
-        case 2005:  return [2014: 1, 2015: 1]
-        case 3001:  return [3007: 1, 3008: 1, 3009: 1]
-        case 3002:  return [3010: 1, 3011: 1]
-        case 3003:  return [3012: 3, 3013: 1]
-        case 3004:  return [3014: 1, 3015: 1]
-        case 3005:  return [3016: 1, 3017: 1]
-        case 3006:  return [3018: 2, 3019: 2]
-        default: return [:]
+        switch InvestigatorId(rawValue: investigatorId)! {
+        case .rolandBanksTheFed:  return [1006: 1, 1007: 1]
+        case .daisyWalkerTheLibrarian:  return [1008: 1, 1009: 1]
+        case .skidsOTooleTheExCon:  return [1010: 1, 1011: 1]
+        case .agnesBakerTheWaitress:  return [1012: 1, 1013: 1]
+        case .wendyAdamsTheUrchin:  return [1014: 1, 1015: 1]
+        case .zoeySamarasTheChef:  return [2006: 1, 2007: 1]
+        case .rexMurphyTheReporter:  return [2008: 1, 2009: 1]
+        case .jennyBarnesTheDilettante:  return [2010: 1, 2011: 1]
+        case .jimCulverTheMusician:  return [2012: 1, 2013: 1]
+        case .ashcanPeteTheDrifter:  return [2014: 1, 2015: 1]
+        case .markHarriganTheSoldier:  return [3007: 1, 3008: 1, 3009: 1]
+        case .minhThiPhanTheSecretary:  return [3010: 1, 3011: 1]
+        case .sefinaRousseauThePainter:  return [3012: 3, 3013: 1]
+        case .akachiOnyeleTheShaman:  return [3014: 1, 3015: 1]
+        case .williamYorickTheGravedigger:  return [3016: 1, 3017: 1]
+        case .lolaHayesTheActress:  return [3018: 2, 3019: 2]
         }
     }
     
     public var avatar: Image {
         let bundle = Bundle(for: Investigator.Dummy.self)
-        switch id {
-        case 1001: return Image.inBundle("roland_banks_the_fed", bundle)
-        case 1002: return Image.inBundle("daisy_walker_the_librarian", bundle)
-        case 1003: return Image.inBundle("skids_o_toole_the_ex_con", bundle)
-        case 1004: return Image.inBundle("agnes_baker_the_waitress", bundle)
-        case 1005: return Image.inBundle("wendy_adams_the_urchin", bundle)
-        case 2001: return Image.inBundle("zoey_samaras_the_chef", bundle)
-        case 2002: return Image.inBundle("rex_murphy_the_reporter", bundle)
-        case 2003: return Image.inBundle("jenny_barnes_the_dilettante", bundle)
-        case 2004: return Image.inBundle("jim_culver_the_musician", bundle)
-        case 2005: return Image.inBundle("ashcan_pete_the_drifter", bundle)
-        case 3001: return Image.inBundle("mark_harrigan_the_soldier", bundle)
-        case 3002: return Image.inBundle("minh_thi_phan_the_secretary", bundle)
-        case 3003: return Image.inBundle("sefina_rousseau_the_painter", bundle)
-        case 3004: return Image.inBundle("akachi_onyele_the_shaman", bundle)
-        case 3005: return Image.inBundle("william_yorick_the_gravedigger", bundle)
-        case 3006: return Image.inBundle("lola_hayes_the_actress", bundle)
-        default: return Image.inBundle("unknown", bundle)
+        
+        switch InvestigatorId(rawValue: id)! {
+        case .rolandBanksTheFed: return Image.inBundle("roland_banks_the_fed", bundle)
+        case .daisyWalkerTheLibrarian: return Image.inBundle("daisy_walker_the_librarian", bundle)
+        case .skidsOTooleTheExCon: return Image.inBundle("skids_o_toole_the_ex_con", bundle)
+        case .agnesBakerTheWaitress: return Image.inBundle("agnes_baker_the_waitress", bundle)
+        case .wendyAdamsTheUrchin: return Image.inBundle("wendy_adams_the_urchin", bundle)
+        case .zoeySamarasTheChef: return Image.inBundle("zoey_samaras_the_chef", bundle)
+        case .rexMurphyTheReporter: return Image.inBundle("rex_murphy_the_reporter", bundle)
+        case .jennyBarnesTheDilettante: return Image.inBundle("jenny_barnes_the_dilettante", bundle)
+        case .jimCulverTheMusician: return Image.inBundle("jim_culver_the_musician", bundle)
+        case .ashcanPeteTheDrifter: return Image.inBundle("ashcan_pete_the_drifter", bundle)
+        case .markHarriganTheSoldier: return Image.inBundle("mark_harrigan_the_soldier", bundle)
+        case .minhThiPhanTheSecretary: return Image.inBundle("minh_thi_phan_the_secretary", bundle)
+        case .sefinaRousseauThePainter: return Image.inBundle("sefina_rousseau_the_painter", bundle)
+        case .akachiOnyeleTheShaman: return Image.inBundle("akachi_onyele_the_shaman", bundle)
+        case .williamYorickTheGravedigger: return Image.inBundle("william_yorick_the_gravedigger", bundle)
+        case .lolaHayesTheActress: return Image.inBundle("lola_hayes_the_actress", bundle)
         }
+    }
+    
+    public var frontImage: Image {
+        let bundle = Bundle(for: Investigator.Dummy.self)
+        
+        return Image.inBundle("0\(id)", bundle)
+    }
+    
+    public var backImage: Image {
+        let bundle = Bundle(for: Investigator.Dummy.self)
+        
+        return Image.inBundle("0\(id)b", bundle)
     }
     
     public var deckOptions: [DeckOption] {
@@ -218,17 +235,17 @@ public struct Investigator: Equatable {
             ]
         }
         
-        switch id {
-        case 1001: return genCoreDeckOptions(mainFaction: .guardian, secondaryFaction: .seeker)
-        case 1002: return genCoreDeckOptions(mainFaction: .seeker, secondaryFaction: .mystic)
-        case 1003: return genCoreDeckOptions(mainFaction: .rogue, secondaryFaction: .guardian)
-        case 1004: return genCoreDeckOptions(mainFaction: .mystic, secondaryFaction: .survivor)
-        case 1005: return genCoreDeckOptions(mainFaction: .survivor, secondaryFaction: .rogue)
-        case 2001: return genDunwichDeckOptions(mainFaction: .guardian)
-        case 2002: return genDunwichDeckOptions(mainFaction: .seeker)
-        case 2003: return genDunwichDeckOptions(mainFaction: .rogue)
-        case 2004: return genDunwichDeckOptions(mainFaction: .mystic)
-        case 2005: return genDunwichDeckOptions(mainFaction: .survivor)
+        switch InvestigatorId(rawValue: id)! {
+        case .rolandBanksTheFed: return genCoreDeckOptions(mainFaction: .guardian, secondaryFaction: .seeker)
+        case .daisyWalkerTheLibrarian: return genCoreDeckOptions(mainFaction: .seeker, secondaryFaction: .mystic)
+        case .skidsOTooleTheExCon: return genCoreDeckOptions(mainFaction: .rogue, secondaryFaction: .guardian)
+        case .agnesBakerTheWaitress: return genCoreDeckOptions(mainFaction: .mystic, secondaryFaction: .survivor)
+        case .wendyAdamsTheUrchin: return genCoreDeckOptions(mainFaction: .survivor, secondaryFaction: .rogue)
+        case .zoeySamarasTheChef: return genDunwichDeckOptions(mainFaction: .guardian)
+        case .rexMurphyTheReporter: return genDunwichDeckOptions(mainFaction: .seeker)
+        case .jennyBarnesTheDilettante: return genDunwichDeckOptions(mainFaction: .rogue)
+        case .jimCulverTheMusician: return genDunwichDeckOptions(mainFaction: .mystic)
+        case .ashcanPeteTheDrifter: return genDunwichDeckOptions(mainFaction: .survivor)
         default:
             let factions: [CardFaction] = [.neutral, .guardian, .seeker, .mystic, .rogue, .survivor]
             
@@ -243,8 +260,8 @@ public struct DeckOptionAllowedFactions: DeckOption {
     public var levels: [Int]
     
     public init(_ factions: [CardFaction],
-         levels: [Int] = [0, 1, 2, 3, 4, 5],
-         maxQuantity: Int = Int.max) {
+                levels: [Int] = [0, 1, 2, 3, 4, 5],
+                maxQuantity: Int = Int.max) {
         self.factions = factions
         self.maxQuantity = maxQuantity
         self.levels = levels
@@ -253,15 +270,15 @@ public struct DeckOptionAllowedFactions: DeckOption {
     public func isDeckValid(_ deck: Deck) -> Deck.DeckValidationResult {
         let numOfValidCards = deck.cards.filter { (deckCard) -> Bool in
             return contains(faction: deckCard.card.faction) && levels.contains(deckCard.card.level)
-        }.reduce(0) { (partialResult, deckCard) -> Int in
-            return partialResult + deckCard.quantity
+            }.reduce(0) { (partialResult, deckCard) -> Int in
+                return partialResult + deckCard.quantity
         }
         
         if numOfValidCards > maxQuantity {
             return Deck.DeckValidationResult(isValid: false,
-                                        message: "Too many cards of limited factions")
+                                             message: "Too many cards of limited factions")
         }
-
+        
         return Deck.DeckValidationResult(isValid: true, message: "Deck is valid")
     }
     
@@ -274,3 +291,4 @@ public struct DeckOptionAllowedFactions: DeckOption {
         return false
     }
 }
+

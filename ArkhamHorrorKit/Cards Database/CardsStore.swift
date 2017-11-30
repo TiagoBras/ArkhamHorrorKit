@@ -194,9 +194,19 @@ public final class CardsStore {
     
     // MARK:- Private Interface
     private func genJoinClause(_ filter: CardFilter?) -> String {
-        guard filter?.deckId != nil else { return "" }
+        guard let filter = filter else { return "" }
+        var clause = [String]()
         
-        return "INNER JOIN DeckCard ON DeckCard.card_id = Card.id"
+        if filter.deckId != nil {
+            clause.append("INNER JOIN DeckCard ON DeckCard.card_id = Card.id")
+        }
+        
+        if !filter.traits.isEmpty {
+            clause.append("INNER JOIN CardTrait ON CardTrait.card_id = Card.id")
+        }
+        
+        return clause.isEmpty ? "" : clause.joined(separator: " ")
+        
     }
     
     private func genWhereClause(_ filter: CardFilter?) -> String {
@@ -276,6 +286,12 @@ public final class CardsStore {
             if !stmt.isEmpty {
                 whereInClauses.append("(\(stmt))")
             }
+        }
+        
+        if !filter.traits.isEmpty {
+            var subClauses = filter.traits.map({ "CardTrait.trait_name = '\($0)'"  })
+            
+            whereInClauses.append("(\(subClauses.joined(separator: " AND ")))")
         }
         
         if let usesCharges = filter.usesCharges {

@@ -199,4 +199,12 @@ class CardStoreTests: XCTestCase {
         
         XCTAssertEqual(cards.count, 9)
     }
+    
+    func testFilterWithTraitOccultLevelZero() {
+        let filter = CardFilter(traits: ["Occult"], level: 0)
+        let cards = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        
+        XCTAssertEqual(cards.count, 1)
+        
+    }
 }

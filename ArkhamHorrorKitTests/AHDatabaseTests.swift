@@ -93,7 +93,6 @@ class AHDatabaseTests: XCTestCase {
         XCTAssertEqual(investigators.count, 16)
     }
     
-    // TODO: test ALL required cards
     func testInvestigatorRequiredCards() {
         testRequiredCards(for: 1001, requiredCards: [1006: 1, 1007: 1])
         testRequiredCards(for: 1002, requiredCards: [1008: 1, 1009: 1])
@@ -111,6 +110,24 @@ class AHDatabaseTests: XCTestCase {
         testRequiredCards(for: 3004, requiredCards: [3014: 1, 3015: 1])
         testRequiredCards(for: 3005, requiredCards: [3016: 1, 3017: 1])
         testRequiredCards(for: 3006, requiredCards: [3018: 2, 3019: 2])
+    }
+    
+    func testInvestigatorsImages() {
+        let investigators = try! db.investigators()
+        
+        XCTAssertEqual(investigators.count, 16)
+        
+        for investigator in investigators {
+            #if os(iOS) || os(watchOS) || os(tvOS)
+                XCTAssert(investigator.avatar.uiImage != nil)
+                XCTAssert(investigator.frontImage.uiImage != nil)
+                XCTAssert(investigator.backImage.uiImage != nil)
+            #elseif os(OSX)
+                XCTAssert(investigator.avatar.nsImage != nil)
+                XCTAssert(investigator.frontImage.nsImage != nil)
+                XCTAssert(investigator.backImage.nsImage != nil)
+            #endif
+        }
     }
     
     private func testRequiredCards(for investigatorId: Int, requiredCards: [Int: Int]) {
