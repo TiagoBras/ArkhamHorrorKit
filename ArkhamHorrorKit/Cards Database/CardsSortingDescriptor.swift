@@ -27,11 +27,11 @@ public struct CardsSortingDescriptor: Equatable {
     
     public static let defaultDescriptors: [CardsSortingDescriptor] = [
         CardsSortingDescriptor(column: .faction, ascending: true),
+        CardsSortingDescriptor(column: .name, ascending: true),
         CardsSortingDescriptor(column: .level, ascending: true),
         CardsSortingDescriptor(column: .type, ascending: true),
         CardsSortingDescriptor(column: .pack, ascending: true),
-        CardsSortingDescriptor(column: .assetSlot, ascending: true),
-        CardsSortingDescriptor(column: .name, ascending: true)
+        CardsSortingDescriptor(column: .assetSlot, ascending: true)
     ]
     
     public static func ==(lhs: CardsSortingDescriptor, rhs: CardsSortingDescriptor) -> Bool {
