@@ -197,11 +197,11 @@ public final class CardsStore {
         guard let filter = filter else { return "" }
         var clause = [String]()
         
-        if filter.deckId != nil {
+        if filter.usesDeckId() {
             clause.append("INNER JOIN DeckCard ON DeckCard.card_id = Card.id")
         }
         
-        if !filter.traits.isEmpty {
+        if filter.usesTraits() {
             clause.append("INNER JOIN CardTrait ON CardTrait.card_id = Card.id")
         }
         

@@ -136,4 +136,32 @@ public struct CardFilter: Equatable {
             }
         }
     }
+    
+    func usesDeckId() -> Bool {
+        if deckId != nil {
+            return true
+        }
+        
+        for subfilter in subfilters {
+            if subfilter.filter.usesDeckId() {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    func usesTraits() -> Bool {
+        if !traits.isEmpty {
+            return true
+        }
+        
+        for subfilter in subfilters {
+            if subfilter.filter.usesTraits() {
+                return true
+            }
+        }
+        
+        return false
+    }
 }
