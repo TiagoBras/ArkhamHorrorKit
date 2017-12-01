@@ -49,7 +49,7 @@ public class DeckStats {
     
     public static func fromDeck(_ deck: Deck) -> DeckStats {
         let stats = DeckStats()
-        stats.deckSize = 30
+        stats.deckSize = deck.investigator.deckSize
         
         for deckCard in deck.cards {
             let quantity = Int(deckCard.quantity)
