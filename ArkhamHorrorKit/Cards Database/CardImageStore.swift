@@ -93,6 +93,10 @@ public class CardImageStore {
                     at: serverPath,
                     storeIn: localDir,
                     completion: { [weak self] (url, error) in
+                        if let error = error as? FileDownloadManager.DownloadManagerError {
+                            return completion(nil, error)
+                        }
+                        
                         #if os(iOS) || os(watchOS) || os(tvOS)
                             if let image = UIImage(contentsOfFile: localPath) {
                                 self?.cache.setCachedValue(name, value: image)
@@ -120,9 +124,9 @@ public class CardImageStore {
     
     public enum CardImageStoreError: Error {
         case imageNotFound(String)
+        case serverNotAvailable
         case serverAndLocalDirsCannotBeEqual
         case invalidImageData(String)
         case cardDoesNotHaveBackImage(String)
-        case serverURLNotDefined
     }
 }
