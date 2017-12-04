@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0910"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "91B5EAF0B5694157CBFFDA41DA2AD4A7"
-               BuildableName = "Zip.framework"
-               BlueprintName = "Zip-macOS"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BlueprintIdentifier = "A5DA6A711FA23C4B00457F27"
+               BuildableName = "ArkhamHorrorKit.framework"
+               BlueprintName = "ArkhamHorrorKit macOS"
+               ReferencedContainer = "container:ArkhamHorrorKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,7 +29,26 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A5DA6A791FA23C4C00457F27"
+               BuildableName = "ArkhamHorrorKit macOSTests.xctest"
+               BlueprintName = "ArkhamHorrorKit macOSTests"
+               ReferencedContainer = "container:ArkhamHorrorKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A5DA6A711FA23C4B00457F27"
+            BuildableName = "ArkhamHorrorKit.framework"
+            BlueprintName = "ArkhamHorrorKit macOS"
+            ReferencedContainer = "container:ArkhamHorrorKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -47,10 +66,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "91B5EAF0B5694157CBFFDA41DA2AD4A7"
-            BuildableName = "Zip.framework"
-            BlueprintName = "Zip-macOS"
-            ReferencedContainer = "container:Pods.xcodeproj">
+            BlueprintIdentifier = "A5DA6A711FA23C4B00457F27"
+            BuildableName = "ArkhamHorrorKit.framework"
+            BlueprintName = "ArkhamHorrorKit macOS"
+            ReferencedContainer = "container:ArkhamHorrorKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -62,6 +81,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A5DA6A711FA23C4B00457F27"
+            BuildableName = "ArkhamHorrorKit.framework"
+            BlueprintName = "ArkhamHorrorKit macOS"
+            ReferencedContainer = "container:ArkhamHorrorKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
