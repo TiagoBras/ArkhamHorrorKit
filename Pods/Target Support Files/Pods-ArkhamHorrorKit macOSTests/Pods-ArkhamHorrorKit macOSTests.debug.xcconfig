@@ -1,10 +1,10 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 CODE_SIGN_IDENTITY =
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/GRDB.swift-macOS" "$PODS_CONFIGURATION_BUILD_DIR/SwiftyJSON-macOS" "$PODS_CONFIGURATION_BUILD_DIR/TBSwiftKit-macOS" "$PODS_CONFIGURATION_BUILD_DIR/Zip-macOS"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/GRDB.swift-macOS" "$PODS_CONFIGURATION_BUILD_DIR/SwiftyJSON-macOS" "$PODS_CONFIGURATION_BUILD_DIR/TBSwiftKit-macOS"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/../Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/GRDB.swift-macOS/GRDB.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SwiftyJSON-macOS/SwiftyJSON.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/TBSwiftKit-macOS/TBSwiftKit.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Zip-macOS/Zip.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "GRDB" -framework "SwiftyJSON" -framework "TBSwiftKit" -framework "Zip"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/GRDB.swift-macOS/GRDB.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SwiftyJSON-macOS/SwiftyJSON.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/TBSwiftKit-macOS/TBSwiftKit.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "GRDB" -framework "SwiftyJSON" -framework "TBSwiftKit"
 OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

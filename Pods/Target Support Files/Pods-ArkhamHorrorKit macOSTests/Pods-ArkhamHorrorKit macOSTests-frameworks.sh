@@ -105,13 +105,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/GRDB.swift-macOS/GRDB.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON-macOS/SwiftyJSON.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TBSwiftKit-macOS/TBSwiftKit.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Zip-macOS/Zip.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/GRDB.swift-macOS/GRDB.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON-macOS/SwiftyJSON.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TBSwiftKit-macOS/TBSwiftKit.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Zip-macOS/Zip.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
