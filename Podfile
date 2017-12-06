@@ -6,7 +6,7 @@ use_frameworks!
 def shared_pods
     pod 'SwiftyJSON', '~> 3.1.4'
     pod 'GRDB.swift', '~> 2.3.0'
-    pod 'TBSwiftKit', '~> 0.0.14'
+    pod 'TBSwiftKit', '~> 0.0.16'
 end
 
 target 'ArkhamHorrorKit iOS' do

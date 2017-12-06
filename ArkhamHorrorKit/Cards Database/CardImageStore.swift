@@ -19,9 +19,10 @@ public class CardImageStore {
     private var imagesNotFound = Set<String>()
     
     private let downloadManager = FileDownloadManager()
+    private var batchDownloadManager: FileBatchDownload?
     
-    private let serverDir: URL?
-    private let localDir: URL
+    public let serverDir: URL?
+    public let localDir: URL
     
     public init(serverDir: URL, localDir: URL, cacheSize: Int) throws {
         if serverDir == localDir {
@@ -45,7 +46,7 @@ public class CardImageStore {
     public typealias CompletionHandler = (NSImage?, Error?) -> ()
     #endif
     public typealias ProgressHandler = (Int, Int) -> ()
-
+    
     public func getFrontImage(card: Card, completion: @escaping CompletionHandler) throws {
         try getImage(name: card.frontImageName, completion: completion)
     }
@@ -122,11 +123,43 @@ public class CardImageStore {
         }
     }
     
+    @discardableResult
+    public func downloadMissingImages(
+        for cards: [Card],
+        progress: FileBatchDownload.ProgressHandler?,
+        completion: @escaping FileBatchDownload.CompletionHandler) throws -> FileBatchDownload {
+        guard let serverDir = serverDir else { throw CardImageStoreError.serverDirNotDefined }
+        
+        var imageNames = [String]()
+        imageNames.append(contentsOf: cards.map({ $0.frontImageName }))
+        imageNames.append(contentsOf: cards.flatMap({ $0.backImageName }))
+        
+        let missingImages = imageNames.flatMap { (name) -> URL? in
+            let url = localDir.appendingPathComponent(name)
+            
+            if FileManager.default.fileExists(atPath: url.path) {
+                return nil
+            } else {
+                return serverDir.appendingPathComponent(name)
+            }
+        }
+        
+        batchDownloadManager = FileBatchDownload(files: missingImages,
+                                                 storeIn: localDir,
+                                                 progress: progress,
+                                                 completion: completion)
+        
+        try batchDownloadManager?.startDownload()
+        
+        return batchDownloadManager!
+    }
+    
     public enum CardImageStoreError: Error {
         case imageNotFound(String)
         case serverNotAvailable
         case serverAndLocalDirsCannotBeEqual
         case invalidImageData(String)
         case cardDoesNotHaveBackImage(String)
+        case serverDirNotDefined
     }
 }

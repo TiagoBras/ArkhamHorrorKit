@@ -23,4 +23,16 @@ class Download {
     var resumeData: Data?
     
     var completionHandlers: [Handlers] = []
+    
+    func completeAll(url: URL?, error: Error?) {
+        for handler in completionHandlers {
+            handler.completion?(url, error)
+        }
+    }
+    
+    func progressAll(progress: Float) {
+        for handler in completionHandlers {
+            handler.progress?(progress)
+        }
+    }
 }

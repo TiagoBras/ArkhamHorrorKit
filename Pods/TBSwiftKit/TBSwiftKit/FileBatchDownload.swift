@@ -24,10 +24,11 @@ public class FileBatchDownload {
     public typealias FilesDownloaded = Int
     public typealias TotalFiles = Int
     public typealias ProgressHandler = (FilesDownloaded, TotalFiles) -> ()
-    public typealias CompletionHandler = (Resume, Error?) -> ()
+    public typealias CompletionHandler = (DownloadReport, Error?) -> ()
     
     private var progress: ProgressHandler?
     private var completion: CompletionHandler
+    private var completed: Bool = false
     
     public init(files: [URL], storeIn directory: URL, progress: ProgressHandler?, completion: @escaping CompletionHandler) {
         self.files = files
@@ -43,7 +44,7 @@ public class FileBatchDownload {
                                       target: nil)
     
     public func startDownload() throws {
-        if !hasStartedDownload {
+        if !hasStartedDownload && !completed {
             hasStartedDownload = true
             
             try files.forEach { (url) in
@@ -64,7 +65,8 @@ public class FileBatchDownload {
                         self?.progress?(downloaded.count, totalFiles)
                         
                         if downloaded.count + notDownloaded.count == totalFiles {
-                            self?.completion(Resume(filesDownloaded: downloaded,
+                            self?.completed = true
+                            self?.completion(DownloadReport(filesDownloaded: downloaded,
                                                     filesNotDownloaded: notDownloaded), error)
                         }
                     }
@@ -73,8 +75,20 @@ public class FileBatchDownload {
         }
     }
     
-    public struct Resume {
-        var filesDownloaded: [URL]
-        var filesNotDownloaded: [URL]
+    public func cancelDownload() {
+        queue.sync {
+            if !self.completed {
+                self.dm.cancelAllDownloads()
+            }
+        }
+    }
+    
+    public struct DownloadReport {
+        public var filesDownloaded: [URL]
+        public var filesNotDownloaded: [URL]
+    }
+    
+    public enum FileBatchDownloadError: Error {
+        case downloadCancelled
     }
 }

@@ -11,13 +11,14 @@ import XCTest
 @testable import ArkhamHorrorKit
 
 class CardImageStoreTests: XCTestCase {
-    func testExample() {
-        let promise = expectation(description: "Card Image Download")
-        let serverDir = URL(string: "https://appassets.nyc3.digitaloceanspaces.com/ahassets/images")!
-        let userDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let serverDir = URL(string: "https://appassets.nyc3.digitaloceanspaces.com/ahassets/images")!
+    let userDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let fm = FileManager.default
+    
+    func testDownloadingOneCardImage() {
+        let promise = expectation(description: "Download Front Image")
         let localDir = userDir.appendingPathComponent("card_images")
         
-        let fm = FileManager.default
         try! fm.createDirectory(at: localDir, withIntermediateDirectories: true, attributes: nil)
         
         let imageStore = try! CardImageStore(serverDir: serverDir, localDir: localDir, cacheSize: 10)
@@ -46,5 +47,37 @@ class CardImageStoreTests: XCTestCase {
         wait(for: [promise2], timeout: 20.0)
         
         try! fm.removeItem(at: localDir)
+    }
+    
+    func testDownloadingMissingImages() {
+        let promise = expectation(description: "Download Missing Images")
+        let localDir = userDir.appendingPathComponent("card_images_local")
+ 
+        if fm.fileExists(atPath: localDir.path) {
+            try! fm.removeItem(at: localDir)
+        }
+        
+        try! fm.createDirectory(at: localDir, withIntermediateDirectories: false, attributes: nil)
+        
+        let db = try! AHDatabase()
+        let cards = Array(1040...1045).map({ DatabaseTestsHelper.fetchCard(id: $0, in: db) })
+        let sourceURL = Bundle(for: CardImageStoreTests.self).url(
+            forResource: "01043", withExtension: "jpeg")!
+        
+        try! fm.copyItem(at: sourceURL, to: localDir.appendingPathComponent("01043.jpeg"))
+        
+        let imageStore = try! CardImageStore(serverDir: serverDir, localDir: localDir, cacheSize: 10)
+        try! imageStore.downloadMissingImages(for: cards, progress: nil) { (report, error) in
+            XCTAssert(error == nil)
+            XCTAssertEqual(report.filesDownloaded.count, 5)
+            XCTAssertEqual(report.filesNotDownloaded.count, 0)
+            
+            let files = try! self.fm.contentsOfDirectory(atPath: localDir.path)
+            XCTAssertEqual(files.count, 6)
+            
+            promise.fulfill()
+        }
+        
+        wait(for: [promise], timeout: 200.0)
     }
 }
