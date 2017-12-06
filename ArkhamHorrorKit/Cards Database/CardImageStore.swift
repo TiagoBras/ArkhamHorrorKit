@@ -123,18 +123,14 @@ public class CardImageStore {
         }
     }
     
-    @discardableResult
-    public func downloadMissingImages(
-        for cards: [Card],
-        progress: FileBatchDownload.ProgressHandler?,
-        completion: @escaping FileBatchDownload.CompletionHandler) throws -> FileBatchDownload {
+    public func missingImages(for cards: [Card]) throws -> [URL] {
         guard let serverDir = serverDir else { throw CardImageStoreError.serverDirNotDefined }
         
         var imageNames = [String]()
         imageNames.append(contentsOf: cards.map({ $0.frontImageName }))
         imageNames.append(contentsOf: cards.flatMap({ $0.backImageName }))
         
-        let missingImages = imageNames.flatMap { (name) -> URL? in
+        return imageNames.flatMap { (name) -> URL? in
             let url = localDir.appendingPathComponent(name)
             
             if FileManager.default.fileExists(atPath: url.path) {
@@ -143,8 +139,14 @@ public class CardImageStore {
                 return serverDir.appendingPathComponent(name)
             }
         }
-        
-        batchDownloadManager = FileBatchDownload(files: missingImages,
+    }
+    
+    @discardableResult
+    public func downloadMissingImages(
+        for cards: [Card],
+        progress: FileBatchDownload.ProgressHandler?,
+        completion: @escaping FileBatchDownload.CompletionHandler) throws -> FileBatchDownload {
+        batchDownloadManager = FileBatchDownload(files: try missingImages(for: cards),
                                                  storeIn: localDir,
                                                  progress: progress,
                                                  completion: completion)

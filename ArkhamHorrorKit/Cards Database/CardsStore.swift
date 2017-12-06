@@ -49,6 +49,20 @@ public final class CardsStore {
         })
     }
     
+    public func fetchCard(id: Int, completion: @escaping (Card?, Error?) -> ()) throws {
+        DispatchQueue.global().async {
+            do {
+                let card = try self.fetchCard(id: id)
+                
+                DispatchQueue.main.async {
+                    completion(card, nil)
+                }
+            } catch {
+                completion(nil, error)
+            }
+        }
+    }
+    
     public func fetchCards(filter: CardFilter?, sorting: [CardsSortingDescriptor]?) -> [Card] {
         guard let cards = try? dbWriter.read({ db -> [Card] in
             let joinClause = genJoinClause(filter)
@@ -73,6 +87,18 @@ public final class CardsStore {
         return cards
     }
     
+    public func fetchCards(filter: CardFilter?,
+                           sorting: [CardsSortingDescriptor]?,
+                           completion: @escaping ([Card]) -> ()) {
+        DispatchQueue.global().async {
+            let cards = self.fetchCards(filter: filter, sorting: sorting)
+            
+            DispatchQueue.main.async {
+                completion(cards)
+            }
+        }
+    }
+    
     public func fetchCards(filter: CardFilter?, sorting: [CardsSortingDescriptor]?, groupResults: Bool) -> DatabaseCardStoreFetchResult? {
         let cards = fetchCards(filter: filter, sorting: sorting)
         
@@ -92,6 +118,19 @@ public final class CardsStore {
         }
         
         return result
+    }
+    
+    public func fetchCards(filter: CardFilter?,
+                           sorting: [CardsSortingDescriptor]?,
+                           groupResults: Bool,
+                           completion: @escaping (DatabaseCardStoreFetchResult?) -> ()) {
+        DispatchQueue.global().async {
+            let result = self.fetchCards(filter: filter, sorting: sorting, groupResults: groupResults)
+            
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
     }
     
     class func makeCard(record: CardRecord,

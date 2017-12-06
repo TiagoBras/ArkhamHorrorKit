@@ -67,6 +67,9 @@ class CardImageStoreTests: XCTestCase {
         try! fm.copyItem(at: sourceURL, to: localDir.appendingPathComponent("01043.jpeg"))
         
         let imageStore = try! CardImageStore(serverDir: serverDir, localDir: localDir, cacheSize: 10)
+        
+        XCTAssertEqual(try! imageStore.missingImages(for: cards).count, 5)
+        
         try! imageStore.downloadMissingImages(for: cards, progress: nil) { (report, error) in
             XCTAssert(error == nil)
             XCTAssertEqual(report.filesDownloaded.count, 5)
