@@ -31,6 +31,24 @@ public struct DeckCard: Hashable, Comparable {
         return lhs.card.id == rhs.card.id
     }
     
+    public func isLessThan(deckCard: DeckCard, using sorter: CardsSortingDescriptor) -> Bool {
+        return sorter.isLessThan(self, deckCard)
+    }
+    
+    public func isLessThan(deckCard: DeckCard, using sorters: [CardsSortingDescriptor]) -> Bool {
+        for sorter in sorters {
+            if sorter.isLessThan(self, deckCard) {
+                return true
+            } else if sorter.isEqual(self, deckCard) {
+                continue
+            } else {
+                return false
+            }
+        }
+        
+        return false
+    }
+    
     public enum DeckCardError: Error {
         case cardNotFound(Int)
     }

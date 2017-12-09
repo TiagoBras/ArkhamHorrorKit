@@ -46,4 +46,22 @@ public struct Card: Equatable {
     public static func ==(lhs: Card, rhs: Card) -> Bool {
         return lhs.id == rhs.id
     }
+    
+    public func isLessThan(card: Card, using sorter: CardsSortingDescriptor) -> Bool {
+        return sorter.isLessThan(self, card)
+    }
+    
+    public func isLessThan(card: Card, using sorters: [CardsSortingDescriptor]) -> Bool {
+        for sorter in sorters {
+            if sorter.isLessThan(self, card) {
+                return true
+            } else if sorter.isEqual(self, card) {
+                continue
+            } else {
+                return false
+            }
+        }
+        
+        return false
+    }
 }

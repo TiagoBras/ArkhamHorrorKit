@@ -78,9 +78,16 @@ public struct Deck: Equatable {
         }
     }
     
+    public func sortedCards(sortingDescriptors: [CardsSortingDescriptor]) -> [DeckCard] {
+        return cards.sorted(by: { (a, b) -> Bool in
+            return a.isLessThan(deckCard: b, using: sortingDescriptors)
+        })
+    }
+    
     public mutating func changeQuantity(of card: Card, quantity: Int) {
         _cards[card.id] = DeckCard(card: card, quantity: quantity)
     }
+    
     
     public static func ==(lhs: Deck, rhs: Deck) -> Bool {
         return lhs.id == rhs.id

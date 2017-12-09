@@ -37,6 +37,52 @@ public struct CardsSortingDescriptor: Equatable {
     public static func ==(lhs: CardsSortingDescriptor, rhs: CardsSortingDescriptor) -> Bool {
         return lhs.column == rhs.column && lhs.ascending == rhs.ascending
     }
+    
+    public func isLessThan(_ a: Card, _ b: Card) -> Bool {
+        var isLessThan: Bool = false
+        
+        switch column {
+        case .faction: isLessThan = a.faction.id < b.faction.id
+        case .type: isLessThan = a.type.id < b.type.id
+        case .pack: isLessThan = a.type.id < b.type.id
+        case .level: isLessThan = a.level < b.level
+        case .assetSlot: isLessThan = (a.assetSlot?.id ?? -1) < (b.assetSlot?.id ?? -1)
+        case .name: isLessThan = a.name < b.name
+        }
+        
+        if ascending {
+            return isLessThan
+        } else {
+            return !isLessThan
+        }
+    }
+    
+    public func isLessThan(_ a: DeckCard, _ b: DeckCard) -> Bool {
+        return isLessThan(a.card, b.card)
+    }
+    
+    public func isEqual(_ a: Card, _ b: Card) -> Bool {
+        var isEqual: Bool = false
+        
+        switch column {
+        case .faction: isEqual = a.faction.id == b.faction.id
+        case .type: isEqual = a.type.id == b.type.id
+        case .pack: isEqual = a.type.id == b.type.id
+        case .level: isEqual = a.level == b.level
+        case .assetSlot: isEqual = (a.assetSlot?.id ?? -1) == (b.assetSlot?.id ?? -1)
+        case .name: isEqual = a.name == b.name
+        }
+        
+        if ascending {
+            return isEqual
+        } else {
+            return !isEqual
+        }
+    }
+    
+    public func isEqual(_ a: DeckCard, _ b: DeckCard) -> Bool {
+        return isEqual(a.card, b.card)
+    }
 }
 
 public protocol CardStoreFetchResult {
