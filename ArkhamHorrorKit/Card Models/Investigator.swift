@@ -8,7 +8,7 @@
 
 import TBSwiftKit
 
-public struct Investigator: Equatable {
+public struct Investigator: Hashable {
     public enum InvestigatorId: Int {
         case rolandBanksTheFed = 1001, daisyWalkerTheLibrarian = 1002, skidsOTooleTheExCon = 1003
         case agnesBakerTheWaitress = 1004, wendyAdamsTheUrchin = 1005, zoeySamarasTheChef = 2001
@@ -42,6 +42,10 @@ public struct Investigator: Equatable {
     
     public static func ==(lhs: Investigator, rhs: Investigator) -> Bool {
         return lhs.id == rhs.id
+    }
+    
+    public var hashValue: Int {
+        return id.hashValue
     }
     
     public var deckSize: Int {

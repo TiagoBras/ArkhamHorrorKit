@@ -8,18 +8,22 @@
 
 public struct DeckCard: Hashable, Comparable {
     public static func <(lhs: DeckCard, rhs: DeckCard) -> Bool {
-        if lhs.card == rhs.card {
+        if lhs.card.id == rhs.card.id {
             return lhs.quantity < rhs.quantity
         } else {
             return lhs.card.id < rhs.card.id
         }
     }
     
-    public let card: Card
-    public let quantity: Int
+    public var card: Card
+    public var quantity: Int
 
     public var hashValue: Int {
-        return card.id
+        var finalHash = 5381
+        finalHash = ((finalHash << 5) &+ finalHash) &+ card.id.hashValue
+        finalHash = ((finalHash << 5) &+ finalHash) &+ quantity.hashValue
+
+        return finalHash
     }
     
     public init(card: Card, quantity: Int) {
@@ -28,7 +32,9 @@ public struct DeckCard: Hashable, Comparable {
     }
 
     public static func ==(lhs: DeckCard, rhs: DeckCard) -> Bool {
-        return lhs.card.id == rhs.card.id
+        guard lhs.card.id == rhs.card.id else { return false }
+        
+        return lhs.quantity == rhs.quantity
     }
     
     public func isLessThan(deckCard: DeckCard, using sorter: CardsSortingDescriptor) -> Bool {

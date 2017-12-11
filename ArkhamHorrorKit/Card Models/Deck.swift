@@ -10,13 +10,7 @@ public protocol DeckOption {
     func isDeckValid(_ deck: Deck) -> Deck.DeckValidationResult
 }
 
-extension Set where Element == DeckCard {
-    public func index(of element: Card) -> Set<DeckCard>.Index? {
-        return index(where: { $0.card.id == element.id })
-    }
-}
-
-public struct Deck: Equatable {
+public struct Deck: Hashable {
     public var id: Int
     public var investigator: Investigator
     public var name: String
@@ -90,7 +84,25 @@ public struct Deck: Equatable {
     
     
     public static func ==(lhs: Deck, rhs: Deck) -> Bool {
-        return lhs.id == rhs.id
+        guard lhs.id == rhs.id else { return false }
+        guard lhs.investigator == rhs.investigator else { return false }
+        guard lhs.name == rhs.name else { return false }
+        guard lhs.creationDate == rhs.creationDate else { return false }
+        guard lhs.updateDate == rhs.updateDate else { return false }
+        
+        return lhs._cards == rhs._cards
+    }
+
+    public var hashValue: Int {
+        var finalHash = 5381
+        let hashes: [Int] = [id.hashValue, investigator.hashValue, name.hashValue,
+                             creationDate.hashValue, updateDate.hashValue, cards.hashValue]
+        
+        for hash in hashes {
+            finalHash = ((finalHash << 5) &+ finalHash) &+ hash
+        }
+        
+        return finalHash
     }
     
     public struct DeckValidationResult {
