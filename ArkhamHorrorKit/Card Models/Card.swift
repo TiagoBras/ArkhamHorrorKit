@@ -6,7 +6,7 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 //
 
-public struct Card: Equatable {
+public struct Card: Hashable {
     public var id: Int
     public var name: String
     public var subname: String
@@ -45,6 +45,10 @@ public struct Card: Equatable {
     
     public static func ==(lhs: Card, rhs: Card) -> Bool {
         return lhs.id == rhs.id
+    }
+    
+    public var hashValue: Int {
+        return id.hashValue
     }
     
     public func isLessThan(card: Card, using sorter: CardsSortingDescriptor) -> Bool {
