@@ -1,12 +1,5 @@
-//
-//  Card.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 19/04/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
-
-public struct Card: Hashable {
+public struct Card: Hashable, Comparable {
     public var id: Int
     public var name: String
     public var subname: String
@@ -44,7 +37,11 @@ public struct Card: Hashable {
     public var backImageName: String?
     
     public static func ==(lhs: Card, rhs: Card) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.hashValue == rhs.hashValue
+    }
+    
+    public static func <(lhs: Card, rhs: Card) -> Bool {
+        return lhs.id < rhs.id
     }
     
     public var hashValue: Int {

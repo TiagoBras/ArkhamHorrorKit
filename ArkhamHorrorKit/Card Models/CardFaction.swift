@@ -1,19 +1,17 @@
-//
-//  CardFaction.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 19/04/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
 import TBSwiftKit
 
-public enum CardFaction: Int {
+public enum CardFaction: Int, Comparable {
     class Dummy {}
     
     case guardian = 1, seeker, rogue, mystic, survivor, neutral
     
     public static var allValues: [CardFaction] = [.guardian, .seeker, .rogue, .mystic, .survivor, .neutral]
+    
+    public static func <(lhs: CardFaction, rhs: CardFaction) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
     
     public init?(code: String) {
         let codes: [String: CardFaction] = [

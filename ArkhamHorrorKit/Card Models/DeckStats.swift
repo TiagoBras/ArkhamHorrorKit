@@ -1,10 +1,4 @@
-//
-//  DeckStats.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 23/10/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
 public class DeckStats {
     public var deckSize: Int = 0

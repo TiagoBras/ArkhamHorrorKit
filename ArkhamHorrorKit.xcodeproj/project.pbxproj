@@ -69,6 +69,8 @@
 		A51A26B41FAF35D7004C6ED1 /* tuo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265B1FAF3467004C6ED1 /* tuo.json */; };
 		A51A26B51FAF35D7004C6ED1 /* uau.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26581FAF3467004C6ED1 /* uau.json */; };
 		A51A26B61FAF35D7004C6ED1 /* wda.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26591FAF3467004C6ED1 /* wda.json */; };
+		A51DBA421FDEF86500B247A4 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51DBA411FDEF86500B247A4 /* Helpers.swift */; };
+		A51DBA431FDEF86500B247A4 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51DBA411FDEF86500B247A4 /* Helpers.swift */; };
 		A524FB7E1FB0F05B00123949 /* DeckStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A524FB7D1FB0F05B00123949 /* DeckStoreTests.swift */; };
 		A524FB7F1FB0F05B00123949 /* DeckStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A524FB7D1FB0F05B00123949 /* DeckStoreTests.swift */; };
 		A53E36CE1FCC97A20002F85A /* cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CC1FCC97A20002F85A /* cycles.json */; };
@@ -248,6 +250,7 @@
 		A51A26611FAF3468004C6ED1 /* schema_v1.sql */ = {isa = PBXFileReference; lastKnownFileType = text; path = schema_v1.sql; sourceTree = "<group>"; };
 		A51A26621FAF3468004C6ED1 /* dwl.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dwl.json; sourceTree = "<group>"; };
 		A51A26631FAF3468004C6ED1 /* core.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = core.json; sourceTree = "<group>"; };
+		A51DBA411FDEF86500B247A4 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		A524FB7D1FB0F05B00123949 /* DeckStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckStoreTests.swift; sourceTree = "<group>"; };
 		A52F52021FAFC12900CEFA18 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A52F52041FAFC39C00CEFA18 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
@@ -555,6 +558,7 @@
 			isa = PBXGroup;
 			children = (
 				A5DA6A561FA23B2900457F27 /* ArkhamHorrorKit.h */,
+				A51DBA411FDEF86500B247A4 /* Helpers.swift */,
 				A563C3E21FB129720060FE8C /* Resources */,
 				A557A7DD1FAFCB21007B9D6F /* Cards Database */,
 				A5DA6A8B1FA2440900457F27 /* Card Models */,
@@ -1072,6 +1076,7 @@
 				A557A7EA1FB0E65E007B9D6F /* DeckSortingDescriptor.swift in Sources */,
 				A5DA6A9E1FA244C300457F27 /* CardCycle.swift in Sources */,
 				A55DEB391FCA3D5700141FED /* CardImageStore.swift in Sources */,
+				A51DBA421FDEF86500B247A4 /* Helpers.swift in Sources */,
 				A57FFB461FB5FE7F00B16FE6 /* ScenarioRecord.swift in Sources */,
 				A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */,
 				A57E8EE41FAE6926008942B0 /* DeckCardRecord.swift in Sources */,
@@ -1123,6 +1128,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5779C2F1FB608A400DB9DAD /* ChaosToken.swift in Sources */,
+				A51DBA431FDEF86500B247A4 /* Helpers.swift in Sources */,
 				A5779C301FB608A700DB9DAD /* ChaosBagDifficulty.swift in Sources */,
 				A5DA6AB11FA244C400457F27 /* CardPack.swift in Sources */,
 				A5DA6AB21FA244C400457F27 /* CardsSortingDescriptor.swift in Sources */,

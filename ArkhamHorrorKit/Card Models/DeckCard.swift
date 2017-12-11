@@ -1,10 +1,4 @@
-//
-//  DeckCard.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 01/06/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
 public struct DeckCard: Hashable, Comparable {
     public static func <(lhs: DeckCard, rhs: DeckCard) -> Bool {
@@ -20,7 +14,7 @@ public struct DeckCard: Hashable, Comparable {
 
     public var hashValue: Int {
         var finalHash = 5381
-        finalHash = ((finalHash << 5) &+ finalHash) &+ card.id.hashValue
+        finalHash = ((finalHash << 5) &+ finalHash) &+ card.hashValue
         finalHash = ((finalHash << 5) &+ finalHash) &+ quantity.hashValue
 
         return finalHash

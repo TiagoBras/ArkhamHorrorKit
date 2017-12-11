@@ -1,12 +1,6 @@
-//
-//  CardPack.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 19/04/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
-public struct CardPack: Hashable {
+public struct CardPack: Hashable, Comparable {
     public var id: String
     public var name: String
     public var position: Int
@@ -14,10 +8,22 @@ public struct CardPack: Hashable {
     public var cycle: CardCycle
     
     public var hashValue: Int {
-        return (cycle.position * 1000) + position
+        let hashables: [AnyHashable] = [id, name, position, size, cycle]
+        
+        return hashables.hashValue
     }
     
     public static func ==(lhs: CardPack, rhs: CardPack) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.hashValue == rhs.hashValue
+    }
+    
+    public static func <(lhs: CardPack, rhs: CardPack) -> Bool {
+        if lhs.cycle < rhs.cycle {
+            return true
+        } else if lhs.cycle == rhs.cycle {
+            return lhs.position < rhs.position
+        } else {
+            return false
+        }
     }
 }

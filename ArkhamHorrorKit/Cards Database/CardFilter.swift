@@ -1,10 +1,4 @@
-//
-//  CardFilter.swift
-//  ArkhamHorrorKit iOS
-//
-//  Created by Tiago Bras on 26/10/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
 public struct CardFilter: Equatable {
     public var cardIds = Set<Int>()

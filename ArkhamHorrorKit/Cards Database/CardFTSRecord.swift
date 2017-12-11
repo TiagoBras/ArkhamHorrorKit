@@ -1,10 +1,4 @@
-//
-//  CardFTSRecord.swift
-//  ArkhamHorrorKit
-//
-//  Created by Tiago Bras on 28/11/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
 import Foundation
 import GRDB

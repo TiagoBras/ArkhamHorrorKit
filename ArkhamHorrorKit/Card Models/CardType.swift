@@ -1,12 +1,6 @@
-//
-//  CardType.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 19/04/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
-public enum CardType: Int {
+public enum CardType: Int, Comparable {
     case asset = 1, event, skill, treachery, enemy
     
     public var id: Int {
@@ -19,6 +13,10 @@ public enum CardType: Int {
     
     public static var allValues: [CardType] {
         return [.asset, .event, .skill, .treachery, .enemy]
+    }
+    
+    public static func <(lhs: CardType, rhs: CardType) -> Bool {
+        return lhs.rawValue < rhs.hashValue
     }
     
     public init?(code: String) {

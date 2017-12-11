@@ -1,10 +1,4 @@
-//
-//  DBDeck.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 03/06/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
 import GRDB
 

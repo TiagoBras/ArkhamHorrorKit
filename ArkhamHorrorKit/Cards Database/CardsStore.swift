@@ -1,10 +1,4 @@
-//
-//  CardsStoreV1.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 23/10/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
 import Foundation
 import GRDB

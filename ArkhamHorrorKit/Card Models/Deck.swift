@@ -1,10 +1,4 @@
-//
-//  Deck.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 01/06/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
 public protocol DeckOption {
     func isDeckValid(_ deck: Deck) -> Deck.DeckValidationResult
@@ -82,7 +76,6 @@ public struct Deck: Hashable {
         _cards[card.id] = DeckCard(card: card, quantity: quantity)
     }
     
-    
     public static func ==(lhs: Deck, rhs: Deck) -> Bool {
         guard lhs.id == rhs.id else { return false }
         guard lhs.investigator == rhs.investigator else { return false }
@@ -94,15 +87,10 @@ public struct Deck: Hashable {
     }
 
     public var hashValue: Int {
-        var finalHash = 5381
-        let hashes: [Int] = [id.hashValue, investigator.hashValue, name.hashValue,
-                             creationDate.hashValue, updateDate.hashValue, cards.hashValue]
+        let hashables: [AnyHashable] = [id, investigator, name,
+                             creationDate, updateDate, cards]
         
-        for hash in hashes {
-            finalHash = ((finalHash << 5) &+ finalHash) &+ hash
-        }
-        
-        return finalHash
+        return hashables.hashValue
     }
     
     public struct DeckValidationResult {

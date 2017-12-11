@@ -1,17 +1,13 @@
-//
-//  CardTestSkillIcon.swift
-//  ArkhamHorrorKit iOS
-//
-//  Created by Tiago Bras on 26/10/2017.
-//  Copyright © 2017 Tiago Bras. All rights reserved.
-//
-
 import TBSwiftKit
 
-public enum CardSkillTestIcon: Int {
+public enum CardSkillTestIcon: Int, Comparable {
     case willpower = 1, intellect, combat, agility, wild
     
     public static var allValues: [CardSkillTestIcon] = [.willpower, .intellect, .combat, .agility, .wild]
+    
+    public static func <(lhs: CardSkillTestIcon, rhs: CardSkillTestIcon) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
     
     public var id: Int {
         return rawValue

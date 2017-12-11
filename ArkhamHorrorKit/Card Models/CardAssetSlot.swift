@@ -1,12 +1,6 @@
-//
-//  CardAssetSlot.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 27/04/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
-public enum CardAssetSlot: Int {
+public enum CardAssetSlot: Int, Comparable {
     case hand = 1, hand2, ally, body, accessory, arcane, arcane2
 
     public static var allValues: [CardAssetSlot] = [.ally, .body, .accessory, .hand, .hand2, .arcane, .arcane2]
@@ -21,6 +15,10 @@ public enum CardAssetSlot: Int {
         case .arcane2: return "2Arcane"
         default: return String(describing: self).capitalized
         }
+    }
+    
+    public static func <(lhs: CardAssetSlot, rhs: CardAssetSlot) -> Bool {
+        return lhs.rawValue < rhs.rawValue
     }
     
     public init?(code: String) {

@@ -1,14 +1,8 @@
-//
-//  Investigator.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 31/05/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
 import TBSwiftKit
 
-public struct Investigator: Hashable {
+public struct Investigator: Hashable, Comparable {
     public enum InvestigatorId: Int {
         case rolandBanksTheFed = 1001, daisyWalkerTheLibrarian = 1002, skidsOTooleTheExCon = 1003
         case agnesBakerTheWaitress = 1004, wendyAdamsTheUrchin = 1005, zoeySamarasTheChef = 2001
@@ -231,6 +225,10 @@ public struct Investigator: Hashable {
         }
         
         return [DeckOptionAllowedFactions(Array(factions), level: 0, maxQuantity: 5)]
+    }
+    
+    public static func <(lhs: Investigator, rhs: Investigator) -> Bool {
+        return lhs.id < rhs.id
     }
 }
 

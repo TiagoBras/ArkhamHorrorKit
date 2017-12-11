@@ -1,10 +1,4 @@
-//
-//  CardsSortingDescriptor.swift
-//  ArkhamHorrorCompanion
-//
-//  Created by Tiago Bras on 19/04/2017.
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-//
 
 public struct CardsSortingDescriptor: Equatable {
     public enum CardColumn {
