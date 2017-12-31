@@ -65,7 +65,7 @@ public class CardImageStore {
             if FileManager.default.fileExists(atPath: localPath) {
                 #if os(iOS) || os(watchOS) || os(tvOS)
                     if let image = UIImage(contentsOfFile: localPath) {
-                        cache.setCachedValue(name, value: image)
+                        cache.set(name, value: image)
                         completion(image, nil)
                     } else {
                         imagesNotFound.insert(name)
@@ -94,7 +94,7 @@ public class CardImageStore {
                         
                         #if os(iOS) || os(watchOS) || os(tvOS)
                             if let image = UIImage(contentsOfFile: localPath) {
-                                self?.cache.setCachedValue(name, value: image)
+                                self?.cache.set(name, value: image)
                                 completion(image, nil)
                             } else {
                                 self?.imagesNotFound.insert(name)
