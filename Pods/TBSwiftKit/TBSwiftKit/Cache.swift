@@ -32,6 +32,7 @@ public class Cache<Key, Value> where Key: Hashable {
     
     private let MIN_ITEMS_COUNT = 5
     private lazy var items = [Key: ValueWithTimestamp<Value>]()
+    private var queue: DispatchQueue
     
     public let maxItems: Int
     public var count: Int {
@@ -44,37 +45,53 @@ public class Cache<Key, Value> where Key: Hashable {
      */
     public init(maxItems: Int = 20) {
         self.maxItems = maxItems >= MIN_ITEMS_COUNT ? maxItems : MIN_ITEMS_COUNT
+        self.queue = DispatchQueue(label: "CACHE:\(UUID().uuidString)",
+            qos: .default,
+            attributes: .concurrent,
+            autoreleaseFrequency: .inherit,
+            target: nil)
     }
     
-    public func getCachedValue(_ key: Key) -> Value? {
-        return items[key]?.value
-    }
-    
-    public func getCachedValue(_ key: Key, defaultValue: DefaultValue) -> Value? {
-        // insert default value if not value is not cached
-        if items[key] != nil {
-            return items[key]?.value
+    public func get(_ key: Key) -> Value? {
+        var returnValue: Value?
+        
+        queue.sync {
+            returnValue = items[key]?.value
         }
         
-        if let newValue = defaultValue() {
+        return returnValue
+    }
+    
+    public func get(_ key: Key, defaultValue: DefaultValue) -> Value? {
+        var returnValue: Value?
+        
+        queue.sync {
+            if items[key] != nil {
+                returnValue = items[key]?.value
+            }
+            
+            if let newValue = defaultValue() {
+                if items.count >= maxItems && items[key] == nil {
+                    removeLeastRecentlyUsedItem()
+                }
+                
+                items[key] = ValueWithTimestamp(newValue)
+                
+                returnValue = items[key]?.value
+            }
+        }
+        
+        return returnValue
+    }
+    
+    public func set(_ key: Key, value: Value) {
+        queue.sync {
             if items.count >= maxItems && items[key] == nil {
                 removeLeastRecentlyUsedItem()
             }
             
-            items[key] = ValueWithTimestamp(newValue)
-            
-            return items[key]?.value
+            items[key] = ValueWithTimestamp(value)
         }
-        
-        return nil
-    }
-    
-    public func setCachedValue(_ key: Key, value: Value) {
-        if items.count >= maxItems && items[key] == nil {
-            removeLeastRecentlyUsedItem()
-        }
-        
-        items[key] = ValueWithTimestamp(value)
     }
     
     public func clear() {

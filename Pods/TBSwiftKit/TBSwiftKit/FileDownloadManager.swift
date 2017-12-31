@@ -181,14 +181,16 @@ public class FileDownloadManager: NSObject, URLSessionDelegate, URLSessionDownlo
     }
     
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        if let error = error {
-            print(error)
+        queue.sync {
+            if let error = error {
+                print(error)
+            }
+            
+            guard let url = task.originalRequest?.url else { return }
+            guard let download = activeDownloads.removeValue(forKey: url) else { return }
+            
+            download.completeAll(url: nil, error: DownloadManagerError.internetNotAvailable)
         }
-        
-        guard let url = task.originalRequest?.url else { return }
-        guard let download = activeDownloads.removeValue(forKey: url) else { return }
-        
-        download.completeAll(url: nil, error: DownloadManagerError.internetNotAvailable)
     }
     
     #if os(iOS) || os(watchOS) || os(tvOS)

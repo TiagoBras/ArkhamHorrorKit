@@ -56,7 +56,7 @@ public class CardImageStore {
     func getImage(name: String, completion: @escaping CompletionHandler) throws {
         if imagesNotFound.contains(name) {
             completion(nil, CardImageStoreError.imageNotFound(name))
-        } else if let image = cache.getCachedValue(name) {
+        } else if let image = cache.get(name) {
             completion(image, nil)
         } else {
             let localPath = localDir.appendingPathComponent(name).path
@@ -73,7 +73,7 @@ public class CardImageStore {
                     }
                 #elseif os(OSX)
                     if let image = NSImage(contentsOfFile: localPath) {
-                        cache.setCachedValue(name, value: image)
+                        cache.set(name, value: image)
                         completion(image, nil)
                     } else {
                         imagesNotFound.insert(name)
@@ -102,7 +102,7 @@ public class CardImageStore {
                             }
                         #elseif os(OSX)
                             if let image = NSImage(contentsOfFile: localPath) {
-                                self?.cache.setCachedValue(name, value: image)
+                                self?.cache.set(name, value: image)
                                 completion(image, nil)
                             } else {
                                 self?.imagesNotFound.insert(name)

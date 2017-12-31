@@ -198,7 +198,7 @@ public final class CardsStore {
         }
         
         if let cache = cardsCache {
-            return cache.getCachedValue(record.id, defaultValue: getCard)
+            return cache.get(record.id, defaultValue: getCard)
         } else {
             return getCard()
         }
