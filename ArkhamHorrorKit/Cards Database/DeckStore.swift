@@ -81,8 +81,6 @@ public final class DeckStore {
     }
     
     public func changeDeckName(deck: Deck, to name: String) throws -> Deck {
-        guard deck.name != name else { return deck }
-        
         var updatedDeck = deck
         
         return try dbWriter.write({ (db) -> Deck in
