@@ -8,16 +8,20 @@ final class DeckRecord: Record {
     var investigatorId: Int
     var creationDate: Date
     var updateDate: Date
+    var version: Int
+    var previousVersionDeckId: Int?
+    var nextVersionDeckId: Int?
     
     override class var databaseTableName: String {
         return "Deck"
     }
     
-    init(investigatorId: Int, name: String) {
+    init(investigatorId: Int, name: String, version: Int) {
         self.name = name
         self.investigatorId = investigatorId
         self.creationDate = Date()
         self.updateDate = creationDate
+        self.version = version
         
         super.init()
     }
@@ -28,6 +32,9 @@ final class DeckRecord: Record {
         name = row["name"]
         creationDate = row["creation_date"]
         updateDate = row["update_date"]
+        version = row["version"]
+        previousVersionDeckId = row["prev_version_deck_id"]
+        nextVersionDeckId = row["next_version_deck_id"]
         
         super.init(row: row)
     }
@@ -38,6 +45,9 @@ final class DeckRecord: Record {
         container["name"] = name
         container["creation_date"] = creationDate
         container["update_date"] = updateDate
+        container["version"] = version
+        container["prev_version_deck_id"] = previousVersionDeckId
+        container["next_version_deck_id"] = nextVersionDeckId
     }
     
     override func didInsert(with rowID: Int64, for column: String?) {

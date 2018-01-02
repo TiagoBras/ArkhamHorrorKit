@@ -13,16 +13,30 @@ public struct Deck: Hashable {
     }
     public var creationDate: Date
     public var updateDate: Date
+    public let version: Int
+    public var prevDeckVersionId: Int?
+    public var nextDeckVersionId: Int?
     
     private var _cards: [Int: DeckCard]
     
-    public init(id: Int, investigator: Investigator, name: String, cards: Set<DeckCard>, creationDate: Date, updateDate: Date) {
+    public init(id: Int,
+                investigator: Investigator,
+                name: String,
+                cards: Set<DeckCard>,
+                creationDate: Date,
+                updateDate: Date,
+                version: Int,
+                prevDeckVersionId: Int?,
+                nextDeckVersionId: Int?) {
         self.id = id
         self.investigator = investigator
         self.name = name
         
         self.creationDate = creationDate
         self.updateDate = updateDate
+        self.version = version
+        self.prevDeckVersionId = prevDeckVersionId
+        self.nextDeckVersionId = nextDeckVersionId
         
         _cards = [:]
         
@@ -96,5 +110,51 @@ public struct Deck: Hashable {
     public struct DeckValidationResult {
         public var isValid: Bool
         public var message: String?
+    }
+    
+    public struct DeckDelta {
+        var cardsAdded: Set<DeckCard>
+        var cardsRemoved: Set<DeckCard>
+        var xp: Int
+    }
+    
+    public func calculateDeckDelta(_ otherDeck: Deck) -> DeckDelta {
+        var added = Set<DeckCard>()
+        var removed = Set<DeckCard>()
+        
+        let otherDeckCards = otherDeck.cards
+        
+        for otherDeckCard in otherDeckCards {
+            var match: DeckCard?
+            for deckCard in cards {
+                if otherDeckCard.card.id == deckCard.card.id {
+                    match = deckCard
+                    break
+                }
+            }
+            
+            if let match = match {
+                let quantityDelta = otherDeckCard.quantity - match.quantity
+                
+                if quantityDelta > 0 {
+                    added.insert(DeckCard(card: match.card, quantity: quantityDelta))
+                } else if quantityDelta < 0 {
+                    removed.insert(DeckCard(card: match.card, quantity: -quantityDelta))
+                }
+            } else {
+                added.insert(otherDeckCard)
+            }
+        }
+        
+        for deckCard in cards {
+            if !otherDeckCards.contains(where: { $0.card.id == deckCard.card.id }) {
+                removed.insert(deckCard)
+            }
+        }
+        
+        let currXP = cards.reduce(0, { $0 + ($1.card.level * $1.quantity) })
+        let otherXP = otherDeckCards.reduce(0, { $0 + ($1.card.level * $1.quantity) })
+        
+        return DeckDelta(cardsAdded: added, cardsRemoved: removed, xp: otherXP - currXP)
     }
 }

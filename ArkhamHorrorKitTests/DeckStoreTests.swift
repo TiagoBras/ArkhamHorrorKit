@@ -104,4 +104,63 @@ class DeckStoreTests: XCTestCase {
         
         XCTAssertEqual(fetchedDeck.name, "Zombie Killer")
     }
+    
+    func testCreateDeckFromAnotherDeck() {
+        let deckV1 = DatabaseTestsHelper.createDeck(name: "Awesome", investigator: roland, in: database)
+        
+        XCTAssertEqual(deckV1.version, 1)
+        XCTAssert(deckV1.prevDeckVersionId == nil)
+        XCTAssert(deckV1.nextDeckVersionId == nil)
+        
+        let deckV2 = try! database.deckStore.createDeck(name: "Awesome V2", from: deckV1)
+        
+        XCTAssertEqual(deckV2.version, 2)
+        XCTAssertEqual(deckV2.prevDeckVersionId!, deckV1.id)
+        XCTAssert(deckV2.nextDeckVersionId == nil)
+        
+        let updatedDeckV1 = try! database.deckStore.fetchDeck(id: deckV1.id)!
+        XCTAssertEqual(updatedDeckV1.version, 1)
+        XCTAssert(updatedDeckV1.prevDeckVersionId == nil)
+        XCTAssertEqual(updatedDeckV1.nextDeckVersionId!, deckV2.id)
+    }
+    
+    func testDeckDeltas() {
+        typealias Pair = DatabaseTestsHelper.CardIdQuantityPair
+        
+        let cards1: [Pair] = [Pair(1040, 1), Pair(1041, 2), Pair(1042, 2)]
+        let deck1 = DatabaseTestsHelper.createDeck(
+            name: "Deck1",
+            investigatorId: Investigator.InvestigatorId.rexMurphyTheReporter.rawValue,
+            cards: cards1,
+            in: database)
+        let xp1 = deck1.cards.reduce(0, { $0 + ($1.card.level * $1.quantity) })
+        
+        let cards2: [Pair] = [Pair(1040, 2), Pair(1041, 1), Pair(1043, 1)]
+        let deck2 = DatabaseTestsHelper.createDeck(
+            name: "Deck2",
+            investigatorId: Investigator.InvestigatorId.rexMurphyTheReporter.rawValue,
+            cards: cards2,
+            in: database)
+        let xp2 = deck2.cards.reduce(0, { $0 + ($1.card.level * $1.quantity) })
+        
+        let delta = deck1.calculateDeckDelta(deck2)
+        
+        let c1040 = DatabaseTestsHelper.fetchCard(id: 1040, in: database)
+        let c1041 = DatabaseTestsHelper.fetchCard(id: 1041, in: database)
+        let c1042 = DatabaseTestsHelper.fetchCard(id: 1042, in: database)
+        let c1043 = DatabaseTestsHelper.fetchCard(id: 1043, in: database)
+        
+        let addedExpected = Set([
+            DeckCard(card: c1040, quantity: 1),
+            DeckCard(card: c1043, quantity: 1)
+        ])
+        let removedExpected = Set([
+            DeckCard(card: c1041, quantity: 1),
+            DeckCard(card: c1042, quantity: 2)
+        ])
+        
+        XCTAssertEqual(xp2 - xp1, delta.xp)
+        XCTAssertEqual(delta.cardsAdded, addedExpected)
+        XCTAssertEqual(delta.cardsRemoved, removedExpected)
+    }
 }

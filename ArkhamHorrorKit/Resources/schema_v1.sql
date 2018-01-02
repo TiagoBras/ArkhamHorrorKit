@@ -132,7 +132,12 @@ CREATE TABLE IF NOT EXISTS Deck (
     investigator_id INTEGER NOT NULL,
     creation_date DATETIME NOT NULL,
     update_date DATETIME NOT NULL,
-    FOREIGN KEY (investigator_id) REFERENCES Investigator(id)
+    version INT NOT NULL DEFAULT 1,
+    prev_version_deck_id INT,
+    next_version_deck_id INT,
+    FOREIGN KEY (investigator_id) REFERENCES Investigator(id),
+    FOREIGN KEY (prev_version_deck_id) REFERENCES Deck(id),
+    FOREIGN KEY (next_version_deck_id) REFERENCES Deck(id)
 );
 
 CREATE TABLE IF NOT EXISTS DeckCard (

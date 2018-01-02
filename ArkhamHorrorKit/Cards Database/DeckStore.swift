@@ -13,7 +13,7 @@ public final class DeckStore {
     
     func createDeck(name: String, investigatorId: Int) throws -> Deck {
         return try dbWriter.write({ (db) -> Deck in
-            let record = DeckRecord(investigatorId: investigatorId, name: name)
+            let record = DeckRecord(investigatorId: investigatorId, name: name, version: 1)
             
             try record.save(db)
             
@@ -23,6 +23,28 @@ public final class DeckStore {
     
     public func createDeck(name: String, investigator: Investigator) throws -> Deck {
         return try createDeck(name: name, investigatorId: investigator.id)
+    }
+
+    public func createDeck(name: String, from deck: Deck) throws -> Deck {
+        return try dbWriter.write({ (db) -> Deck in
+            guard let oldRecord = try DeckRecord.fetchOne(db: db, id: deck.id) else {
+                throw AHDatabaseError.deckNotFound(deck.id)
+            }
+
+            let record = DeckRecord(investigatorId: deck.investigator.id,
+                                    name: name,
+                                    version: oldRecord.version + 1)
+            record.previousVersionDeckId = oldRecord.id
+            try record.save(db)
+
+            oldRecord.nextVersionDeckId = record.id
+
+            if oldRecord.hasPersistentChangedValues {
+                try oldRecord.save(db)
+            }
+
+            return try makeDeck(record: record, deckCards: Set())
+        })
     }
     
     public func deleteDeck(_ deck: Deck) throws {
@@ -138,6 +160,9 @@ public final class DeckStore {
                     name: record.name,
                     cards: deckCards,
                     creationDate: record.creationDate,
-                    updateDate: record.updateDate)
+                    updateDate: record.updateDate,
+                    version: record.version,
+                    prevDeckVersionId: record.previousVersionDeckId,
+                    nextDeckVersionId: record.nextVersionDeckId)
     }
 }
