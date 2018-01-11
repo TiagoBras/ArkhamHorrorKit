@@ -44,12 +44,12 @@ public final class CardsStore {
     }
     
     public func fetchCard(id: Int, completion: @escaping (Card?, Error?) -> ()) throws {
-        DispatchQueue.global().async {
+        DispatchQueue.global().async { [weak self] in
             do {
-                let card = try self.fetchCard(id: id)
-                
-                DispatchQueue.main.async {
-                    completion(card, nil)
+                if let output = try self?.fetchCard(id: id) {
+                    DispatchQueue.main.async {
+                        completion(output, nil)
+                    }
                 }
             } catch {
                 completion(nil, error)
@@ -64,7 +64,7 @@ public final class CardsStore {
             let sortByClause = genOrderByClause(sorting)
             
             let stmt = "SELECT * FROM Card \(joinClause) WHERE \(whereClause) ORDER BY \(sortByClause)"
-            print(stmt)
+            
             return try CardRecord.fetchAll(db, stmt).flatMap ({ (record) -> Card? in
                 let traits = try CardTraitRecord.fetchCardTraits(
                     db: db,
@@ -84,11 +84,11 @@ public final class CardsStore {
     public func fetchCards(filter: CardFilter?,
                            sorting: [CardsSortingDescriptor]?,
                            completion: @escaping ([Card]) -> ()) {
-        DispatchQueue.global().async {
-            let cards = self.fetchCards(filter: filter, sorting: sorting)
-            
-            DispatchQueue.main.async {
-                completion(cards)
+        DispatchQueue.global().async { [weak self] in
+            if let cards = self?.fetchCards(filter: filter, sorting: sorting) {
+                DispatchQueue.main.async {
+                    completion(cards)
+                }
             }
         }
     }
@@ -118,17 +118,17 @@ public final class CardsStore {
                            sorting: [CardsSortingDescriptor]?,
                            groupResults: Bool,
                            completion: @escaping (DatabaseCardStoreFetchResult?) -> ()) {
-        DispatchQueue.global().async {
-            let result = self.fetchCards(filter: filter, sorting: sorting, groupResults: groupResults)
-            
-            DispatchQueue.main.async {
-                completion(result)
+        DispatchQueue.global().async { [weak self] in
+            if let result = self?.fetchCards(filter: filter, sorting: sorting, groupResults: groupResults) {
+                DispatchQueue.main.async {
+                    completion(result)
+                }
             }
         }
     }
     
     private func updateCardStar(_ card: Card, starred: Bool, completion: ((Card?, Error?) -> ())?) {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+        DispatchQueue.global().async { [weak self] in
             var updatedCard = card
             
             do {
@@ -400,6 +400,12 @@ public final class CardsStore {
             if !filteredMatch.isEmpty {
                 whereInClauses.append("id IN (SELECT id FROM CardFTS WHERE CardFTS MATCH \"\(filteredMatch)*\")")
             }
+        }
+        
+        if let isFavorite = filter.onlyFavorites {
+            let favorite: Int = isFavorite ? 1 : 0
+            
+            whereInClauses.append("favorite = \(favorite)")
         }
         
         var s = ""

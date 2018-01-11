@@ -24,6 +24,22 @@ public final class DeckStore {
     public func createDeck(name: String, investigator: Investigator) throws -> Deck {
         return try createDeck(name: name, investigatorId: investigator.id)
     }
+    
+    public func createDeck(name: String, investigator: Investigator, completion: @escaping (Deck?, Error?) -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                if let output = try self?.createDeck(name: name, investigator: investigator) {
+                    DispatchQueue.main.async {
+                        completion(output, nil)
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+            }
+        }
+    }
 
     public func createDeck(name: String, from deck: Deck) throws -> Deck {
         return try dbWriter.write({ (db) -> Deck in
@@ -47,6 +63,22 @@ public final class DeckStore {
         })
     }
     
+    public func createDeck(name: String, from deck: Deck, completion: @escaping (Deck?, Error?) -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                if let output = try self?.createDeck(name: name, from: deck) {
+                    DispatchQueue.main.async {
+                        completion(output, nil)
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+            }
+        }
+    }
+    
     public func deleteDeck(_ deck: Deck) throws {
         try dbWriter.write({ (db) in
             guard let record = try DeckRecord.fetchOne(db: db, id: deck.id) else {
@@ -57,6 +89,22 @@ public final class DeckStore {
         })
     }
     
+    public func deleteDeck(_ deck: Deck, completion: @escaping (Error?) -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                try self?.deleteDeck(deck)
+                
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(error)
+                }
+            }
+        }
+    }
+    
     public func fetchDeck(id: Int) throws -> Deck? {
         guard let record = try dbWriter.read({ (db) -> DeckRecord? in
             return try DeckRecord.fetchOne(db: db, id: id)
@@ -65,6 +113,22 @@ public final class DeckStore {
         let deckCards = try fetchAllDeckCards(forDeckId: record.id!)
         
         return try makeDeck(record: record, deckCards: deckCards)
+    }
+    
+    public func fetchDeck(id: Int, completion: @escaping (Deck?, Error?) -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                if let output = try self?.fetchDeck(id: id) {
+                    DispatchQueue.main.async {
+                        completion(output, nil)
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+            }
+        }
     }
     
     public func fetchAllDecks() throws -> [Deck] {
@@ -83,15 +147,26 @@ public final class DeckStore {
         return decks
     }
     
+    public func fetchAllDeck(completion: @escaping ([Deck]?, Error?) -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                if let output = try self?.fetchAllDecks() {
+                    DispatchQueue.main.async {
+                        completion(output, nil)
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+            }
+        }
+    }
+    
     func fetchAllDeckCards(forDeckId id: Int) throws -> Set<DeckCard> {
         let records = try dbWriter.read({ (db) -> [DeckCardRecord] in
             return try DeckCardRecord.fetchAll(db: db, deckId: id)
         })
-        
-//        var cardFilter = CardFilter()
-//        cardFilter.cardIds = Set<Int>(records.map({ $0.cardId }))
-//        
-//        let cards = cardStore.fetchCards(filter: cardFilter, sorting: nil, groupResults: false)
         
         let deckCards = try records.map { (record) -> DeckCard in
             let card = try cardStore.fetchCard(id: record.cardId)
@@ -122,6 +197,22 @@ public final class DeckStore {
         })
     }
     
+    public func changeDeckName(deck: Deck, to name: String, completion: @escaping (Deck?, Error?) -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                if let output = try self?.changeDeckName(deck: deck, to: name) {
+                    DispatchQueue.main.async {
+                        completion(output, nil)
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+            }
+        }
+    }
+    
     public func changeCardQuantity(deck: Deck, card: Card, quantity: Int) throws -> Deck {
         if let deckCard = deck.deckCard(withId: card.id) {
             if deckCard.quantity == quantity {
@@ -148,6 +239,25 @@ public final class DeckStore {
             
             return updatedDeck
         })
+    }
+    
+    public func changeCardQuantity(deck: Deck,
+                                   card: Card,
+                                   quantity: Int,
+                                   completion: @escaping (Deck?, Error?) -> ())  {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                if let output = try self?.changeCardQuantity(deck: deck, card: card, quantity: quantity) {
+                    DispatchQueue.main.async {
+                        completion(output, nil)
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+            }
+        }
     }
     
     private func makeDeck(record: DeckRecord, deckCards: Set<DeckCard>) throws -> Deck {
