@@ -16,6 +16,7 @@ public struct CardFilter: Equatable {
     public var traits = Set<String>()
     public var usesCharges: Bool? = nil
     public var hideWeaknesses: Bool? = nil
+    public var onlyFavorites: Bool? = nil
     
     public init() { }
     
@@ -73,6 +74,7 @@ public struct CardFilter: Equatable {
         if lhs.fullTextSearchMatch != rhs.fullTextSearchMatch { return false }
         if lhs.deckId != rhs.deckId { return false }
         if lhs.subfilters.count != rhs.subfilters.count { return false }
+        if lhs.onlyFavorites != rhs.onlyFavorites { return false }
         
         for (s1, s2) in zip(lhs.subfilters, rhs.subfilters) {
             guard s1.op == s2.op else { return false }

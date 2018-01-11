@@ -100,6 +100,8 @@ CREATE TABLE Card (
     internal_code TEXT NOT NULL,
     uses_charges INTEGER NOT NULL DEFAULT 0,
 
+    favorite INTEGER NOT NULL DEFAULT 0,
+
     FOREIGN KEY (pack_id) REFERENCES Pack(id),
     FOREIGN KEY (investigator_id) REFERENCES Investigator(id)
 );

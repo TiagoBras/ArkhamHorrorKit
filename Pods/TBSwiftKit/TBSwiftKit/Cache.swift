@@ -95,7 +95,9 @@ public class Cache<Key, Value> where Key: Hashable {
     }
     
     public func clear() {
-        items.removeAll(keepingCapacity: true)
+        queue.sync {
+            items.removeAll()
+        }
     }
     
     private func removeLeastRecentlyUsedItem() {

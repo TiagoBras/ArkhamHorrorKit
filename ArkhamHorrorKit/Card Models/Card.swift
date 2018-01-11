@@ -35,6 +35,7 @@ public struct Card: Hashable, Comparable {
     public var enemyHealthPerInvestigator: Bool
     public var frontImageName: String
     public var backImageName: String?
+    public var isFavorite: Bool
     
     public static func ==(lhs: Card, rhs: Card) -> Bool {
         return lhs.hashValue == rhs.hashValue

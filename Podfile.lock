@@ -1,18 +1,18 @@
 PODS:
   - GRDB.swift (2.3.1)
   - SwiftyJSON (3.1.4)
-  - TBSwiftKit (0.0.22)
+  - TBSwiftKit (0.0.28)
 
 DEPENDENCIES:
   - GRDB.swift (~> 2.3.0)
   - SwiftyJSON (~> 3.1.4)
-  - TBSwiftKit (~> 0.0.22)
+  - TBSwiftKit (~> 0.0.28)
 
 SPEC CHECKSUMS:
   GRDB.swift: fa0742c1b3d8aa6e3610a05ebf7c6b9e77589726
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  TBSwiftKit: f7ab2fc72215d0a17e320fe3009ca45e9a307af1
+  TBSwiftKit: 6fb191e7ca3c912742d4bfa2caaf4a9dbacee78b
 
-PODFILE CHECKSUM: 08c61dbd04d239110239f521b463f997f5b3bbd2
+PODFILE CHECKSUM: cb81d5c0383f98df35fcb36b35bbc1115e6b6fd4
 
 COCOAPODS: 1.3.1

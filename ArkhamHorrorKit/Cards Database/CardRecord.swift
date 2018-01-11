@@ -40,6 +40,7 @@ final class CardRecord: Record {
     var enemyHealthPerInvestigator: Bool
     var internalCode: String
     var usesCharges: Bool
+    var isFavorite: Bool
     
     override class var databaseTableName: String {
         return "Card"
@@ -87,6 +88,7 @@ final class CardRecord: Record {
         enemyHealthPerInvestigator = row[RowKeys.enemyHealthPerInvestigator.rawValue]
         internalCode = row[RowKeys.internalCode.rawValue]
         usesCharges = row[RowKeys.usesCharges.rawValue]
+        isFavorite = row[RowKeys.favorite.rawValue]
         
         super.init(row: row)
     }
@@ -127,6 +129,7 @@ final class CardRecord: Record {
         container[RowKeys.enemyHealthPerInvestigator.rawValue] = enemyHealthPerInvestigator
         container[RowKeys.internalCode.rawValue] = internalCode
         container[RowKeys.usesCharges.rawValue] = usesCharges
+        container[RowKeys.favorite.rawValue] = isFavorite
     }
     
     class func fetchOne(db: Database, id: Int) throws -> CardRecord? {
@@ -241,6 +244,8 @@ final class CardRecord: Record {
             dict[RowKeys.enemyHorror.rawValue] = obj["enemy_horror"].intValue
             dict[RowKeys.enemyHealthPerInvestigator.rawValue] = obj["health_per_investigator"].boolValue
             dict[RowKeys.usesCharges.rawValue] = CardRecord.doesCardUsesCharges(obj["text"].stringValue)
+            
+            dict[RowKeys.favorite.rawValue] = obj["favorite"].boolValue
             
             let card = CardRecord(row: Row(dict))
             
@@ -401,5 +406,6 @@ final class CardRecord: Record {
         case enemyHealthPerInvestigator = "enemy_health_per_investigator"
         case internalCode = "internal_code"
         case usesCharges = "uses_charges"
+        case favorite = "favorite"
     }
 }

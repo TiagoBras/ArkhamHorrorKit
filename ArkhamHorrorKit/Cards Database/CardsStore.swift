@@ -127,6 +127,48 @@ public final class CardsStore {
         }
     }
     
+    private func updateCardStar(_ card: Card, starred: Bool, completion: ((Card?, Error?) -> ())?) {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            var updatedCard = card
+            
+            do {
+                try self?.dbWriter.read({ db in
+                    guard let record = try CardRecord.fetchOne(db: db, id: card.id) else {
+                        throw AHDatabaseError.cardNotFound(card.id)
+                    }
+                    
+                    record.isFavorite = starred
+                    
+                    if record.hasPersistentChangedValues {
+                        try record.save(db)
+                        
+                        updatedCard.isFavorite = true
+                        
+                        DispatchQueue.main.async {
+                            completion?(updatedCard, nil)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion?(card, nil)
+                        }
+                    }
+                })
+            } catch {
+                DispatchQueue.main.async {
+                    completion?(nil, error)
+                }
+            }
+        }
+    }
+    
+    public func starCard(_ card: Card, completion: ((Card?, Error?) -> ())?) {
+        updateCardStar(card, starred: true, completion: completion)
+    }
+    
+    public func unstarCard(_ card: Card, completion: ((Card?, Error?) -> ())?) {
+        updateCardStar(card, starred: false, completion: completion)
+    }
+    
     class func makeCard(record: CardRecord,
                         pack: CardPack,
                         traits: [String] = [],
@@ -194,7 +236,8 @@ public final class CardsStore {
                         enemyHorror: record.enemyHorror,
                         enemyHealthPerInvestigator: record.enemyHealthPerInvestigator,
                         frontImageName: "\(record.internalCode).jpeg",
-                backImageName: backImageName)
+                        backImageName: backImageName,
+                        isFavorite: record.isFavorite)
         }
         
         if let cache = cardsCache {
@@ -381,13 +424,16 @@ public final class CardsStore {
         }
         
         func orderStmt(_ descriptor: CardsSortingDescriptor) -> String {
+            let mod: String = descriptor.ascending ? "ASC" : "DESC"
+            
             switch descriptor.column {
-            case .name: return "name \(descriptor.ascending ? "ASC" : "DESC")"
-            case .faction: return "faction_id \(descriptor.ascending ? "ASC" : "DESC")"
-            case .pack: return "pack_id \(descriptor.ascending ? "ASC" : "DESC")"
-            case .type: return "type_id \(descriptor.ascending ? "ASC" : "DESC")"
-            case .level: return "level \(descriptor.ascending ? "ASC" : "DESC")"
-            case .assetSlot: return "asset_slot_id IS NULL, asset_slot_id \(descriptor.ascending ? "ASC" : "DESC")"
+            case .name: return "name \(mod)"
+            case .faction: return "faction_id \(mod)"
+            case .pack: return "pack_id \(mod)"
+            case .type: return "type_id \(mod)"
+            case .level: return "level \(mod)"
+            case .assetSlot: return "asset_slot_id IS NULL, asset_slot_id \(mod)"
+            case .favoriteStatus: return "favorite \(mod)"
             }
         }
         
@@ -404,6 +450,7 @@ public final class CardsStore {
         case .type: return a.type.id == b.type.id
         case .level: return a.level == b.level
         case .assetSlot: return a.assetSlot == b.assetSlot
+        case .favoriteStatus: return a.isFavorite == b.isFavorite
         }
     }
     
@@ -436,6 +483,7 @@ public final class CardsStore {
                 } else {
                     name = kNotAnAsset
                 }
+            case .favoriteStatus: name = "Favorites"
             }
             
             if names.isEmpty {

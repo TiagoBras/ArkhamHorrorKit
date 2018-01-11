@@ -12,7 +12,9 @@ public class FileDownloadManager: NSObject, URLSessionDelegate, URLSessionDownlo
     private var activeDownloads: [URL: Download] = [:]
     
     private lazy var downloadSession: URLSession = {
-        return URLSession(configuration: .default, delegate: self, delegateQueue: nil)
+        let config = URLSessionConfiguration.background(withIdentifier: UUID().uuidString)
+        
+        return URLSession(configuration: config, delegate: self, delegateQueue: nil)
     }()
     
     #if os(iOS) || os(watchOS) || os(tvOS)

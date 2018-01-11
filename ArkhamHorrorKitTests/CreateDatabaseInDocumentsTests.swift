@@ -12,7 +12,7 @@ import XCTest
 class CreateDatabaseInDocumentsTests: XCTestCase {
     func testExample() {
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let url = docs.appendingPathComponent("ah.db")
+        let url = docs.appendingPathComponent("database.sqlite")
         
         if FileManager.default.fileExists(atPath: url.path) {
             try! FileManager.default.removeItem(at: url)

@@ -44,26 +44,26 @@ public final class AHDatabase {
     }
     
     public func updateDatabaseFromJSONFilesInDirectory(url: URL) throws {
-        var files = try FileManager.default.contentsOfDirectory(atPath: url.path)
+        var urls = FileManager.default.contentsOf(directory: url, fileExtension: "json")
         
         // Try loading cycles first if exists
-        if let index = files.index(of: "cycles.json") {
-            try loadCyclesFromJSON(at: url.appendingPathComponent("cycles.json"))
+        if let index = urls.index(where: { $0.lastPathComponent == "cycles.json" }) {
+            try loadCyclesFromJSON(at: urls[index])
             
-            files.remove(at: index)
+            urls.remove(at: index)
         }
         
         // Try loading cycles first if exists
-        if let index = files.index(of: "packs.json") {
-            try loadPacksFromJSON(at: url.appendingPathComponent("packs.json"))
+        if let index = urls.index(where: { $0.lastPathComponent == "packs.json" }) {
+            try loadPacksFromJSON(at: urls[index])
             
-            files.remove(at: index)
+            urls.remove(at: index)
         }
         
         // Load all files (ignore files that don't contain cards)
-        for file in files {
+        for url in urls {
             do {
-                try loadCardsAndInvestigatorsFromJSON(at: url.appendingPathComponent(file))
+                try loadCardsAndInvestigatorsFromJSON(at: url)
             } catch CardRecord.CardError.jsonDoesNotContainCards {
                 continue
             } catch {

@@ -2,7 +2,7 @@
 
 public struct CardsSortingDescriptor: Equatable {
     public enum CardColumn {
-        case faction, type, pack, level, assetSlot, name
+        case faction, type, pack, level, assetSlot, name, favoriteStatus
         
         public var name: String {
             switch self {
@@ -12,6 +12,7 @@ public struct CardsSortingDescriptor: Equatable {
             case .level: return "Level"
             case .assetSlot: return "Asset Slot"
             case .name: return "Name"
+            case .favoriteStatus: return "Favorite"
             }
         }
     }
@@ -42,6 +43,7 @@ public struct CardsSortingDescriptor: Equatable {
         case .level: isLessThan = a.level < b.level
         case .assetSlot: isLessThan = (a.assetSlot?.id ?? -1) < (b.assetSlot?.id ?? -1)
         case .name: isLessThan = a.name < b.name
+        case .favoriteStatus: isLessThan = !a.isFavorite && b.isFavorite
         }
         
         if ascending {
@@ -65,6 +67,7 @@ public struct CardsSortingDescriptor: Equatable {
         case .level: isEqual = a.level == b.level
         case .assetSlot: isEqual = (a.assetSlot?.id ?? -1) == (b.assetSlot?.id ?? -1)
         case .name: isEqual = a.name == b.name
+        case .favoriteStatus: isEqual = a.isFavorite == b.isFavorite
         }
         
         if ascending {
