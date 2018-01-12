@@ -51,6 +51,7 @@ public final class DeckStore {
                                     name: name,
                                     version: oldRecord.version + 1)
             record.previousVersionDeckId = oldRecord.id
+            
             try record.save(db)
 
             oldRecord.nextVersionDeckId = record.id
@@ -223,13 +224,7 @@ public final class DeckStore {
         var updatedDeck = deck
         
         return try dbWriter.write({ (db) -> Deck in
-            let record: DeckCardRecord
-            
-            if let retrieved = try DeckCardRecord.fetchOne(db: db, deckId: deck.id, cardId: card.id) {
-                record = retrieved
-            } else {
-                record = DeckCardRecord(deckId: deck.id, cardId: card.id, quantity: quantity)
-            }
+            let record = DeckCardRecord(deckId: deck.id, cardId: card.id, quantity: quantity)
             
             if record.hasPersistentChangedValues {
                 try record.save(db)

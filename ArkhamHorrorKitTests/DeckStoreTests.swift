@@ -163,4 +163,21 @@ class DeckStoreTests: XCTestCase {
         XCTAssertEqual(delta.cardsAdded, addedExpected)
         XCTAssertEqual(delta.cardsRemoved, removedExpected)
     }
+    
+    func testChangeCardQuantity() {
+        var deck = DatabaseTestsHelper.createDeck(
+            name: "Spy",
+            investigatorId: Investigator.InvestigatorId.rolandBanksTheFed.rawValue,
+            in: database)
+        
+        let shotgun = DatabaseTestsHelper.fetchCard(id: 1029, in: database)
+        
+        _ = try! database.deckStore.changeCardQuantity(deck: deck, card: shotgun, quantity: 1)
+        deck = (try! database.deckStore.fetchDeck(id: deck.id))!
+        XCTAssertEqual(deck.cards.first!.quantity, 1)
+        
+        _ = try! database.deckStore.changeCardQuantity(deck: deck, card: shotgun, quantity: 2)
+        deck = (try! database.deckStore.fetchDeck(id: deck.id))!
+        XCTAssertEqual(deck.cards.first!.quantity, 2)
+    }
 }
