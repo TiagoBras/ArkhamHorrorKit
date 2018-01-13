@@ -96,9 +96,9 @@ class CardStoreTests: XCTestCase {
             investigator: try! database.investigatorsDictionary()[1001]!,
             cards: cardIdQuantities, in: database).id
         let result = database.cardStore.fetchCards(filter: filter, sorting: nil, groupResults: false)
-
+        
         XCTAssertNotNil(result)
-
+        
         XCTAssertEqual(result!.numberOfCards(inSection: 0), 3)
     }
     
@@ -205,6 +205,18 @@ class CardStoreTests: XCTestCase {
         let cards = database.cardStore.fetchCards(filter: filter, sorting: nil)
         
         XCTAssertEqual(cards.count, 1)
+    }
+    
+    func testFilteringByPack() {
+        var filter = CardFilter()
+        filter.packs = [CardPack(id: "dwl",
+                                 name: "",
+                                 position: 1,
+                                 size: 1,
+                                 cycle: CardCycle(id: "dwl", name: "", position: 1, size: 1))]
         
+        let cards = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        
+        XCTAssertEqual(cards.count, 34)
     }
 }

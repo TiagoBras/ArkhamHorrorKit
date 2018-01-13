@@ -328,7 +328,7 @@ public final class CardsStore {
         
         if !filter.packs.isEmpty {
             let ids = filter.packs
-                .map{ String($0.id) }
+                .map{ "'\(String($0.id))'" }
                 .joined(separator: ",")
             whereInClauses.append("pack_id IN (\(ids))")
         }
