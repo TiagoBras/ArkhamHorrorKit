@@ -1,6 +1,7 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
 
 import TBSwiftKit
+import SwiftyJSON
 
 public class CardImageStore {
     private let cacheSize: Int
@@ -17,18 +18,32 @@ public class CardImageStore {
     
     public let serverDir: URL?
     public let localDir: URL
+    public let authToken: String
+    
+    public init(serverHost: URL, localDir: URL, authToken: String, cacheSize: Int) throws {
+        if serverHost == localDir {
+            throw CardImageStoreError.serverAndLocalDirsCannotBeEqual
+        }
+        
+        self.authToken = authToken
+        self.serverDir = serverHost
+        self.localDir = localDir
+        self.cacheSize = cacheSize >= 5 ? cacheSize : 10
+    }
     
     public init(serverDir: URL, localDir: URL, cacheSize: Int) throws {
         if serverDir == localDir {
             throw CardImageStoreError.serverAndLocalDirsCannotBeEqual
         }
         
+        self.authToken = ""
         self.serverDir = serverDir
         self.localDir = localDir
         self.cacheSize = cacheSize >= 5 ? cacheSize : 10
     }
     
     public init(localDir: URL, cacheSize: Int) {
+        self.authToken = ""
         self.serverDir = nil
         self.localDir = localDir
         self.cacheSize = cacheSize >= 5 ? cacheSize : 10
@@ -123,7 +138,7 @@ public class CardImageStore {
         var imageNames = [String]()
         imageNames.append(contentsOf: cards.map({ $0.frontImageName }))
         imageNames.append(contentsOf: cards.flatMap({ $0.backImageName }))
-        
+
         return imageNames.flatMap { (name) -> URL? in
             let url = localDir.appendingPathComponent(name)
             
@@ -133,6 +148,69 @@ public class CardImageStore {
                 return serverDir.appendingPathComponent(name)
             }
         }
+    }
+    
+    @discardableResult
+    public func missingImages(completion: @escaping ([URL]?, Error?) -> ()) throws -> URLSessionDataTask {
+        let fm = FileManager.default
+        let paths = fm.contentsOf(directory: localDir, fileExtension: "jpeg").sorted { (a, b) -> Bool in
+            return a.path < b.path
+        }
+        
+        let imagesNames = paths.map({ $0.lastPathComponent })
+        
+        guard let serverDir = serverDir else { throw CardImageStoreError.serverDirNotDefined }
+        
+        let endpoint = serverDir.appendingPathComponent("/ahc/update")
+
+        var request = URLRequest(url: endpoint, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 20)
+        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = try JSONSerialization.data(withJSONObject: ["images": imagesNames])
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data, error == nil else {
+                return completion(nil, error)
+            }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                return completion(nil, CardImageStoreError.httpStatusCode(httpStatus.statusCode))
+            }
+            
+            let json = JSON(data: data)
+            
+            if let imageURL = json["images_url"].string,
+                let images = json["images"].arrayObject as? [String] {
+                
+                if let url = URL(string: imageURL) {
+                    let fullpaths = images.map({ url.appendingPathComponent($0) })
+                    
+                    return completion(fullpaths, nil)
+                }
+            }
+            
+            return completion([], nil)
+        }
+        
+        task.resume()
+
+        return task
+    }
+    
+    @discardableResult
+    public func downloadMissingImages(
+        urls: [URL],
+        progress: FileBatchDownload.ProgressHandler?,
+        completion: @escaping FileBatchDownload.CompletionHandler) throws -> FileBatchDownload {
+        batchDownloadManager = FileBatchDownload(files: urls,
+                                                 storeIn: localDir,
+                                                 progress: progress,
+                                                 completion: completion)
+        
+        try batchDownloadManager?.startDownload()
+        
+        return batchDownloadManager!
     }
     
     @discardableResult
@@ -157,5 +235,6 @@ public class CardImageStore {
         case invalidImageData(String)
         case cardDoesNotHaveBackImage(String)
         case serverDirNotDefined
+        case httpStatusCode(Int)
     }
 }

@@ -83,4 +83,65 @@ class CardImageStoreTests: XCTestCase {
         
         wait(for: [promise], timeout: 200.0)
     }
+    
+    func testDownloadMissingImagesFromHeroku() {
+        let localDir = userDir.appendingPathComponent("card_images_local_v2")
+        
+        if fm.fileExists(atPath: localDir.path) {
+            try! fm.removeItem(at: localDir)
+        }
+        
+        try! fm.createDirectory(at: localDir, withIntermediateDirectories: false, attributes: nil)
+        
+        let sourceURL = Bundle(for: CardImageStoreTests.self).url(
+            forResource: "01043", withExtension: "jpeg")!
+        
+        
+        let server = URL(string: "https://bitmountains.herokuapp.com")!
+        
+        let imageStore = try! CardImageStore(serverHost: server,
+                                             localDir: localDir,
+                                             authToken: "48pvZOZWny8LcmEJBP5YgVwpt7Kux58KKqUSW",
+                                             cacheSize: 20)
+        
+        let promise = expectation(description: "Download Missing Images Heroku - 1")
+        try! imageStore.missingImages(completion: { (urls, error) in
+            XCTAssert(error == nil)
+            XCTAssertEqual(urls!.count, 316)
+            
+            promise.fulfill()
+        })
+        
+        try! fm.copyItem(at: sourceURL, to: localDir.appendingPathComponent("01043.jpeg"))
+        
+        let promise2 = expectation(description: "Download Missing Images Heroku - 2")
+        let promise3 = expectation(description: "Download Missing Images Heroku - 3")
+        try! imageStore.missingImages(completion: { (urls, error) in
+            XCTAssert(error == nil)
+            XCTAssertEqual(urls!.count, 315)
+            
+            promise2.fulfill()
+            
+            var first5Urls = Array(urls!.prefix(5))
+            first5Urls.append(imageStore.serverDir!.appendingPathComponent("images/xxxxx.jpeg"))
+            
+            print(first5Urls)
+            
+            try! imageStore.downloadMissingImages(
+                urls: first5Urls,
+                progress: nil,
+                completion: { (report, error) in
+                    if let error = error {
+                        print(error)
+                        XCTFail()
+                    }
+                    
+                    XCTAssertEqual(report.filesDownloaded.count, 5)
+                    XCTAssertEqual(report.filesNotDownloaded.count, 1)
+                    promise3.fulfill()
+            })
+        })
+        
+        wait(for: [promise, promise2, promise3], timeout: 200.0)
+    }
 }
