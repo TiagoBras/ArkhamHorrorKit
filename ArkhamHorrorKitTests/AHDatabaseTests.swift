@@ -12,6 +12,10 @@ import XCTest
 
 class AHDatabaseTests: XCTestCase {
     var db: AHDatabase!
+    let server = URL(string: "https://bitmountains.herokuapp.com")!
+    let userDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let fm = FileManager.default
+    let authToken = getEnvironmentVar("MAGIC_TOKEN")!
     
     override func setUp() {
         super.setUp()
@@ -54,7 +58,6 @@ class AHDatabaseTests: XCTestCase {
     
     func testUpdateDatabaseFromJSONFilesAtDirectory() {
         // First lest's create the directory in documents and copy a couple of files
-        let fm = FileManager.default
         let documentsDir = fm.urls(for: .documentDirectory, in: .userDomainMask).first!
         let filesDir = documentsDir.appendingPathComponent("ah_files")
         
@@ -78,19 +81,23 @@ class AHDatabaseTests: XCTestCase {
         XCTAssertNil(try! db.cardPacksDictionary()["tmd"])
         XCTAssertEqual(try! db.cardStore.fetchCard(id: 3111).sanity, 1)
         
-        try! db.updateDatabaseFromJSONFilesInDirectory(url: filesDir)
+        let promise = expectation(description: "testUpdateDatabaseFromJSONFilesAtDirectory")
+        db.updateDatabaseFromJSONFilesInDirectory(url: filesDir, completion: { (error) in
+            XCTAssert(error == nil)
+            XCTAssertEqual(try! self.db.cardCyclesDictionary()["ttd"]!.name, "The Test Dummy")
+            XCTAssertEqual(try! self.db.cardPacksDictionary()["tmd"]!.name, "The Master Dummy")
+            XCTAssertEqual(try! self.db.cardStore.fetchCard(id: 3111).sanity, 4)
+            
+            promise.fulfill()
+        })
 
-        XCTAssertEqual(try! db.cardCyclesDictionary()["ttd"]!.name, "The Test Dummy")
-        XCTAssertEqual(try! db.cardPacksDictionary()["tmd"]!.name, "The Master Dummy")
-        XCTAssertEqual(try! db.cardStore.fetchCard(id: 3111).sanity, 4)
-        
-        try! fm.removeItem(at: filesDir)
+        wait(for: [promise], timeout: 30.0)
     }
     
     func testInvestigators() {
         let investigators = try! db.investigators()
         
-        XCTAssertEqual(investigators.count, 16)
+        XCTAssertEqual(investigators.count, 17)
     }
     
     func testInvestigatorRequiredCards() {
@@ -110,12 +117,13 @@ class AHDatabaseTests: XCTestCase {
         testRequiredCards(for: 3004, requiredCards: [3014: 1, 3015: 1])
         testRequiredCards(for: 3005, requiredCards: [3016: 1, 3017: 1])
         testRequiredCards(for: 3006, requiredCards: [3018: 2, 3019: 2])
+        testRequiredCards(for: 99001, requiredCards: [99002: 1, 99003: 1])
     }
     
     func testInvestigatorsImages() {
         let investigators = try! db.investigators()
         
-        XCTAssertEqual(investigators.count, 16)
+        XCTAssertEqual(investigators.count, 17)
         
         for investigator in investigators {
             #if os(iOS) || os(watchOS) || os(tvOS)
@@ -128,6 +136,54 @@ class AHDatabaseTests: XCTestCase {
                 XCTAssert(investigator.backImage.nsImage != nil)
             #endif
         }
+    }
+    
+    func testCheckIfUpdateIsAvailable() {
+        let promise = expectation(description: "Is Update Available")
+        let database = try! AHDatabase()
+        
+        database.isUpdateAvailable(serverDomain: server, authenticationToken: authToken) { (bool, error) in
+            if error != nil {
+                XCTFail("Error should be nil")
+            }
+            
+            if let bool = bool {
+                XCTAssertTrue(bool)
+            } else {
+                XCTFail("Boolean should not be nil")
+            }
+            
+            promise.fulfill()
+        }
+        
+        wait(for: [promise], timeout: 20)
+    }
+    
+    func testUpdateDatabase() {
+        let promise = expectation(description: "Update Database")
+        let database = try! AHDatabase()
+        let expectedChecksum = "3af2d0fb99644d2ff9975d717c2e33c4e4d0129e397464e8100a7136c69a4592"
+        
+        database.updateDatabase(serverDomain: server,
+                          authenticationToken: authToken,
+                          jsonLocalDirectory: FileManager.default.temporaryDirectory) { (error) in
+                            if error != nil {
+                                print(error!)
+                                XCTFail("Error should be nil")
+                            }
+                            
+                            let checksum = try! database.generalInfoJsonChecksum()
+                            
+                            let sums = try! database.getAllJsonFilesChecksums()
+                            
+                            print(sums)
+                            
+                            XCTAssertEqual(checksum, expectedChecksum)
+                            
+                            promise.fulfill()
+        }
+        
+        wait(for: [promise], timeout: 30)
     }
     
     private func testRequiredCards(for investigatorId: Int, requiredCards: [Int: Int]) {

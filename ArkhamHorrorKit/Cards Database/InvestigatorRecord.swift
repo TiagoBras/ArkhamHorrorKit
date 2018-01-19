@@ -94,8 +94,14 @@ final class InvestigatorRecord: Record {
                 continue
             }
             
+            guard let investigatorId = Int(obj["code"].stringValue) else { continue }
+            
+            guard Investigator.InvestigatorId(rawValue: investigatorId) != nil else {
+                throw InvestigatorError.investigatorNotImplemented(investigatorId)
+            }
+            
             var dict = [String: DatabaseValueConvertible?]()
-            dict[RowKeys.id.rawValue] = Int(obj["code"].stringValue)
+            dict[RowKeys.id.rawValue] = investigatorId
             dict[RowKeys.name.rawValue] = obj["name"].stringValue
             dict[RowKeys.position.rawValue] = obj["position"].intValue
             dict[RowKeys.subname.rawValue] = obj["subname"].stringValue
@@ -128,6 +134,7 @@ final class InvestigatorRecord: Record {
     
     enum InvestigatorError: Error {
         case invalidFactionCode(String)
+        case investigatorNotImplemented(Int)
     }
     
     enum RowKeys: String {

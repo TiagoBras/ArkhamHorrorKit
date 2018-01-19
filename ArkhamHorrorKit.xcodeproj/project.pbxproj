@@ -11,6 +11,10 @@
 		3764492D6961AA54168F2563 /* Pods_ArkhamHorrorKit_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F04466D3EFBF00B2C7700C6 /* Pods_ArkhamHorrorKit_iOSTests.framework */; };
 		56A4CBEAE2957D33B0C9E53A /* Pods_ArkhamHorrorKit_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F26C2B14B385004DB7863952 /* Pods_ArkhamHorrorKit_iOS.framework */; };
 		A3F02738298214FEACF91D64 /* Pods_ArkhamHorrorKit_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F508E71D6325C8E474FB55A /* Pods_ArkhamHorrorKit_macOS.framework */; };
+		A508E3F9200FA0BB00067885 /* FileChecksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508E3F8200FA0BB00067885 /* FileChecksum.swift */; };
+		A508E3FA200FA0CD00067885 /* FileChecksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508E3F8200FA0BB00067885 /* FileChecksum.swift */; };
+		A508E3FC200FB1E100067885 /* JSONLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508E3FB200FB1E100067885 /* JSONLoader.swift */; };
+		A508E3FD200FB1E100067885 /* JSONLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508E3FB200FB1E100067885 /* JSONLoader.swift */; };
 		A51A261F1FAE7AFA004C6ED1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */; };
 		A51A26201FAE7B01004C6ED1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */; };
 		A51A264F1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */; };
@@ -71,16 +75,10 @@
 		A51A26B61FAF35D7004C6ED1 /* wda.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26591FAF3467004C6ED1 /* wda.json */; };
 		A51DBA421FDEF86500B247A4 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51DBA411FDEF86500B247A4 /* Helpers.swift */; };
 		A51DBA431FDEF86500B247A4 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51DBA411FDEF86500B247A4 /* Helpers.swift */; };
-		A524FB7E1FB0F05B00123949 /* DeckStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A524FB7D1FB0F05B00123949 /* DeckStoreTests.swift */; };
-		A524FB7F1FB0F05B00123949 /* DeckStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A524FB7D1FB0F05B00123949 /* DeckStoreTests.swift */; };
 		A53E36CE1FCC97A20002F85A /* cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CC1FCC97A20002F85A /* cycles.json */; };
 		A53E36CF1FCC97A20002F85A /* cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CC1FCC97A20002F85A /* cycles.json */; };
 		A53E36D01FCC97A20002F85A /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CD1FCC97A20002F85A /* packs.json */; };
 		A53E36D11FCC97A20002F85A /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CD1FCC97A20002F85A /* packs.json */; };
-		A53E36D31FCC98C70002F85A /* books.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36D21FCC98C70002F85A /* books.json */; };
-		A53E36D41FCC98C70002F85A /* books.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36D21FCC98C70002F85A /* books.json */; };
-		A53E36D51FCC98E00002F85A /* books.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36D21FCC98C70002F85A /* books.json */; };
-		A53E36D61FCC98E10002F85A /* books.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36D21FCC98C70002F85A /* books.json */; };
 		A53E36D71FCCA27D0002F85A /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CD1FCC97A20002F85A /* packs.json */; };
 		A53E36D81FCCA27E0002F85A /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CD1FCC97A20002F85A /* packs.json */; };
 		A53E36D91FCCA2800002F85A /* cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CC1FCC97A20002F85A /* cycles.json */; };
@@ -138,6 +136,12 @@
 		A5837B801FD096F40062FBFA /* CardFiltersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5837B7E1FD096F40062FBFA /* CardFiltersTests.swift */; };
 		A5837B821FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5837B811FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift */; };
 		A5837B831FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5837B811FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift */; };
+		A59E56BD2011596E00362558 /* DatabaseServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E56BC2011596E00362558 /* DatabaseServer.swift */; };
+		A59E56BE2011596E00362558 /* DatabaseServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E56BC2011596E00362558 /* DatabaseServer.swift */; };
+		A59E56C020116D1B00362558 /* DatabaseServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E56BF20116D1B00362558 /* DatabaseServerTests.swift */; };
+		A59E56C120116D1B00362558 /* DatabaseServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E56BF20116D1B00362558 /* DatabaseServerTests.swift */; };
+		A59E56C3201210D200362558 /* DeckStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E56C2201210D200362558 /* DeckStoreTests.swift */; };
+		A59E56C4201210D200362558 /* DeckStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E56C2201210D200362558 /* DeckStoreTests.swift */; };
 		A59FCA511FB71B2F00DF4994 /* chaos_bags.json in Resources */ = {isa = PBXBuildFile; fileRef = A5D8B7291FB64A6800DAC40F /* chaos_bags.json */; };
 		A59FCA521FB71B3000DF4994 /* chaos_bags.json in Resources */ = {isa = PBXBuildFile; fileRef = A5D8B7291FB64A6800DAC40F /* chaos_bags.json */; };
 		A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */; };
@@ -148,6 +152,8 @@
 		A5BCA80E1FA282EF001E6817 /* DeckRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */; };
 		A5C6040A1FD860730016F538 /* 01043.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A5C604091FD860730016F538 /* 01043.jpeg */; };
 		A5C6040B1FD860730016F538 /* 01043.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A5C604091FD860730016F538 /* 01043.jpeg */; };
+		A5C6D02620101DC6002EDE2F /* GeneralInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C6D02520101DC6002EDE2F /* GeneralInfo.swift */; };
+		A5C6D02720101DC6002EDE2F /* GeneralInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C6D02520101DC6002EDE2F /* GeneralInfo.swift */; };
 		A5D8B7221FB619C200DAC40F /* ChaosBagDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7211FB619C200DAC40F /* ChaosBagDatabaseTests.swift */; };
 		A5D8B7231FB624FB00DAC40F /* ChaosBagDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7211FB619C200DAC40F /* ChaosBagDatabaseTests.swift */; };
 		A5D8B7271FB6337300DAC40F /* TableInfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7241FB6317000DAC40F /* TableInfoRecord.swift */; };
@@ -234,6 +240,8 @@
 		92398109576434EC7D204ACE /* Pods-ArkhamHorrorKit iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArkhamHorrorKit iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArkhamHorrorKit iOSTests/Pods-ArkhamHorrorKit iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		972F31D02760183140847776 /* Pods-ArkhamHorrorKit iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArkhamHorrorKit iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArkhamHorrorKit iOSTests/Pods-ArkhamHorrorKit iOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		A214A815668A3EB391B6A12D /* Pods-ArkhamHorrorKit macOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArkhamHorrorKit macOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArkhamHorrorKit macOSTests/Pods-ArkhamHorrorKit macOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A508E3F8200FA0BB00067885 /* FileChecksum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileChecksum.swift; sourceTree = "<group>"; };
+		A508E3FB200FB1E100067885 /* JSONLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLoader.swift; sourceTree = "<group>"; };
 		A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseBaseValuesTests.swift; sourceTree = "<group>"; };
 		A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTestsHelper.swift; sourceTree = "<group>"; };
@@ -251,13 +259,11 @@
 		A51A26621FAF3468004C6ED1 /* dwl.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dwl.json; sourceTree = "<group>"; };
 		A51A26631FAF3468004C6ED1 /* core.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = core.json; sourceTree = "<group>"; };
 		A51DBA411FDEF86500B247A4 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		A524FB7D1FB0F05B00123949 /* DeckStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckStoreTests.swift; sourceTree = "<group>"; };
 		A52F52021FAFC12900CEFA18 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A52F52041FAFC39C00CEFA18 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		A52F52051FAFC3BC00CEFA18 /* ArkhamHorrorKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = ArkhamHorrorKit.podspec; sourceTree = SOURCE_ROOT; };
 		A53E36CC1FCC97A20002F85A /* cycles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cycles.json; sourceTree = "<group>"; };
 		A53E36CD1FCC97A20002F85A /* packs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = packs.json; sourceTree = "<group>"; };
-		A53E36D21FCC98C70002F85A /* books.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = books.json; sourceTree = "<group>"; };
 		A53E36DE1FCCACFE0002F85A /* eotpV1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = eotpV1.json; sourceTree = "<group>"; };
 		A53E370D1FCDBA080002F85A /* CardFTSRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFTSRecord.swift; sourceTree = "<group>"; };
 		A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckFilter.swift; sourceTree = "<group>"; };
@@ -285,10 +291,14 @@
 		A5837B6C1FCF411D0062FBFA /* CardTraitsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTraitsTests.swift; sourceTree = "<group>"; };
 		A5837B7E1FD096F40062FBFA /* CardFiltersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFiltersTests.swift; sourceTree = "<group>"; };
 		A5837B811FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDatabaseInDocumentsTests.swift; sourceTree = "<group>"; };
+		A59E56BC2011596E00362558 /* DatabaseServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseServer.swift; sourceTree = "<group>"; };
+		A59E56BF20116D1B00362558 /* DatabaseServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseServerTests.swift; sourceTree = "<group>"; };
+		A59E56C2201210D200362558 /* DeckStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckStoreTests.swift; sourceTree = "<group>"; };
 		A5BCA7A91FA24C33001E6817 /* CardTestSkillIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTestSkillIcon.swift; sourceTree = "<group>"; };
 		A5BCA7B11FA24CE1001E6817 /* CardFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFilter.swift; sourceTree = "<group>"; };
 		A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckRecord.swift; sourceTree = "<group>"; };
 		A5C604091FD860730016F538 /* 01043.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 01043.jpeg; sourceTree = "<group>"; };
+		A5C6D02520101DC6002EDE2F /* GeneralInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfo.swift; sourceTree = "<group>"; };
 		A5D8B7211FB619C200DAC40F /* ChaosBagDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaosBagDatabaseTests.swift; sourceTree = "<group>"; };
 		A5D8B7241FB6317000DAC40F /* TableInfoRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableInfoRecord.swift; sourceTree = "<group>"; };
 		A5D8B7291FB64A6800DAC40F /* chaos_bags.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = chaos_bags.json; sourceTree = "<group>"; };
@@ -402,6 +412,8 @@
 				A557A7E61FB0E63A007B9D6F /* DeckFilter.swift */,
 				A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */,
 				A55DEB381FCA3D5700141FED /* CardImageStore.swift */,
+				A508E3FB200FB1E100067885 /* JSONLoader.swift */,
+				A59E56BC2011596E00362558 /* DatabaseServer.swift */,
 				A557A7E31FAFCBCF007B9D6F /* Models */,
 			);
 			path = "Cards Database";
@@ -440,7 +452,6 @@
 				A51A26551FAF3467004C6ED1 /* ptc.json */,
 				A51A265E1FAF3467004C6ED1 /* eotp.json */,
 				A51A265B1FAF3467004C6ED1 /* tuo.json */,
-				A53E36D21FCC98C70002F85A /* books.json */,
 				A51A26571FAF3467004C6ED1 /* promo.json */,
 			);
 			name = Packs;
@@ -516,6 +527,7 @@
 				A53E370D1FCDBA080002F85A /* CardFTSRecord.swift */,
 				A5837B661FCF3E440062FBFA /* TraitRecord.swift */,
 				A5837B691FCF40040062FBFA /* CardTraitRecord.swift */,
+				A5C6D02520101DC6002EDE2F /* GeneralInfo.swift */,
 			);
 			name = Cards;
 			sourceTree = "<group>";
@@ -572,19 +584,20 @@
 		A5DA6A601FA23B2900457F27 /* ArkhamHorrorKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				A5837B811FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift */,
 				A5653BFD1FB1FBFC00862AC1 /* Data */,
 				A5653C021FB1FCDE00862AC1 /* AHDatabaseTests.swift */,
 				A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */,
 				A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */,
 				A5DA6A631FA23B2900457F27 /* Info.plist */,
-				A524FB7D1FB0F05B00123949 /* DeckStoreTests.swift */,
 				A563C36F1FB11D670060FE8C /* CardStoreTests.swift */,
 				A5D8B7211FB619C200DAC40F /* ChaosBagDatabaseTests.swift */,
 				A5D8B7241FB6317000DAC40F /* TableInfoRecord.swift */,
 				A55DEB3B1FCA4A7500141FED /* CardImageStoreTests.swift */,
 				A5837B6C1FCF411D0062FBFA /* CardTraitsTests.swift */,
 				A5837B7E1FD096F40062FBFA /* CardFiltersTests.swift */,
-				A5837B811FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift */,
+				A59E56BF20116D1B00362558 /* DatabaseServerTests.swift */,
+				A59E56C2201210D200362558 /* DeckStoreTests.swift */,
 			);
 			path = ArkhamHorrorKitTests;
 			sourceTree = "<group>";
@@ -604,6 +617,7 @@
 				A5DA6A911FA2441A00457F27 /* DeckCard.swift */,
 				A5DA6A971FA2441A00457F27 /* DeckStats.swift */,
 				A5DA6A8C1FA2441A00457F27 /* Investigator.swift */,
+				A508E3F8200FA0BB00067885 /* FileChecksum.swift */,
 			);
 			path = "Card Models";
 			sourceTree = "<group>";
@@ -771,7 +785,6 @@
 				A51A266E1FAF3470004C6ED1 /* tmm.json in Resources */,
 				A51A266C1FAF3470004C6ED1 /* ptc.json in Resources */,
 				A51A26691FAF3470004C6ED1 /* eotp.json in Resources */,
-				A53E36D31FCC98C70002F85A /* books.json in Resources */,
 				A53E36D01FCC97A20002F85A /* packs.json in Resources */,
 				A51A26641FAF3470004C6ED1 /* schema_v1.sql in Resources */,
 				A53E36CE1FCC97A20002F85A /* cycles.json in Resources */,
@@ -791,7 +804,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A53E36D51FCC98E00002F85A /* books.json in Resources */,
 				A51A26A01FAF35D6004C6ED1 /* promo.json in Resources */,
 				A51A26A11FAF35D6004C6ED1 /* ptc.json in Resources */,
 				A5653C051FB1FFCB00862AC1 /* base_core_updated.json in Resources */,
@@ -826,7 +838,6 @@
 				A51A268E1FAF347B004C6ED1 /* tmm.json in Resources */,
 				A51A268C1FAF347B004C6ED1 /* ptc.json in Resources */,
 				A51A26891FAF347B004C6ED1 /* eotp.json in Resources */,
-				A53E36D41FCC98C70002F85A /* books.json in Resources */,
 				A53E36D11FCC97A20002F85A /* packs.json in Resources */,
 				A51A26841FAF347B004C6ED1 /* schema_v1.sql in Resources */,
 				A53E36CF1FCC97A20002F85A /* cycles.json in Resources */,
@@ -846,7 +857,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A53E36D61FCC98E10002F85A /* books.json in Resources */,
 				A51A26B01FAF35D7004C6ED1 /* promo.json in Resources */,
 				A51A26B11FAF35D7004C6ED1 /* ptc.json in Resources */,
 				A5653C061FB1FFCC00862AC1 /* base_core_updated.json in Resources */,
@@ -1075,11 +1085,14 @@
 				A5BCA7B21FA24CE1001E6817 /* CardFilter.swift in Sources */,
 				A557A7EA1FB0E65E007B9D6F /* DeckSortingDescriptor.swift in Sources */,
 				A5DA6A9E1FA244C300457F27 /* CardCycle.swift in Sources */,
+				A5C6D02620101DC6002EDE2F /* GeneralInfo.swift in Sources */,
 				A55DEB391FCA3D5700141FED /* CardImageStore.swift in Sources */,
 				A51DBA421FDEF86500B247A4 /* Helpers.swift in Sources */,
 				A57FFB461FB5FE7F00B16FE6 /* ScenarioRecord.swift in Sources */,
 				A5BCA7AA1FA24C33001E6817 /* CardTestSkillIcon.swift in Sources */,
+				A508E3FC200FB1E100067885 /* JSONLoader.swift in Sources */,
 				A57E8EE41FAE6926008942B0 /* DeckCardRecord.swift in Sources */,
+				A59E56BD2011596E00362558 /* DatabaseServer.swift in Sources */,
 				A53E370E1FCDBA080002F85A /* CardFTSRecord.swift in Sources */,
 				A5BCA80D1FA282EF001E6817 /* DeckRecord.swift in Sources */,
 				A5DA6AC41FA2461300457F27 /* CardPackRecord.swift in Sources */,
@@ -1091,6 +1104,7 @@
 				A5D8B7311FB64B3B00DAC40F /* ChaosBag.swift in Sources */,
 				A5DA6A9F1FA244C300457F27 /* CardFaction.swift in Sources */,
 				A5D8B72B1FB64B1E00DAC40F /* Campaign.swift in Sources */,
+				A508E3F9200FA0BB00067885 /* FileChecksum.swift in Sources */,
 				A5779C3C1FB6120A00DB9DAD /* ScenarioChaosBagRecord.swift in Sources */,
 				A5DA6AD11FA246DC00457F27 /* AHDatabase.swift in Sources */,
 				A5DA6AD41FA246DC00457F27 /* DeckStore.swift in Sources */,
@@ -1109,17 +1123,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A524FB7E1FB0F05B00123949 /* DeckStoreTests.swift in Sources */,
 				A55DEB3C1FCA4A7500141FED /* CardImageStoreTests.swift in Sources */,
 				A5837B6D1FCF411D0062FBFA /* CardTraitsTests.swift in Sources */,
 				A5837B821FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift in Sources */,
 				A5D8B7271FB6337300DAC40F /* TableInfoRecord.swift in Sources */,
 				A563C3701FB11D670060FE8C /* CardStoreTests.swift in Sources */,
 				A5D8B7221FB619C200DAC40F /* ChaosBagDatabaseTests.swift in Sources */,
+				A59E56C3201210D200362558 /* DeckStoreTests.swift in Sources */,
 				A51A26511FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
 				A5837B7F1FD096F40062FBFA /* CardFiltersTests.swift in Sources */,
 				A51A264F1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
 				A5653C031FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */,
+				A59E56C020116D1B00362558 /* DatabaseServerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1130,6 +1145,7 @@
 				A5779C2F1FB608A400DB9DAD /* ChaosToken.swift in Sources */,
 				A51DBA431FDEF86500B247A4 /* Helpers.swift in Sources */,
 				A5779C301FB608A700DB9DAD /* ChaosBagDifficulty.swift in Sources */,
+				A508E3FA200FA0CD00067885 /* FileChecksum.swift in Sources */,
 				A5DA6AB11FA244C400457F27 /* CardPack.swift in Sources */,
 				A5DA6AB21FA244C400457F27 /* CardsSortingDescriptor.swift in Sources */,
 				A57FFB4A1FB5FE8B00B16FE6 /* ChaosBagRecord.swift in Sources */,
@@ -1138,6 +1154,7 @@
 				A5DA6AC71FA2461300457F27 /* CardCycleRecord.swift in Sources */,
 				A53E370F1FCDBA080002F85A /* CardFTSRecord.swift in Sources */,
 				A5DA6AB71FA244C400457F27 /* DeckCard.swift in Sources */,
+				A508E3FD200FB1E100067885 /* JSONLoader.swift in Sources */,
 				A5DA6AB31FA244C400457F27 /* CardSubtype.swift in Sources */,
 				A5DA6AC61FA2461300457F27 /* InvestigatorRecord.swift in Sources */,
 				A5DA6AC51FA2461300457F27 /* CardRecord.swift in Sources */,
@@ -1146,11 +1163,13 @@
 				A5DA6AAE1FA244C400457F27 /* CardCycle.swift in Sources */,
 				A5DA6AC81FA2461300457F27 /* CardPackRecord.swift in Sources */,
 				A57FFB471FB5FE7F00B16FE6 /* ScenarioRecord.swift in Sources */,
+				A59E56BE2011596E00362558 /* DatabaseServer.swift in Sources */,
 				A57E8EE51FAE6926008942B0 /* DeckCardRecord.swift in Sources */,
 				A55DEB3A1FCA3D5700141FED /* CardImageStore.swift in Sources */,
 				A5BCA80E1FA282EF001E6817 /* DeckRecord.swift in Sources */,
 				A5DA6AD71FA246DD00457F27 /* CardsStore.swift in Sources */,
 				A5779C3A1FB60DA700DB9DAD /* ChaosBagDatabaseMigrator.swift in Sources */,
+				A5C6D02720101DC6002EDE2F /* GeneralInfo.swift in Sources */,
 				A5837B6B1FCF40040062FBFA /* CardTraitRecord.swift in Sources */,
 				A5DA6ACB1FA2468900457F27 /* FileChecksumRecord.swift in Sources */,
 				A5DA6AAD1FA244C400457F27 /* CardAssetSlot.swift in Sources */,
@@ -1176,17 +1195,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A524FB7F1FB0F05B00123949 /* DeckStoreTests.swift in Sources */,
 				A55DEB3D1FCA4A7500141FED /* CardImageStoreTests.swift in Sources */,
 				A5837B6E1FCF411D0062FBFA /* CardTraitsTests.swift in Sources */,
 				A5837B831FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift in Sources */,
 				A5D8B7281FB6337300DAC40F /* TableInfoRecord.swift in Sources */,
 				A563C3711FB11D670060FE8C /* CardStoreTests.swift in Sources */,
 				A5D8B7231FB624FB00DAC40F /* ChaosBagDatabaseTests.swift in Sources */,
+				A59E56C4201210D200362558 /* DeckStoreTests.swift in Sources */,
 				A51A26521FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
 				A5837B801FD096F40062FBFA /* CardFiltersTests.swift in Sources */,
 				A51A26501FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
 				A5653C041FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */,
+				A59E56C120116D1B00362558 /* DatabaseServerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

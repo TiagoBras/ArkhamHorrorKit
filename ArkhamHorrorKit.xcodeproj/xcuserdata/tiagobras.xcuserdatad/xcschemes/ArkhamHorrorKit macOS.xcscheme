@@ -72,6 +72,18 @@
             ReferencedContainer = "container:ArkhamHorrorKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "MAGIC_TOKEN"
+            value = "48pvZOZWny8LcmEJBP5YgVwpt7Kux58KKqUSW"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "TEST_VARIABLE"
+            value = "HelloWorld"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

@@ -36,6 +36,11 @@ public struct CardFilter: Equatable {
         self.levels = Set([level])
     }
     
+    public init(traits: [String], fromLevel: Int, toLevel: Int) {
+        self.traits = Set(traits)
+        self.levels = Set(Array(fromLevel...toLevel))
+    }
+    
     public init(usesCharges: Bool, fromLevel: Int, toLevel: Int) {
         self.usesCharges = usesCharges
         self.levels = Set(Array(fromLevel...toLevel))

@@ -3,7 +3,7 @@
 import Foundation
 import GRDB
 
-final class FileChecksumRecord: Record {
+final class FileChecksumRecord: Record, Comparable {
     var filename: String
     var hex: String
     
@@ -32,5 +32,15 @@ final class FileChecksumRecord: Record {
     
     class func fetchOne(db: Database, filename: String) throws -> FileChecksumRecord? {
         return try FileChecksumRecord.fetchOne(db, key: ["filename": filename])
+    }
+    
+    static func <(lhs: FileChecksumRecord, rhs: FileChecksumRecord) -> Bool {
+        return lhs.filename < rhs.filename
+    }
+    
+    static func ==(lhs: FileChecksumRecord, rhs: FileChecksumRecord) -> Bool {
+        guard lhs.filename == lhs.filename else { return false }
+        
+        return lhs.hex == rhs.hex
     }
 }

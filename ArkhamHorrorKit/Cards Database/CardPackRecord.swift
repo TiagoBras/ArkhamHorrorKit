@@ -48,7 +48,7 @@ final class CardPackRecord: Record {
         var packs = [CardPackRecord]()
         
         for obj in json.arrayValue {
-            guard obj["date_release"].string != nil else { continue }
+//            guard obj["date_release"].string != nil else { continue }
             
             var dict = [String: DatabaseValueConvertible?]()
             dict["id"] = obj["code"].stringValue

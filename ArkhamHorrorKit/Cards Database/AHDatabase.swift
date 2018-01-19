@@ -15,6 +15,14 @@ public enum AHDatabaseError: Error {
     case invalidCardFactionId(Int)
     case couldNotMakeCardFromRecord(Int)
     case deckNotFound(Int)
+    case couldNotHashJSONFiles
+    case couldNotHashImages
+    case invalidChecksums
+    case invalidURLTaskData
+    case httpStatusCode(Int)
+    case couldNotChecksum
+    case invalidReport
+    case invalidUrls
 }
 
 public final class AHDatabase {
@@ -43,44 +51,234 @@ public final class AHDatabase {
         try migrateToLastVersion()
     }
     
-    public func updateDatabaseFromJSONFilesInDirectory(url: URL) throws {
+    public func getAllJsonFilesChecksums() throws -> [String: String] {
+        return try dbQueue.read { (db) -> [String: String] in
+            let records = try FileChecksumRecord.fetchAll(db)
+            
+            var checksumMap = [String: String]()
+            
+            records.forEach({ (record) in
+                checksumMap[record.filename] = record.hex
+            })
+            
+            return checksumMap
+        }
+    }
+    
+    public func getAllJsonFilesChecksums(completion: @escaping ([String: String]?, Error?) -> ()) {
+        DispatchQueue.global().async {
+            do {
+                let result = try self.getAllJsonFilesChecksums()
+                
+                completion(result, nil)
+            } catch {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    public func generalInfoJsonChecksum() throws -> String {
+        return try dbQueue.read({ (db) -> String in
+            return try GeneralInfo.fetchUniqueRow(db: db).jsonFilesChecksum
+        })
+    }
+    
+    private var server: DatabaseServer?
+    public func isUpdateAvailable(serverDomain: URL,
+                                  authenticationToken: String,
+                                  completion: @escaping (Bool?, Error?) -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                self?.server = DatabaseServer(domain: serverDomain, authenticationToken: authenticationToken)
+                
+                guard let info = try self?.dbQueue.read({ (db) -> GeneralInfo in
+                    return try GeneralInfo.fetchUniqueRow(db: db)
+                }) else { return }
+                
+                self?.server?.checkUpdates(
+                    jsonChecksum: info.jsonFilesChecksum,
+                    imagesChecksum: nil,
+                    completion: { (report, error) in
+                        if let error = error {
+                            return completion(nil, error)
+                        }
+                        
+                        guard let report = report else {
+                            return completion(nil, AHDatabaseError.invalidReport)
+                        }
+                        
+                        completion(report.jsonFilesUpdateAvailable, nil)
+                })
+            } catch {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    private var fileBatchDownloader: FileBatchDownload?
+    public func updateDatabase(serverDomain: URL,
+                               authenticationToken: String,
+                               jsonLocalDirectory: URL,
+                               completion: @escaping (Error?) -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                self?.server = DatabaseServer(domain: serverDomain, authenticationToken: authenticationToken)
+                
+                guard let checksums = try self?.dbQueue.read({ (db) -> [String: String] in
+                    let records = try FileChecksumRecord.fetchAll(db)
+                    
+                    var checksums = [String: String]()
+                    
+                    records.forEach({ (record) in
+                        checksums[record.filename] = record.hex
+                    })
+                    
+                    return checksums
+                }) else { return }
+                
+                self?.server?.checkUpdatedJsonFiles(jsonFilesChecksums: checksums) { (urls, error) in
+                    if let error = error {
+                        return completion(error)
+                    }
+                    
+                    guard let urls = urls else {
+                        return completion(AHDatabaseError.invalidUrls)
+                    }
+                    
+                    self?.fileBatchDownloader = FileBatchDownload(
+                        files: urls,
+                        storeIn: jsonLocalDirectory,
+                        progress: nil,
+                        completion: { (report, error) in
+                            if let error = error {
+                                return completion(error)
+                            }
+                            
+                            do {
+                                var urls = report.filesDownloaded
+                                
+                                // Load cycles.json first
+                                if let index = urls.index(where: { $0.lastPathComponent == "cycles.json" }) {
+                                    let url = urls.remove(at: index)
+                                    
+                                    try self?.loadCyclesFromJSON(at: url)
+                                }
+                                
+                                // Load packs.json second
+                                if let index = urls.index(where: { $0.lastPathComponent == "packs.json" }) {
+                                    let url = urls.remove(at: index)
+                                    
+                                    try self?.loadPacksFromJSON(at: url)
+                                }
+
+                                for url in urls {
+                                    let components = url.lastPathComponent.split(separator: ".")
+                                    
+                                    guard components.count == 2 else { continue }
+                                    
+                                    let packId = String(components[0])
+                                    
+                                    if let packExists = try self?.dbQueue.read({ (db) -> Bool in
+                                        return try CardPackRecord.fetchOne(db: db, id: packId) != nil
+                                    }), packExists {
+                                        try self?.loadCardsAndInvestigatorsFromJSON(at: url)
+                                    }
+                                }
+                                
+                                completion(nil)
+                            } catch {
+                                completion(error)
+                            }
+                    })
+                    
+                    do {
+                        try self?.fileBatchDownloader?.startDownload()
+                    } catch {
+                        completion(error)
+                    }
+                }
+            } catch {
+                completion(error)
+            }
+        }
+    }
+    
+    public func updateDatabaseFromJSONFilesInDirectory(url: URL, completion: @escaping (Error?) -> ()) {
         var urls = FileManager.default.contentsOf(directory: url, fileExtension: "json")
         
-        // Try loading cycles first if exists
-        if let index = urls.index(where: { $0.lastPathComponent == "cycles.json" }) {
-            try loadCyclesFromJSON(at: urls[index])
-            
-            urls.remove(at: index)
-        }
-        
-        // Try loading cycles first if exists
-        if let index = urls.index(where: { $0.lastPathComponent == "packs.json" }) {
-            try loadPacksFromJSON(at: urls[index])
-            
-            urls.remove(at: index)
-        }
-        
-        // Load all files (ignore files that don't contain cards)
-        for url in urls {
-            do {
-                try loadCardsAndInvestigatorsFromJSON(at: url)
-            } catch CardRecord.CardError.jsonDoesNotContainCards {
-                continue
-            } catch {
-                throw error
+        DispatchQueue.global().async {
+            self.getAllJsonFilesChecksums { (checksums, error) in
+                if let error = error {
+                    return completion(error)
+                }
+                
+                guard let checksums = checksums else {
+                    return completion(AHDatabaseError.invalidChecksums)
+                }
+                
+                do {
+                    // Try loading cycles first if exists
+                    if let index = urls.index(where: { $0.lastPathComponent == "cycles.json" }) {
+                        let res = try JSONLoader.load(url: urls[index])
+                        
+                        if let actual = checksums["cycles.json"], actual == res.checksum {
+                            
+                        } else {
+                            try self.loadCyclesFromJSON(at: urls[index])
+                            
+                            try self.dbQueue.write({ db in
+                                try FileChecksumRecord(filename: "cycles.json", hex: res.checksum).save(db)
+                            })
+                        }
+                        
+                        urls.remove(at: index)
+                    }
+                    
+                    // Try loading cycles first if exists
+                    if let index = urls.index(where: { $0.lastPathComponent == "packs.json" }) {
+                        let res = try JSONLoader.load(url: urls[index])
+                        
+                        if let actual = checksums["packs.json"], actual == res.checksum {
+                            
+                        } else {
+                            try self.loadPacksFromJSON(at: urls[index])
+                            
+                            try self.dbQueue.write({ db in
+                                try FileChecksumRecord(filename: "packs.json", hex: res.checksum).save(db)
+                            })
+                        }
+                        
+                        urls.remove(at: index)
+                    }
+                    
+                    // Load all files (ignore files that don't contain cards)
+                    for url in urls {
+                        do {
+                            try self.loadCardsAndInvestigatorsFromJSON(at: url)
+                        } catch CardRecord.CardError.jsonDoesNotContainCards {
+                            continue
+                        } catch {
+                            throw error
+                        }
+                    }
+                    
+                    completion(nil)
+                } catch {
+                    completion(error)
+                }
             }
         }
     }
     
     public func loadCyclesFromJSON(at url: URL) throws {
-        try loadJSON(at: url, handler: { (db, json) in
-            try CardCycleRecord.loadJSONRecords(json: json, into: db)
+        try loadJSON(at: url, handler: { (db, res) in
+            try CardCycleRecord.loadJSONRecords(json: res.json, into: db)
         })
     }
     
     public func loadPacksFromJSON(at url: URL) throws {
-        try loadJSON(at: url, handler: { (db, json) in
-            try CardPackRecord.loadJSONRecords(json: json, into: db)
+        try loadJSON(at: url, handler: { (db, res) in
+            try CardPackRecord.loadJSONRecords(json: res.json, into: db)
         })
     }
     
@@ -91,9 +289,9 @@ public final class AHDatabase {
     /// - Parameter url: JSON url
     /// - Throws: error
     public func loadCardsAndInvestigatorsFromJSON(at url: URL) throws {
-        try loadJSON(at: url) { (db, json) in
-            try InvestigatorRecord.loadJSONRecords(json: json, into: db)
-            try CardRecord.loadJSONRecords(json: json, into: db)
+        try loadJSON(at: url) { (db, res) in
+            try InvestigatorRecord.loadJSONRecords(json: res.json, into: db)
+            try CardRecord.loadJSONRecords(json: res.json, into: db)
         }
     }
     
@@ -294,36 +492,44 @@ public final class AHDatabase {
     }
     
     // MARK:- Private methods
-    private func loadJSON(at url: URL, handler: (Database, JSON) throws -> ()) throws {
+    private func loadJSON(
+        at url: URL,
+        handler: @escaping (Database, JSONLoader.JSONLoaderResults) throws -> ()) throws {
         var shouldUpdateStores = false
-        
+
         try dbQueue.inTransaction { (db) -> Database.TransactionCompletion in
-            let data = try Data(contentsOf: url)
-            let dataChecksum = CryptoHelper.sha256Hex(data: data)
+            let results = try JSONLoader.load(url: url)
             
-            let filename = url.lastPathComponent
+            try handler(db, results)
             
-            guard filename.count > 0 else { return Database.TransactionCompletion.rollback }
+            let record = FileChecksumRecord(filename: results.filename, hex: results.checksum)
             
-            if let record = try FileChecksumRecord.fetchOne(db: db, filename: filename) {
-                // Don't load the json file if checksums are equal
-                if record.hex == dataChecksum {
-                    return Database.TransactionCompletion.rollback
+            if record.hasPersistentChangedValues {
+                try record.save(db)
+                
+                shouldUpdateStores = true
+                
+                let combinedHash = try FileChecksumRecord.fetchAll(db)
+                    .sorted()
+                    .map({ r -> String in r.hex })
+                    .joined(separator: "")
+                
+                guard let checksum = CryptoHelper.sha256Hex(string: combinedHash) else {
+                    throw AHDatabaseError.couldNotChecksum
+                }
+                
+                let info = try GeneralInfo.fetchUniqueRow(db: db)
+                
+                info.jsonFilesChecksum = checksum
+                
+                if info.hasPersistentChangedValues {
+                    try info.save(db)
                 }
             }
-            
-            let json = JSON(data: data)
-            
-            try handler(db, json)
-            
-            let record = FileChecksumRecord(filename: filename, hex: dataChecksum)
-            try record.save(db)
-            
-            shouldUpdateStores = true
-            
+
             return Database.TransactionCompletion.commit
         }
-        
+    
         if shouldUpdateStores {
             try updateStores()
         }

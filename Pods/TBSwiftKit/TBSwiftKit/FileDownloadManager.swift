@@ -12,16 +12,29 @@ public class FileDownloadManager: NSObject, URLSessionDelegate, URLSessionDownlo
     private var activeDownloads: [URL: Download] = [:]
     
     private lazy var downloadSession: URLSession = {
-        let config = URLSessionConfiguration.background(withIdentifier: UUID().uuidString)
+        let config: URLSessionConfiguration
         
-        return URLSession(configuration: config, delegate: self, delegateQueue: nil)
+        if self.useBackgroundSession {
+            config = URLSessionConfiguration.background(withIdentifier: UUID().uuidString)
+        } else {
+            config = URLSessionConfiguration.default
+        }
+        
+        return Foundation.URLSession(configuration: config, delegate: self, delegateQueue: nil)
     }()
+    
+    private var useBackgroundSession: Bool = true
     
     #if os(iOS) || os(watchOS) || os(tvOS)
     public var backgroundSessionCompletionHandler: (() -> ())?
     
-    public init(backgroundSessionCompletionHandler: (() -> ())? = nil) {
+    public init(useBackgroundSession: Bool = false, backgroundSessionCompletionHandler: (() -> ())? = nil) {
         self.backgroundSessionCompletionHandler = backgroundSessionCompletionHandler
+        self.useBackgroundSession = useBackgroundSession
+    }
+    #else
+    public init(useBackgroundSession: Bool = true) {
+        self.useBackgroundSession = useBackgroundSession
     }
     #endif
     

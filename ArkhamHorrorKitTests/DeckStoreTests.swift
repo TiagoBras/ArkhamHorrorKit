@@ -153,11 +153,11 @@ class DeckStoreTests: XCTestCase {
         let addedExpected = Set([
             DeckCard(card: c1040, quantity: 1),
             DeckCard(card: c1043, quantity: 1)
-        ])
+            ])
         let removedExpected = Set([
             DeckCard(card: c1041, quantity: 1),
             DeckCard(card: c1042, quantity: 2)
-        ])
+            ])
         
         XCTAssertEqual(xp2 - xp1, delta.xp)
         XCTAssertEqual(delta.cardsAdded, addedExpected)
@@ -181,3 +181,4 @@ class DeckStoreTests: XCTestCase {
         XCTAssertEqual(deck.cards.first!.quantity, 2)
     }
 }
+

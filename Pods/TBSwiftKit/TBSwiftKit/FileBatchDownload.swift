@@ -47,6 +47,14 @@ public class FileBatchDownload {
         if !hasStartedDownload && !completed {
             hasStartedDownload = true
             
+            guard files.count > 0 else {
+                progress?(0, 0)
+                
+                let report = DownloadReport(filesDownloaded: [], filesNotDownloaded: [])
+                
+                return completion(report, nil)
+            }
+            
             try files.forEach { (url) in
                 try dm.downloadFile(at: url, storeIn: directory, completion: { [weak self] (fileUrl, error) in
                     self?.queue.sync {
@@ -65,9 +73,23 @@ public class FileBatchDownload {
                         self?.progress?(downloaded.count, totalFiles)
                         
                         if downloaded.count + notDownloaded.count == totalFiles {
+                            if let error = error {
+                                switch error {
+                                case FileDownloadManager.DownloadManagerError.httpStatusCode:
+                                    self?.completed = true
+                                    self?.completion(DownloadReport(
+                                        filesDownloaded: downloaded,
+                                        filesNotDownloaded: notDownloaded), nil)
+                                    return
+                                default: break
+                                }
+                            }
+
                             self?.completed = true
-                            self?.completion(DownloadReport(filesDownloaded: downloaded,
-                                                    filesNotDownloaded: notDownloaded), error)
+                            self?.completion(DownloadReport(
+                                filesDownloaded: downloaded,
+                                filesNotDownloaded: notDownloaded), error)
+                            return
                         }
                     }
                 })

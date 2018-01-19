@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/TBSwiftKit/TBSwiftKit/FileDownloadManager.swift"
-            timestampString = "537845178.727048"
+            timestampString = "538058932.068858"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
-            landmarkName = "urlSession(_:didBecomeInvalidWithError:)"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "cancelAllDownloads()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,124 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/TBSwiftKit/TBSwiftKit/FileDownloadManager.swift"
-            timestampString = "537845178.727125"
+            timestampString = "538058934.2822551"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
-            landmarkName = "urlSession(_:task:didCompleteWithError:)"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "pauseDownload(url:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/TBSwiftKit/TBSwiftKit/FileDownloadManager.swift"
+            timestampString = "538058936.496796"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "resumeDownload(url:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/TBSwiftKit/TBSwiftKit/FileDownloadManager.swift"
+            timestampString = "538058939.793035"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "urlSession(_:downloadTask:didFinishDownloadingTo:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/TBSwiftKit/TBSwiftKit/FileDownloadManager.swift"
+            timestampString = "538058943.539802"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "urlSession(_:didBecomeInvalidWithError:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TBSwiftKit.FileDownloadManager.urlSession(__ObjC.URLSession, didBecomeInvalidWithError: Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
+                  moduleName = "TBSwiftKit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tiagobras/Developer/SwiftProjects/ArkhamHorrorKit/Pods/TBSwiftKit/TBSwiftKit/FileDownloadManager.swift"
+                  timestampString = "538083432.378075"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "187"
+                  endingLineNumber = "187"
+                  offsetFromSymbolStart = "23">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in TBSwiftKit.FileDownloadManager.urlSession(__ObjC.URLSession, didBecomeInvalidWithError: Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
+                  moduleName = "TBSwiftKit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tiagobras/Developer/SwiftProjects/ArkhamHorrorKit/Pods/TBSwiftKit/TBSwiftKit/FileDownloadManager.swift"
+                  timestampString = "538083432.379813"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "188"
+                  endingLineNumber = "188"
+                  offsetFromSymbolStart = "21">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ArkhamHorrorKit/Cards Database/AHDatabaseMigrator.swift"
+            timestampString = "538083426.1902879"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "v1(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ArkhamHorrorKit/Cards Database/AHDatabaseMigrator.swift"
+            timestampString = "538083426.190367"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "v1(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

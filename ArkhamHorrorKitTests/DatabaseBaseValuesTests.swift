@@ -49,7 +49,7 @@ class DatabaseBaseValuesTests: XCTestCase {
         let version = AHDatabaseMigrator.MigrationVersion.v1
         
         try! DatabaseTestsHelper.inReadOnly(dbVersion: version, { (db) in
-            XCTAssertEqual(try CardPackRecord.fetchCount(db), 14)
+            XCTAssertEqual(try CardPackRecord.fetchCount(db), 19)
             
             let packs = loadJSONInMainBundle(filename: "packs.json").arrayValue
             
@@ -83,7 +83,7 @@ class DatabaseBaseValuesTests: XCTestCase {
             
             XCTAssertEqual(promo.count, 1)
             
-            XCTAssertEqual(try InvestigatorRecord.fetchCount(db), 16)
+            XCTAssertEqual(try InvestigatorRecord.fetchCount(db), 17)
             
             let investigator = try InvestigatorRecord.fetchOne(db: db, id: 3004)!
             
@@ -148,7 +148,7 @@ class DatabaseBaseValuesTests: XCTestCase {
             let wda = loadCardsJSONInMainBundle(filename: "wda.json")
             XCTAssertEqual(wda.count, 14)
             
-            XCTAssertEqual(try CardRecord.fetchCount(db), 255)
+            XCTAssertEqual(try CardRecord.fetchCount(db), 269)
             
             let card1 = try CardRecord.fetchOne(db: db, id: 2027)!
             

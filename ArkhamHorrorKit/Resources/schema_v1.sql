@@ -1,3 +1,10 @@
+-- Table: Meta Information
+CREATE TABLE GeneralInfo (
+    id INTEGER PRIMARY KEY CHECK (id = 0),
+    json_files_checksum TEXT NOT NULL DEFAULT "",
+    images_checksum TEXT NOT NULL DEFAULT ""
+);
+
 -- Table: Last Update Hash
 CREATE TABLE FileChecksum (
     filename TEXT PRIMARY KEY,

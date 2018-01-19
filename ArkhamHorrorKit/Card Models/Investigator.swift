@@ -10,6 +10,7 @@ public struct Investigator: Hashable, Comparable {
         case ashcanPeteTheDrifter = 2005, markHarriganTheSoldier = 3001, minhThiPhanTheSecretary = 3002
         case sefinaRousseauThePainter = 3003, akachiOnyeleTheShaman = 3004, williamYorickTheGravedigger = 3005
         case lolaHayesTheActress = 3006
+        case marieLambeauTheEntertainer = 99001
     }
     
     class Dummy {}
@@ -81,6 +82,9 @@ public struct Investigator: Hashable, Comparable {
         case .lolaHayesTheActress:
             factions.append(contentsOf:
                 [.guardian, .seeker, .mystic, .rogue, .survivor])
+        case .marieLambeauTheEntertainer:
+            factions.append(contentsOf:
+                [.guardian, .seeker, .mystic, .rogue, .survivor])
         default:
             factions.append(contentsOf:
                 [.guardian, .seeker, .mystic, .rogue, .survivor])
@@ -147,6 +151,12 @@ public struct Investigator: Hashable, Comparable {
                 fromLevel: 0,
                 toLevel: 3)
             filter.or(CardFilter(factions: [.neutral], fromLevel: 0, toLevel: 5))
+        case .marieLambeauTheEntertainer:
+            filter = CardFilter(factions: [.neutral], fromLevel: 0, toLevel: 5)
+            filter.or(CardFilter(factions: [.mystic], fromLevel: 0, toLevel: 3))
+            filter.or(CardFilter(factions: [.seeker, .survivor], level: 0))
+            filter.or(CardFilter(traits: ["Spell"], fromLevel: 0, toLevel: 5))
+            filter.or(CardFilter(traits: ["Occult"], level: 0))
         }
         
         return filter
@@ -173,6 +183,7 @@ public struct Investigator: Hashable, Comparable {
         case .akachiOnyeleTheShaman:  return [3014: 1, 3015: 1]
         case .williamYorickTheGravedigger:  return [3016: 1, 3017: 1]
         case .lolaHayesTheActress:  return [3018: 2, 3019: 2]
+        case .marieLambeauTheEntertainer: return [99002: 1, 99003: 1]
         }
     }
     
@@ -196,19 +207,28 @@ public struct Investigator: Hashable, Comparable {
         case .akachiOnyeleTheShaman: return Image.inBundle("akachi_onyele_the_shaman", bundle)
         case .williamYorickTheGravedigger: return Image.inBundle("william_yorick_the_gravedigger", bundle)
         case .lolaHayesTheActress: return Image.inBundle("lola_hayes_the_actress", bundle)
+        case .marieLambeauTheEntertainer: return Image.inBundle("marie_lambeau_the_entertainer", bundle)
         }
     }
     
     public var frontImage: Image {
         let bundle = Bundle(for: Investigator.Dummy.self)
         
-        return Image.inBundle("0\(id)", bundle)
+        if InvestigatorId(rawValue: id)! == .marieLambeauTheEntertainer {
+            return Image.inBundle("\(id)", bundle)
+        } else {
+            return Image.inBundle("0\(id)", bundle)
+        }
     }
     
     public var backImage: Image {
         let bundle = Bundle(for: Investigator.Dummy.self)
         
-        return Image.inBundle("0\(id)b", bundle)
+        if InvestigatorId(rawValue: id)! == .marieLambeauTheEntertainer {
+            return Image.inBundle("\(id)b", bundle)
+        } else {
+            return Image.inBundle("0\(id)b", bundle)
+        }
     }
     
     public var deckOptions: [DeckOption] {
@@ -221,6 +241,7 @@ public struct Investigator: Hashable, Comparable {
         case .jennyBarnesTheDilettante: factions = allFactions.subtracting([faction])
         case .jimCulverTheMusician: factions = allFactions.subtracting([faction])
         case .ashcanPeteTheDrifter: factions = allFactions.subtracting([faction])
+        case .marieLambeauTheEntertainer: factions = [.seeker, .survivor]
         default: return []
         }
         
