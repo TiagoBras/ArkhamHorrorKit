@@ -5,6 +5,7 @@ public struct CardCycle: Hashable, Comparable {
     public var name: String
     public var position: Int
     public var size: Int
+    public var cardsCount: Int
     
     public var hashValue: Int {
         let hashables: [AnyHashable] = [id, name, position, size]

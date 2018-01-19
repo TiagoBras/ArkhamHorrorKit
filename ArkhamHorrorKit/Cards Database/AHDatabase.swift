@@ -324,11 +324,22 @@ public final class AHDatabase {
                 
                 var cycles = [String: CardCycle]()
                 
-                records.forEach({ (record) in
+                try records.forEach({ (record) in
+                    let cardTable = CardRecord.databaseTableName
+                    let packTable = CardPackRecord.databaseTableName
+                    let sql = """
+                    SELECT Count(*) FROM \(cardTable)
+                    INNER JOIN \(packTable) ON \(packTable).id = \(cardTable).pack_id
+                    WHERE \(packTable).cycle_id = '\(record.id)'
+                    """
+                    
+                    let count = try Int.fetchOne(db, sql)
+                    
                     let cycle = CardCycle(id: record.id,
                                           name: record.name,
                                           position: record.position,
-                                          size: record.size)
+                                          size: record.size,
+                                          cardsCount: count ?? 0)
                     
                     cycles[cycle.id] = cycle
                 })
@@ -359,11 +370,16 @@ public final class AHDatabase {
                         throw AHDatabaseError.cycleNotFound(record.cycleId)
                     }
                     
+                    let table = CardRecord.databaseTableName
+                    let sql = "SELECT COUNT(*) FROM \(table) WHERE pack_id = '\(record.id)'"
+                    let count = try Int.fetchOne(db, sql)
+                    
                     let pack = CardPack(id: record.id,
                                         name: record.name,
                                         position: record.position,
                                         size: record.size,
-                                        cycle: cycle)
+                                        cycle: cycle,
+                                        cardsCount: count ?? 0)
                     packs[pack.id] = pack
                 })
                 

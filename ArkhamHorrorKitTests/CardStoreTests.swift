@@ -213,7 +213,7 @@ class CardStoreTests: XCTestCase {
                                  name: "",
                                  position: 1,
                                  size: 1,
-                                 cycle: CardCycle(id: "dwl", name: "", position: 1, size: 1))]
+                                 cycle: CardCycle(id: "dwl", name: "", position: 1, size: 1, cardsCount: 0), cardsCount: 0)]
         
         let cards = database.cardStore.fetchCards(filter: filter, sorting: nil)
         

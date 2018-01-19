@@ -6,6 +6,7 @@ public struct CardPack: Hashable, Comparable {
     public var position: Int
     public var size: Int
     public var cycle: CardCycle
+    public var cardsCount: Int
     
     public var hashValue: Int {
         let hashables: [AnyHashable] = [id, name, position, size, cycle]
