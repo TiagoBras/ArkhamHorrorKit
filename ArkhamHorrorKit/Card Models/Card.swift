@@ -37,6 +37,16 @@ public struct Card: Hashable, Comparable {
     public var backImageName: String?
     public var isFavorite: Bool
     
+    public var isWeakness: Bool {
+        return subtype != nil
+    }
+    
+    public var isBasicWeakness: Bool {
+        guard let subtype = subtype else { return false }
+        
+        return subtype == .basicweakness
+    }
+    
     public static func ==(lhs: Card, rhs: Card) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
