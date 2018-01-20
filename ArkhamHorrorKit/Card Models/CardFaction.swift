@@ -50,7 +50,7 @@ public enum CardFaction: Int, Comparable {
         case .rogue: return Color(hexString: "4A854D")!
         case .mystic: return Color(hexString: "655B8F")!
         case .survivor: return Color(hexString: "ED2B30")!
-        case .neutral: return Color(hexString: "AAAAAA")!
+        case .neutral: return Color(hexString: "515151")!
         }
     }
     
@@ -61,7 +61,7 @@ public enum CardFaction: Int, Comparable {
         case .rogue: return Color(hexString: "DCEDC8")!
         case .mystic: return Color(hexString: "E1BEE7")!
         case .survivor: return Color(hexString: "FFCDD2")!
-        case .neutral: return Color(hexString: "ECEFF1")!
+        case .neutral: return Color(hexString: "84878b")!
         }
     }
     
