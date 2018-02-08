@@ -45,6 +45,62 @@ public class CardImageStore {
     #endif
     public typealias ProgressHandler = (Int, Int) -> ()
     
+    #if os(iOS) || os(watchOS) || os(tvOS)
+    func getLocalImage(name: String) -> UIImage? {
+        let localPath = localDir.appendingPathComponent(name).path
+    
+        if FileManager.default.fileExists(atPath: localPath) {
+            if let image = UIImage(contentsOfFile: localPath) {
+                cache.set(name, value: image)
+                return image
+            } else {
+                return nil
+            }
+        }
+    
+        return nil
+    }
+    
+    public func getLocalFrontImage(card: Card) -> UIImage? {
+        return getLocalImage(name: card.frontImageName)
+    }
+    
+    public func getLocalBackImage(card: Card) -> UIImage? {
+        guard let backImageName = card.backImageName else {
+            return nil
+        }
+    
+        return getLocalImage(name: backImageName)
+    }
+    #elseif os(OSX)
+    func getLocalImage(name: String) -> NSImage? {
+        let localPath = localDir.appendingPathComponent(name).path
+        
+        if FileManager.default.fileExists(atPath: localPath) {
+            if let image = NSImage(contentsOfFile: localPath) {
+                cache.set(name, value: image)
+                return image
+            } else {
+                return nil
+            }
+        }
+        
+        return nil
+    }
+    
+    public func getLocalFrontImage(card: Card) -> NSImage? {
+        return getLocalImage(name: card.frontImageName)
+    }
+    
+    public func getLocalBackImage(card: Card) -> NSImage? {
+        guard let backImageName = card.backImageName else {
+            return nil
+        }
+        
+        return getLocalImage(name: backImageName)
+    }
+    #endif
+    
     public func getFrontImage(card: Card, completion: @escaping CompletionHandler) throws {
         try getImage(name: card.frontImageName, completion: completion)
     }
