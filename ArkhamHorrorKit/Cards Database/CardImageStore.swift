@@ -46,18 +46,39 @@ public class CardImageStore {
     public typealias ProgressHandler = (Int, Int) -> ()
     
     #if os(iOS) || os(watchOS) || os(tvOS)
-    func getLocalImage(name: String) -> UIImage? {
+    func getLocalImage(name: String, size: CGSize? = nil) -> UIImage? {
+        let cacheName: String
+        
+        if let size = size {
+            cacheName = "\(name)@\(size.width)x\(size.height)"
+        } else {
+            cacheName = name
+        }
+        
+        if let image = cache.get(cacheName) {
+            return image
+        }
+        
         let localPath = localDir.appendingPathComponent(name).path
-    
+        
         if FileManager.default.fileExists(atPath: localPath) {
             if let image = UIImage(contentsOfFile: localPath) {
-                cache.set(name, value: image)
-                return image
+                if let size = size {
+                    let resizedImage = resizeImage(image: image, size: size)
+                    
+                    cache.set(cacheName, value: resizedImage)
+                    
+                    return resizedImage
+                } else {
+                    cache.set(cacheName, value: image)
+                    
+                    return image
+                }
             } else {
                 return nil
             }
         }
-    
+        
         return nil
     }
     
@@ -69,11 +90,15 @@ public class CardImageStore {
         guard let backImageName = card.backImageName else {
             return nil
         }
-    
+        
         return getLocalImage(name: backImageName)
     }
     #elseif os(OSX)
     func getLocalImage(name: String) -> NSImage? {
+        if let image = cache.get(name) {
+            return image
+        }
+        
         let localPath = localDir.appendingPathComponent(name).path
         
         if FileManager.default.fileExists(atPath: localPath) {
@@ -84,7 +109,7 @@ public class CardImageStore {
                 return nil
             }
         }
-        
+    
         return nil
     }
     
@@ -96,7 +121,7 @@ public class CardImageStore {
         guard let backImageName = card.backImageName else {
             return nil
         }
-        
+    
         return getLocalImage(name: backImageName)
     }
     #endif
@@ -225,4 +250,25 @@ public class CardImageStore {
         case httpStatusCode(Int)
         case invalidURLTaskData
     }
+    
+    #if os(iOS) || os(watchOS) || os(tvOS)
+    func resizeImage(image: UIImage, size target: CGSize, opaque: Bool = false) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(target, opaque, 0)
+        
+        let size = image.size
+        let scale = min(abs(target.width / size.width), abs(target.height / size.height))
+        
+        image.draw(in: CGRect(x: 0.5 * (target.width - (size.width * scale)),
+                    y: 0.5 * (target.height - (size.height * scale)),
+                    width: size.width * scale,
+                    height: size.height * scale))
+        
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        UIGraphicsEndImageContext()
+        
+        return resizedImage
+    }
+    #endif
+    
 }
