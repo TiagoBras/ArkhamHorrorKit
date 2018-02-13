@@ -42,25 +42,25 @@ public final class DeckStore {
     }
 
     public func createDeck(name: String, from deck: Deck) throws -> Deck {
+        let newDeck = try duplicateDeck(deck)
+        
         return try dbWriter.write({ (db) -> Deck in
             guard let oldRecord = try DeckRecord.fetchOne(db: db, id: deck.id) else {
                 throw AHDatabaseError.deckNotFound(deck.id)
             }
-
-            let record = DeckRecord(investigatorId: deck.investigator.id,
-                                    name: name,
-                                    version: oldRecord.version + 1)
-            record.previousVersionDeckId = oldRecord.id
             
-            try record.save(db)
-
-            oldRecord.nextVersionDeckId = record.id
-
-            if oldRecord.hasPersistentChangedValues {
-                try oldRecord.save(db)
+            guard let newRecord = try DeckRecord.fetchOne(db: db, id: newDeck.id) else {
+                throw AHDatabaseError.deckNotFound(newDeck.id)
             }
 
-            return try makeDeck(record: record, deckCards: Set())
+            newRecord.previousVersionDeckId = oldRecord.id
+            newRecord.version = oldRecord.version + 1
+            try newRecord.save(db)
+
+            oldRecord.nextVersionDeckId = newRecord.id
+            try oldRecord.save(db)
+
+            return try makeDeck(record: newRecord, deckCards: newDeck.cards)
         })
     }
     
@@ -71,6 +71,51 @@ public final class DeckStore {
                     DispatchQueue.main.async {
                         completion(output, nil)
                     }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+            }
+        }
+    }
+    
+    public func duplicateDeck(_ deck: Deck) throws -> Deck {
+        let deckId = try dbWriter.write({ (db) -> Int in
+            let record = DeckRecord(investigatorId: deck.investigator.id,
+                                    name: deck.name,
+                                    version: 1)
+            
+            try record.save(db)
+            
+            guard let deckId = record.id else {
+                throw AHDatabaseError.deckHasNoDefinedId
+            }
+            
+            for deckCard in deck.cards {
+                let record = DeckCardRecord(deckId: deckId,
+                                            cardId: deckCard.card.id,
+                                            quantity: deckCard.quantity)
+                try record.save(db)
+            }
+            
+            return deckId
+        })
+        
+        guard let deck = try fetchDeck(id: deckId) else {
+            throw AHDatabaseError.deckNotFound(deckId)
+        }
+        
+        return deck
+    }
+    
+    public func duplicateDeck(_ deck: Deck, completion: @escaping (Deck?, Error?) -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                let deck = try self?.duplicateDeck(deck)
+                
+                DispatchQueue.main.async {
+                    completion(deck, nil)
                 }
             } catch {
                 DispatchQueue.main.async {

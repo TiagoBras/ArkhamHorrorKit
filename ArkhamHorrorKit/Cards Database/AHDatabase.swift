@@ -23,6 +23,7 @@ public enum AHDatabaseError: Error {
     case couldNotChecksum
     case invalidReport
     case invalidUrls
+    case deckHasNoDefinedId
 }
 
 public final class AHDatabase {
