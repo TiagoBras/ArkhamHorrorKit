@@ -37,89 +37,82 @@ public final class AHDatabaseMigrator {
     private var migrator = DatabaseMigrator()
     
     private static func v1(_ db: Database) throws {
-        do {
-            let thisBundle = Bundle(for: self)
-            
-            guard let schemaSQL = thisBundle.url(forResource: "schema_v1", withExtension: "sql") else {
-                throw CardsDatabaseMigratorError.fileNotFound("schema_v1.sql")
-            }
-            
-            let sql = try String(contentsOf: schemaSQL)
-            
-            // Create schema
-            try db.execute(AHDatabaseMigrator.cleanUp(sql: sql))
-            
-            var jsonLoaderResults = [JSONLoader.JSONLoaderResults]()
-            
-            // Load cycles.json
-            let cyclesRes = try JSONLoader.load(bundle: thisBundle, filename: "cycles.json")
-            try CardCycleRecord.loadJSONRecords(json: cyclesRes.json, into: db)
-            try FileChecksumRecord(filename: "cycles.json", hex: cyclesRes.checksum).save(db)
-            jsonLoaderResults.append(cyclesRes)
-            
-            // Load packs.json
-            let packsRes = try JSONLoader.load(bundle: thisBundle, filename: "packs.json")
-            let packs = try CardPackRecord.loadJSONRecords(json: packsRes.json, into: db)
-            try FileChecksumRecord(filename: "packs.json", hex: packsRes.checksum).save(db)
-            jsonLoaderResults.append(packsRes)
-            
-            for pack in packs {
-                let cycleRecords = try CardCycleRecord.fetchAll(db)
-                
-                guard cycleRecords.index(where: { $0.id == pack.cycleId }) != nil else {
-                    continue
-                }
-                
-                guard let url = thisBundle.url(forResource: pack.id, withExtension: "json") else {
-                    continue
-                }
-                
-                let loadResults = try JSONLoader.load(url: url)
-                
-                var skipChecksum = true
-                
-                do {
-                    try InvestigatorRecord.loadJSONRecords(json: loadResults.json, into: db)
-                    try FileChecksumRecord(filename: "\(pack.id).json", hex: loadResults.checksum).save(db)
-                    jsonLoaderResults.append(loadResults)
-                    
-                } catch CardRecord.CardError.jsonDoesNotContainCards {
-                    skipChecksum = false
-                } catch {
-                    throw error
-                }
-                
-                do {
-                    try CardRecord.loadJSONRecords(json: loadResults.json, into: db)
-                    
-                    if !skipChecksum {
-                        try FileChecksumRecord(filename: "\(pack.id).json", hex: loadResults.checksum).save(db)
-                        jsonLoaderResults.append(loadResults)
-                    }
-                } catch CardRecord.CardError.jsonDoesNotContainCards {
-                    continue
-                } catch {
-                    throw error
-                }
-            }
-            
-            // Update GeneralInfo
-            let concatenatedChecksum = jsonLoaderResults.sorted().map({ $0.checksum }).joined(separator: "")
-            
-            guard let checksum = CryptoHelper.sha256Hex(string: concatenatedChecksum) else {
-                throw CardsDatabaseMigratorError.couldNotCalculateHashOfString(concatenatedChecksum)
-            }
-            
-            let generalInfo = try GeneralInfo.fetchUniqueRow(db: db)
-            generalInfo.jsonFilesChecksum = checksum
-            
-            try generalInfo.save(db)
-        } catch {
-            print(error)
-            
-            throw error
+        let thisBundle = Bundle(for: self)
+        
+        guard let schemaSQL = thisBundle.url(forResource: "schema_v1", withExtension: "sql") else {
+            throw CardsDatabaseMigratorError.fileNotFound("schema_v1.sql")
         }
         
+        let sql = try String(contentsOf: schemaSQL)
+        
+        // Create schema
+        try db.execute(AHDatabaseMigrator.cleanUp(sql: sql))
+        
+        var jsonLoaderResults = [JSONLoader.JSONLoaderResults]()
+        
+        // Load cycles.json
+        let cyclesRes = try JSONLoader.load(bundle: thisBundle, filename: "cycles.json")
+        try CardCycleRecord.loadJSONRecords(json: cyclesRes.json, into: db)
+        try FileChecksumRecord(filename: "cycles.json", hex: cyclesRes.checksum).save(db)
+        jsonLoaderResults.append(cyclesRes)
+        
+        // Load packs.json
+        let packsRes = try JSONLoader.load(bundle: thisBundle, filename: "packs.json")
+        let packs = try CardPackRecord.loadJSONRecords(json: packsRes.json, into: db)
+        try FileChecksumRecord(filename: "packs.json", hex: packsRes.checksum).save(db)
+        jsonLoaderResults.append(packsRes)
+        
+        for pack in packs {
+            let cycleRecords = try CardCycleRecord.fetchAll(db)
+            
+            guard cycleRecords.index(where: { $0.id == pack.cycleId }) != nil else {
+                continue
+            }
+            
+            guard let url = thisBundle.url(forResource: pack.id, withExtension: "json") else {
+                continue
+            }
+            
+            let loadResults = try JSONLoader.load(url: url)
+            
+            var skipChecksum = true
+            
+            do {
+                try InvestigatorRecord.loadJSONRecords(json: loadResults.json, into: db)
+                try FileChecksumRecord(filename: "\(pack.id).json", hex: loadResults.checksum).save(db)
+                jsonLoaderResults.append(loadResults)
+                
+            } catch CardRecord.CardError.jsonDoesNotContainCards {
+                skipChecksum = false
+            } catch {
+                throw error
+            }
+            
+            do {
+                try CardRecord.loadJSONRecords(json: loadResults.json, into: db)
+                
+                if !skipChecksum {
+                    try FileChecksumRecord(filename: "\(pack.id).json", hex: loadResults.checksum).save(db)
+                    jsonLoaderResults.append(loadResults)
+                }
+            } catch CardRecord.CardError.jsonDoesNotContainCards {
+                continue
+            } catch {
+                throw error
+            }
+        }
+        
+        // Update GeneralInfo
+        let concatenatedChecksum = jsonLoaderResults.sorted().map({ $0.checksum }).joined(separator: "")
+        
+        guard let checksum = CryptoHelper.sha256Hex(string: concatenatedChecksum) else {
+            throw CardsDatabaseMigratorError.couldNotCalculateHashOfString(concatenatedChecksum)
+        }
+        
+        let generalInfo = try GeneralInfo.fetchUniqueRow(db: db)
+        generalInfo.jsonFilesChecksum = checksum
+        
+        try generalInfo.save(db)
     }
     
     private static func cleanUp(sql: String) -> String {

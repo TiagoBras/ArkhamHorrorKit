@@ -4,10 +4,10 @@ import Foundation
 
 public struct DeckFilter {
     public var factions: [CardFaction]?
-    public var investigators: [Investigator]?
+    public var investigatorsIds: [Int]?
     
-    public init(factions: [CardFaction]?, investigators: [Investigator]?) {
+    public init(factions: [CardFaction]?, investigatorsIds: [Int]?) {
         self.factions = factions
-        self.investigators = investigators
+        self.investigatorsIds = investigatorsIds
     }
 }

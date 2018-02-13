@@ -418,9 +418,7 @@ public final class CardsStore {
         for subfilter in filter.subfilters {
             s = "\(s) \(subfilter.op.rawValue) (\(genWhereClause(subfilter.filter)))"
         }
-        
-        print(s)
-        
+
         return s
     }
     

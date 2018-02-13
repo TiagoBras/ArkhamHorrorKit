@@ -4,14 +4,15 @@ import Foundation
 
 public struct DeckSortingDescriptor: Equatable {
     public enum Column {
-        case updateDate, creationDate, faction, investigatorNumber
+        case name, updateDate, creationDate, faction, investigator
         
         public var name: String {
             switch self {
+            case .name: return "Name"
             case .updateDate: return "Update Date"
             case .creationDate: return "Creation Date"
             case .faction: return "Faction"
-            case .investigatorNumber: return "Investigator"
+            case .investigator: return "Investigator"
             }
         }
     }

@@ -154,6 +154,7 @@
 		A5C6040B1FD860730016F538 /* 01043.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A5C604091FD860730016F538 /* 01043.jpeg */; };
 		A5C6D02620101DC6002EDE2F /* GeneralInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C6D02520101DC6002EDE2F /* GeneralInfo.swift */; };
 		A5C6D02720101DC6002EDE2F /* GeneralInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C6D02520101DC6002EDE2F /* GeneralInfo.swift */; };
+		A5D61FEE20337BF1004DAABC /* DeckSortingDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A557A7E91FB0E65E007B9D6F /* DeckSortingDescriptor.swift */; };
 		A5D8B7221FB619C200DAC40F /* ChaosBagDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7211FB619C200DAC40F /* ChaosBagDatabaseTests.swift */; };
 		A5D8B7231FB624FB00DAC40F /* ChaosBagDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7211FB619C200DAC40F /* ChaosBagDatabaseTests.swift */; };
 		A5D8B7271FB6337300DAC40F /* TableInfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D8B7241FB6317000DAC40F /* TableInfoRecord.swift */; };
@@ -1170,6 +1171,7 @@
 				A5DA6AD71FA246DD00457F27 /* CardsStore.swift in Sources */,
 				A5779C3A1FB60DA700DB9DAD /* ChaosBagDatabaseMigrator.swift in Sources */,
 				A5C6D02720101DC6002EDE2F /* GeneralInfo.swift in Sources */,
+				A5D61FEE20337BF1004DAABC /* DeckSortingDescriptor.swift in Sources */,
 				A5837B6B1FCF40040062FBFA /* CardTraitRecord.swift in Sources */,
 				A5DA6ACB1FA2468900457F27 /* FileChecksumRecord.swift in Sources */,
 				A5DA6AAD1FA244C400457F27 /* CardAssetSlot.swift in Sources */,

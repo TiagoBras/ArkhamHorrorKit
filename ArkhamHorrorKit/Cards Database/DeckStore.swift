@@ -300,6 +300,58 @@ public final class DeckStore {
         }
     }
     
+    private func genDeckFetchStatement(filter: DeckFilter?,
+                                       sortingDescriptors: [Deck]?) -> String {
+        var sql = "SELECT * FROM \(DeckRecord.databaseTableName)"
+        
+        var joinsClause = [String]()
+        var whereClause = [String]()
+        var sortClause = [String]()
+        
+        if let factions = filter?.factions, factions.count > 0 {
+            let t = InvestigatorRecord.databaseTableName
+  
+            joinsClause.append("INNER JOIN \(t) ON \(t).id = investigator_id")
+            
+            let ids = factions.map({ String($0.id) }).joined(separator: ", ")
+            
+            whereClause.append("\(t).faction_id IN (\(ids))")
+        }
+        
+        if let ids = filter?.investigatorsIds?.map({ String($0) }), ids.count > 0 {
+            whereClause.append("investigator_id IN (\(ids.joined(separator: ", ")))")
+        }
+        
+        if let descriptors = sortingDescriptors, descriptors.count > 0 {
+            func orderStmt(_ descriptor: DeckSortingDescriptor) -> String {
+                let mod: String = descriptor.ascending ? "ASC" : "DESC"
+                
+                switch descriptor.column {
+//                case .name: return "name \(mod)"
+//                case .faction: return "faction_id \(mod)"
+//                case .pack: return "pack_id \(mod)"
+//                case .type: return "type_id \(mod)"
+//                case .level: return "level \(mod)"
+//                case .assetSlot: return "asset_slot_id IS NULL, asset_slot_id \(mod)"
+//                case .favoriteStatus: return "favorite \(mod)"
+                case .name: return "name \(mod)"
+                case .updateDate: return "update_date \(mod)"
+                case .creationDate: return "creation_date \(mod)"
+                case .faction: return "\(InvestigatorRecord.databaseTableName).faction_id \(mod)"
+                case .investigator: return "investigator_id \(mod)"
+                }
+            }
+            
+//            return descriptors
+//                .map({ orderStmt($0) })
+//                .joined(separator: ", ")
+        } else {
+            sortClause.append("id DESC")
+        }
+        
+        return ""
+    }
+    
     private func makeDeck(record: DeckRecord, deckCards: Set<DeckCard>) throws -> Deck {
         guard let investigator = cardStore.investigators[record.investigatorId] else {
             throw AHDatabaseError.investigatorNotFound(record.investigatorId)
