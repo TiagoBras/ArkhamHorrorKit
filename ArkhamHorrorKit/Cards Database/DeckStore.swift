@@ -209,6 +209,22 @@ public final class DeckStore {
         }
     }
     
+    public func deleteAllDecks() throws {
+        try self.dbWriter.write({ (db) -> () in
+            try DeckRecord.deleteAll(db)
+        })
+    }
+    
+    public func deleteAllDecks(completion: @escaping (Error?) -> ()) {
+        DispatchQueue.global().async {
+            do {
+                try self.deleteAllDecks()
+            } catch {
+                completion(error)
+            }
+        }
+    }
+    
     func fetchAllDeckCards(forDeckId id: Int) throws -> Set<DeckCard> {
         let records = try dbWriter.read({ (db) -> [DeckCardRecord] in
             return try DeckCardRecord.fetchAll(db: db, deckId: id)
