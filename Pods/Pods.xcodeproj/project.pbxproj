@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -335,7 +335,7 @@
 		0471DE9A7A92BEAF6F1F33CCAB317E33 /* SQLSpecificExpressible+QueryInterface.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SQLSpecificExpressible+QueryInterface.swift"; path = "GRDB/QueryInterface/SQLSpecificExpressible+QueryInterface.swift"; sourceTree = "<group>"; };
 		04AF02E0F79DDB06AF996F1AD384E398 /* UUID.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UUID.swift; path = GRDB/Core/Support/Foundation/UUID.swift; sourceTree = "<group>"; };
 		097AF3AD9E0D85DA0B652537E687E0B2 /* Pods-ArkhamHorrorKit iOSTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ArkhamHorrorKit iOSTests-frameworks.sh"; sourceTree = "<group>"; };
-		0A35059759C868C7B813E1545B99D238 /* GRDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GRDB.framework; path = "GRDB.swift-macOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A35059759C868C7B813E1545B99D238 /* GRDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GRDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C141EA1C3B61E92BC2D6F4E950FF0A9 /* Pods-ArkhamHorrorKit iOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ArkhamHorrorKit iOS-umbrella.h"; sourceTree = "<group>"; };
 		0C193A32DB816B37CF87E87E9456C49D /* Column.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Column.swift; path = GRDB/QueryInterface/Column.swift; sourceTree = "<group>"; };
 		0FC0F2B101889BE0A45D95B2ADAAD70C /* Pods-ArkhamHorrorKit iOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ArkhamHorrorKit iOS-dummy.m"; sourceTree = "<group>"; };
@@ -355,7 +355,7 @@
 		21D5E433E034EAF8923703F9D0994723 /* Pods-ArkhamHorrorKit macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ArkhamHorrorKit macOS.debug.xcconfig"; sourceTree = "<group>"; };
 		233608E0AD9615DC21D969A150D2625C /* DatabaseReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseReader.swift; path = GRDB/Core/DatabaseReader.swift; sourceTree = "<group>"; };
 		23CDF45DBD6F76B02C291FBFD376943B /* FTS3TokenizerDescriptor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FTS3TokenizerDescriptor.swift; path = GRDB/FTS/FTS3TokenizerDescriptor.swift; sourceTree = "<group>"; };
-		27ADB0FA1BEE2E805DA18B9A46337E2F /* SwiftyJSON-iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "SwiftyJSON-iOS.modulemap"; sourceTree = "<group>"; };
+		27ADB0FA1BEE2E805DA18B9A46337E2F /* SwiftyJSON-iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "SwiftyJSON-iOS.modulemap"; sourceTree = "<group>"; };
 		292B2A19382EA586DBE1A10256556A48 /* SwiftyJSON-iOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyJSON-iOS-dummy.m"; sourceTree = "<group>"; };
 		29E22D5B87B9DB479233D781EB04C228 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A112699F7BA0B9C66E3291FF97B345B /* RowAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RowAdapter.swift; path = GRDB/Core/RowAdapter.swift; sourceTree = "<group>"; };
@@ -370,11 +370,11 @@
 		3498B57CE6D474203635D21CC27496DD /* QueryInterfaceRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QueryInterfaceRequest.swift; path = GRDB/QueryInterface/QueryInterfaceRequest.swift; sourceTree = "<group>"; };
 		34AE96F5C7860EF3FF09B43DE6F44766 /* GRDB.swift-iOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GRDB.swift-iOS-dummy.m"; sourceTree = "<group>"; };
 		34D32882273EB5CBB32F19EA816293AF /* RowConvertible+TableMapping.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "RowConvertible+TableMapping.swift"; path = "GRDB/Record/RowConvertible+TableMapping.swift"; sourceTree = "<group>"; };
-		35EA4A87A696DF5F0E9F50BE210848F3 /* Pods_ArkhamHorrorKit_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ArkhamHorrorKit_macOS.framework; path = "Pods-ArkhamHorrorKit macOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		35EA4A87A696DF5F0E9F50BE210848F3 /* Pods_ArkhamHorrorKit_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArkhamHorrorKit_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3658CEDCF2B4230B52ED012E8A5521D0 /* GRDB.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GRDB.h; path = Support/GRDB.h; sourceTree = "<group>"; };
 		38569D47A79ED30F3471E6CC162ECF83 /* SQLSelectable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLSelectable.swift; path = GRDB/QueryInterface/SQLSelectable.swift; sourceTree = "<group>"; };
 		3928239DA592035517E364A70036F195 /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = GRDB/Core/Configuration.swift; sourceTree = "<group>"; };
-		3A3F342CD70B406CD4EF919885575F1A /* GRDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GRDB.framework; path = "GRDB.swift-iOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A3F342CD70B406CD4EF919885575F1A /* GRDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GRDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A4FA677DA73A31F81715B910E6799F0 /* FTS4.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FTS4.swift; path = GRDB/FTS/FTS4.swift; sourceTree = "<group>"; };
 		3BAB669E8A93F1E1A9435DF740618B60 /* DatabaseValueConvertible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseValueConvertible.swift; path = GRDB/Core/DatabaseValueConvertible.swift; sourceTree = "<group>"; };
 		3BE521EC8EEE785DFE53EECD19F4355C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../TBSwiftKit-macOS/Info.plist"; sourceTree = "<group>"; };
@@ -401,11 +401,11 @@
 		5D8B8DFEF900546AEC0AD2E52C74718E /* NSNumber.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSNumber.swift; path = GRDB/Core/Support/Foundation/NSNumber.swift; sourceTree = "<group>"; };
 		5DD467DFB79DDA04213C6CF4689FF974 /* DatabaseValueConvertible+ReferenceConvertible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DatabaseValueConvertible+ReferenceConvertible.swift"; path = "GRDB/Core/Support/Foundation/DatabaseValueConvertible+ReferenceConvertible.swift"; sourceTree = "<group>"; };
 		5EA23A10A98DD5A4F1B188256C382D1C /* ReadWriteBox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadWriteBox.swift; path = GRDB/Utils/ReadWriteBox.swift; sourceTree = "<group>"; };
-		606E26B2A84F4553A93988BA0BD3F93E /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyJSON.framework; path = "SwiftyJSON-macOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		606E26B2A84F4553A93988BA0BD3F93E /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		617B987BD82B3709EE6A2DE130999CD8 /* TBSwiftKit-macOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "TBSwiftKit-macOS-umbrella.h"; path = "../TBSwiftKit-macOS/TBSwiftKit-macOS-umbrella.h"; sourceTree = "<group>"; };
 		6381F6C88139519B16C120304B3A585F /* FTS5.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FTS5.swift; path = GRDB/FTS/FTS5.swift; sourceTree = "<group>"; };
 		65697C9CAB7138150241895C9EED4559 /* FileBatchDownload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FileBatchDownload.swift; path = TBSwiftKit/FileBatchDownload.swift; sourceTree = "<group>"; };
-		65CB10109765B32913EDE0BF67AE45DE /* TBSwiftKit-macOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; name = "TBSwiftKit-macOS.modulemap"; path = "../TBSwiftKit-macOS/TBSwiftKit-macOS.modulemap"; sourceTree = "<group>"; };
+		65CB10109765B32913EDE0BF67AE45DE /* TBSwiftKit-macOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; name = "TBSwiftKit-macOS.modulemap"; path = "../TBSwiftKit-macOS/TBSwiftKit-macOS.modulemap"; sourceTree = "<group>"; };
 		669D4B9F6D8CE390EBE080C9E8C2805D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		67D203FA3B7465AEF3ECE636D4F8A362 /* SwiftyJSON-macOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "SwiftyJSON-macOS-dummy.m"; path = "../SwiftyJSON-macOS/SwiftyJSON-macOS-dummy.m"; sourceTree = "<group>"; };
 		68527E0E3405069832CB105F2B29F12E /* Pods-ArkhamHorrorKit macOS-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ArkhamHorrorKit macOS-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -417,7 +417,7 @@
 		727DC45D81019AEF9A319CF936E6CB80 /* SQLCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLCollection.swift; path = GRDB/QueryInterface/SQLCollection.swift; sourceTree = "<group>"; };
 		73E09316E5636E207ED52753C8D23E8D /* Fixits-0-90-1.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Fixits-0-90-1.swift"; path = "GRDB/Legacy/Fixits-0-90-1.swift"; sourceTree = "<group>"; };
 		7508758155709A766D523BD57F86DF08 /* GRDB-Bridging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "GRDB-Bridging.h"; path = "Support/GRDB-Bridging.h"; sourceTree = "<group>"; };
-		751B883100DBB3D0FCB835409F91AEF4 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyJSON.framework; path = "SwiftyJSON-iOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		751B883100DBB3D0FCB835409F91AEF4 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76175B8623012457B6C5BA9CAEC7CBDB /* Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = GRDB/Utils/Utils.swift; sourceTree = "<group>"; };
 		7D5E9FA559D09A678ABCA81B6A433F38 /* Fixits-0-84-0.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Fixits-0-84-0.swift"; path = "GRDB/Legacy/Fixits-0-84-0.swift"; sourceTree = "<group>"; };
 		7E9043F95E44D9EF60EF98D7AF0F9C10 /* TBSwiftKit-iOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "TBSwiftKit-iOS-dummy.m"; sourceTree = "<group>"; };
@@ -428,18 +428,18 @@
 		82129BFF45B1DCD330322F7988F6B989 /* SwiftyJSON-iOS.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "SwiftyJSON-iOS.xcconfig"; sourceTree = "<group>"; };
 		843A9A04A8A4BEC835485F7068D0FC27 /* DatabaseCollation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseCollation.swift; path = GRDB/Core/DatabaseCollation.swift; sourceTree = "<group>"; };
 		8571F51B920FF1AB245E90BC56DABA20 /* FileManager+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "FileManager+Extensions.swift"; path = "TBSwiftKit/FileManager+Extensions.swift"; sourceTree = "<group>"; };
-		8980CD3B247A8C16A4CD2D85032BA5AD /* Pods-ArkhamHorrorKit iOSTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-ArkhamHorrorKit iOSTests.modulemap"; sourceTree = "<group>"; };
+		8980CD3B247A8C16A4CD2D85032BA5AD /* Pods-ArkhamHorrorKit iOSTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-ArkhamHorrorKit iOSTests.modulemap"; sourceTree = "<group>"; };
 		8E2D158A4829092E995D3561EF2365CC /* Database+Statements.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Database+Statements.swift"; path = "GRDB/Core/Database+Statements.swift"; sourceTree = "<group>"; };
 		8F81554B8AF7C867F8E7F2D4B1C051B9 /* Pods-ArkhamHorrorKit iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ArkhamHorrorKit iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		904D857C1EAE135D588890F335C0BA24 /* Pods_ArkhamHorrorKit_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ArkhamHorrorKit_iOSTests.framework; path = "Pods-ArkhamHorrorKit iOSTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		904D857C1EAE135D588890F335C0BA24 /* Pods_ArkhamHorrorKit_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArkhamHorrorKit_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		924955A6BF413921C881969368AF29D4 /* FTS3.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FTS3.swift; path = GRDB/FTS/FTS3.swift; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		95DC6CCFEEB756165A3864206AB9EB30 /* Pods-ArkhamHorrorKit iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ArkhamHorrorKit iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		968D53B38740D5AE1E7991426BA09A12 /* QueryInterfaceSelectQueryDefinition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QueryInterfaceSelectQueryDefinition.swift; path = GRDB/QueryInterface/QueryInterfaceSelectQueryDefinition.swift; sourceTree = "<group>"; };
-		96CFE1498035060C8828A5BA441251BD /* TBSwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TBSwiftKit.framework; path = "TBSwiftKit-iOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96CFE1498035060C8828A5BA441251BD /* TBSwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TBSwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97237E217610E4130643E26141D6F77A /* DeltasCalculator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DeltasCalculator.swift; path = TBSwiftKit/DeltasCalculator.swift; sourceTree = "<group>"; };
 		9768AD619326E28686CD771AD9998931 /* Pods-ArkhamHorrorKit iOS-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ArkhamHorrorKit iOS-acknowledgements.plist"; sourceTree = "<group>"; };
-		98256802B87FF12C51C3F568771C52E4 /* Pods-ArkhamHorrorKit macOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-ArkhamHorrorKit macOS.modulemap"; sourceTree = "<group>"; };
+		98256802B87FF12C51C3F568771C52E4 /* Pods-ArkhamHorrorKit macOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-ArkhamHorrorKit macOS.modulemap"; sourceTree = "<group>"; };
 		98B503418317630C26EC4DD6CF63BE6A /* DatabaseValue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseValue.swift; path = GRDB/Core/DatabaseValue.swift; sourceTree = "<group>"; };
 		98B5D8917E13BAE06A0C1C0DA3455103 /* Pods-ArkhamHorrorKit iOSTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ArkhamHorrorKit iOSTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		98FAB1A013E2146900F3C7F47C4FCB61 /* StandardLibrary.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StandardLibrary.swift; path = GRDB/Core/Support/StandardLibrary/StandardLibrary.swift; sourceTree = "<group>"; };
@@ -454,7 +454,7 @@
 		A0D09BE0AB3E1F85511D2F1969E3E5F3 /* DatabasePool.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabasePool.swift; path = GRDB/Core/DatabasePool.swift; sourceTree = "<group>"; };
 		A0D472D9967A98284325A13ECB30171E /* Result.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Result.swift; path = GRDB/Utils/Result.swift; sourceTree = "<group>"; };
 		A12F74DE083E72ADD0AF3010C7BBB7C0 /* SQLOrdering.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLOrdering.swift; path = GRDB/QueryInterface/SQLOrdering.swift; sourceTree = "<group>"; };
-		A29160ADDB5088AE48B5C537544B9A0D /* SwiftyJSON-macOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; name = "SwiftyJSON-macOS.modulemap"; path = "../SwiftyJSON-macOS/SwiftyJSON-macOS.modulemap"; sourceTree = "<group>"; };
+		A29160ADDB5088AE48B5C537544B9A0D /* SwiftyJSON-macOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; name = "SwiftyJSON-macOS.modulemap"; path = "../SwiftyJSON-macOS/SwiftyJSON-macOS.modulemap"; sourceTree = "<group>"; };
 		A2CE6F73FF7FA1B0BFD06646CF84507A /* RowConvertible+Decodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "RowConvertible+Decodable.swift"; path = "GRDB/Record/RowConvertible+Decodable.swift"; sourceTree = "<group>"; };
 		A4281DCC941EC207B4EE7D197597B241 /* TableDefinition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableDefinition.swift; path = GRDB/QueryInterface/TableDefinition.swift; sourceTree = "<group>"; };
 		A46849BF81AC7907F40B48123C0C8FE1 /* Pods-ArkhamHorrorKit macOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ArkhamHorrorKit macOS-umbrella.h"; sourceTree = "<group>"; };
@@ -463,18 +463,18 @@
 		A73A2FB0277147A9162588970E821AF9 /* Image.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Image.swift; path = TBSwiftKit/Image.swift; sourceTree = "<group>"; };
 		A87C1EBF97429869C2F059FCF8D1EABF /* SQLCollatedExpression.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLCollatedExpression.swift; path = GRDB/QueryInterface/SQLCollatedExpression.swift; sourceTree = "<group>"; };
 		AB95055708E714E511A269C3B17514EA /* Database.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Database.swift; path = GRDB/Core/Database.swift; sourceTree = "<group>"; };
-		ABAC2D90B226D7D40AC35B5A5A13D70C /* Pods_ArkhamHorrorKit_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ArkhamHorrorKit_iOS.framework; path = "Pods-ArkhamHorrorKit iOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABAC2D90B226D7D40AC35B5A5A13D70C /* Pods_ArkhamHorrorKit_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArkhamHorrorKit_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADC0BD0DA5750C041DC8961D53109D10 /* NSString.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSString.swift; path = GRDB/Core/Support/Foundation/NSString.swift; sourceTree = "<group>"; };
 		B0EC73FFACFEE3FFCEF24CDDB4838376 /* Pods-ArkhamHorrorKit iOS-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ArkhamHorrorKit iOS-resources.sh"; sourceTree = "<group>"; };
-		B135C626FCADB22C0C378AD28F5316D4 /* Pods-ArkhamHorrorKit iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-ArkhamHorrorKit iOS.modulemap"; sourceTree = "<group>"; };
+		B135C626FCADB22C0C378AD28F5316D4 /* Pods-ArkhamHorrorKit iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-ArkhamHorrorKit iOS.modulemap"; sourceTree = "<group>"; };
 		B17CCF4F6ACB3CC76F46C62588E8671C /* StatementAuthorizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StatementAuthorizer.swift; path = GRDB/Core/StatementAuthorizer.swift; sourceTree = "<group>"; };
 		B27021DC9722FB13BBC54463ACD0AA9D /* grdb_config.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = grdb_config.h; path = Support/grdb_config.h; sourceTree = "<group>"; };
 		B39ADB9C197911791DBFDB243E25EEC9 /* GRDB.swift-iOS.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "GRDB.swift-iOS.xcconfig"; sourceTree = "<group>"; };
 		B471811DF56B76B9AD25285E82CD7B69 /* DatabaseValueConvertible+Decodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DatabaseValueConvertible+Decodable.swift"; path = "GRDB/Core/Support/StandardLibrary/DatabaseValueConvertible+Decodable.swift"; sourceTree = "<group>"; };
-		B4CF988F50F05FC6045A0F7F3D238F42 /* TBSwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TBSwiftKit.framework; path = "TBSwiftKit-macOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4CF988F50F05FC6045A0F7F3D238F42 /* TBSwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TBSwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B72CB2FDFEB626E69CAB916D16EBD898 /* SwiftyJSON-iOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyJSON-iOS-umbrella.h"; sourceTree = "<group>"; };
 		BBB5F791225FEF2855EFC60166CE39AF /* Pool.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Pool.swift; path = GRDB/Utils/Pool.swift; sourceTree = "<group>"; };
-		BBD5A32288EC6AA7B35C64244C0ABAC1 /* TBSwiftKit-iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "TBSwiftKit-iOS.modulemap"; sourceTree = "<group>"; };
+		BBD5A32288EC6AA7B35C64244C0ABAC1 /* TBSwiftKit-iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "TBSwiftKit-iOS.modulemap"; sourceTree = "<group>"; };
 		C16634BEBA2C7661E283E6B408806A2A /* Pods-ArkhamHorrorKit macOSTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ArkhamHorrorKit macOSTests-umbrella.h"; sourceTree = "<group>"; };
 		C29F4040A0CF49F7E3929F29A52BA324 /* Data.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Data.swift; path = GRDB/Core/Support/Foundation/Data.swift; sourceTree = "<group>"; };
 		C53B8C57A8661AF1DF20060A6F3276AE /* Pods-ArkhamHorrorKit iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ArkhamHorrorKit iOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -486,10 +486,10 @@
 		CBB934D9F6D1F838D985FE4BCBE0BD7D /* Statement.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Statement.swift; path = GRDB/Core/Statement.swift; sourceTree = "<group>"; };
 		CBEE0A6E37FBE26C57A8A8ACE4BE7AAD /* SQLOperators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLOperators.swift; path = GRDB/QueryInterface/Support/SQLOperators.swift; sourceTree = "<group>"; };
 		CCA007AAEB92774E8B293B669813F501 /* SwiftyJSON-macOS-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "SwiftyJSON-macOS-prefix.pch"; path = "../SwiftyJSON-macOS/SwiftyJSON-macOS-prefix.pch"; sourceTree = "<group>"; };
-		D0536AC622AEABA213489209381A4C0C /* Pods-ArkhamHorrorKit macOSTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-ArkhamHorrorKit macOSTests.modulemap"; sourceTree = "<group>"; };
+		D0536AC622AEABA213489209381A4C0C /* Pods-ArkhamHorrorKit macOSTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-ArkhamHorrorKit macOSTests.modulemap"; sourceTree = "<group>"; };
 		D31E2C6A5E813F4431555185532500CB /* NSNull.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSNull.swift; path = GRDB/Core/Support/Foundation/NSNull.swift; sourceTree = "<group>"; };
 		D39C00C5B1E4A63EB0B38805A1BD808E /* FTS5Tokenizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FTS5Tokenizer.swift; path = GRDB/FTS/FTS5Tokenizer.swift; sourceTree = "<group>"; };
-		D3D259E2BD2106039D1490814277914E /* GRDB.swift-iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "GRDB.swift-iOS.modulemap"; sourceTree = "<group>"; };
+		D3D259E2BD2106039D1490814277914E /* GRDB.swift-iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "GRDB.swift-iOS.modulemap"; sourceTree = "<group>"; };
 		D3E5970FBC1F15B07B961ABDA847B405 /* TableMapping.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TableMapping.swift; path = GRDB/Record/TableMapping.swift; sourceTree = "<group>"; };
 		D481AB884958235AEBF6C953A315026B /* FTS5WrapperTokenizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FTS5WrapperTokenizer.swift; path = GRDB/FTS/FTS5WrapperTokenizer.swift; sourceTree = "<group>"; };
 		D59868D356D3E27B38E357396ECE148F /* DatabaseSchemaCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseSchemaCache.swift; path = GRDB/Core/DatabaseSchemaCache.swift; sourceTree = "<group>"; };
@@ -505,10 +505,10 @@
 		E3E0326B3D240CAF1AA8905D49811C96 /* SQLExpression.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SQLExpression.swift; path = GRDB/QueryInterface/SQLExpression.swift; sourceTree = "<group>"; };
 		E3EA720EB2FD6175AFB9F4D445214083 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E41403DB1C39E8AD73691720566CD350 /* FileDownloadManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FileDownloadManager.swift; path = TBSwiftKit/FileDownloadManager.swift; sourceTree = "<group>"; };
-		E59C0FF2123AB6C66C9C301D14B62620 /* Pods_ArkhamHorrorKit_macOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ArkhamHorrorKit_macOSTests.framework; path = "Pods-ArkhamHorrorKit macOSTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E59C0FF2123AB6C66C9C301D14B62620 /* Pods_ArkhamHorrorKit_macOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArkhamHorrorKit_macOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AED318AEF6FC56EBC3CC3CA460ECAA /* StatementColumnConvertible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StatementColumnConvertible.swift; path = GRDB/Core/StatementColumnConvertible.swift; sourceTree = "<group>"; };
 		E65481E133E89DD422151C389931BF78 /* Pods-ArkhamHorrorKit macOS-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ArkhamHorrorKit macOS-resources.sh"; sourceTree = "<group>"; };
-		E9F7F5762E7817F68B8778110AD1778E /* GRDB.swift-macOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; name = "GRDB.swift-macOS.modulemap"; path = "../GRDB.swift-macOS/GRDB.swift-macOS.modulemap"; sourceTree = "<group>"; };
+		E9F7F5762E7817F68B8778110AD1778E /* GRDB.swift-macOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; name = "GRDB.swift-macOS.modulemap"; path = "../GRDB.swift-macOS/GRDB.swift-macOS.modulemap"; sourceTree = "<group>"; };
 		EBB995B69F47A12BB2C334B7455DB751 /* URL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URL.swift; path = GRDB/Core/Support/Foundation/URL.swift; sourceTree = "<group>"; };
 		F0008E88D85507CC3C33566B62EF559E /* Pods-ArkhamHorrorKit macOSTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ArkhamHorrorKit macOSTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		F0C3F1DB901B1FA66C244A68C195F8E5 /* Fixits-Swift2.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Fixits-Swift2.swift"; path = "GRDB/Legacy/Fixits-Swift2.swift"; sourceTree = "<group>"; };
@@ -611,7 +611,6 @@
 				5B2C17D99FADE50ADC007DADB34983C4 /* SwiftyJSON.swift */,
 				3F456975F084CD55B6E5F1F6690960EE /* Support Files */,
 			);
-			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -711,7 +710,6 @@
 				58EB16D7BAA2662B1561A5F7CE4AC929 /* VirtualTableModule.swift */,
 				F6128ADB8F9E011E1E43D218CA88428E /* Support Files */,
 			);
-			name = GRDB.swift;
 			path = GRDB.swift;
 			sourceTree = "<group>";
 		};
@@ -906,7 +904,6 @@
 				C995276FF00CCBE4D8BE90E1074CB31D /* TBSwiftKit.h */,
 				66DEE1F936483E4995379570D1E1914D /* Support Files */,
 			);
-			name = TBSwiftKit;
 			path = TBSwiftKit;
 			sourceTree = "<group>";
 		};
@@ -1218,7 +1215,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0920;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2175,7 +2172,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -2183,15 +2182,21 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_DEBUG=1",
@@ -2302,7 +2307,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -2310,14 +2317,20 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_RELEASE=1",
 					"$(inherited)",
