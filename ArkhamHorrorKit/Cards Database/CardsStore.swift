@@ -63,7 +63,7 @@ public final class CardsStore {
             let whereClause = genWhereClause(filter)
             let sortByClause = genOrderByClause(sorting)
             
-            let stmt = "SELECT * FROM Card \(joinClause) WHERE \(whereClause) ORDER BY \(sortByClause)"
+            let stmt = "SELECT DISTINCT * FROM Card \(joinClause) WHERE \(whereClause) GROUP BY Card.id ORDER BY \(sortByClause)"
             
             return try CardRecord.fetchAll(db, stmt).flatMap ({ (record) -> Card? in
                 let traits = try CardTraitRecord.fetchCardTraits(
