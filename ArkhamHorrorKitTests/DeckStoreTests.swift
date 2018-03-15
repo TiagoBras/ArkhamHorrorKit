@@ -179,6 +179,12 @@ class DeckStoreTests: XCTestCase {
         _ = try! database.deckStore.changeCardQuantity(deck: deck, card: shotgun, quantity: 2)
         deck = (try! database.deckStore.fetchDeck(id: deck.id))!
         XCTAssertEqual(deck.cards.first!.quantity, 2)
+        
+        let updatedDeck = try! database.deckStore.changeCardQuantity(deck: deck, card: shotgun, quantity: 0)
+        XCTAssertEqual(updatedDeck.numberOfCards, 0)
+        
+        deck = (try! database.deckStore.fetchDeck(id: deck.id))!
+        XCTAssertEqual(updatedDeck.numberOfCards, 0)
     }
 }
 

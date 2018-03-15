@@ -162,7 +162,7 @@ class AHDatabaseTests: XCTestCase {
     func testUpdateDatabase() {
         let promise = expectation(description: "Update Database")
         let database = try! AHDatabase()
-        let expectedChecksum = "3af2d0fb99644d2ff9975d717c2e33c4e4d0129e397464e8100a7136c69a4592"
+        let expectedChecksum = "ffbb536c348a15da3d666e90bcec3edba1dbdb820489b72f2fb78627f6fbd7a1"
         
         database.updateDatabase(serverDomain: server,
                           authenticationToken: authToken,

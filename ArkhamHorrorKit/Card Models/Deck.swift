@@ -87,6 +87,13 @@ public struct Deck: Hashable {
     }
     
     public mutating func changeQuantity(of card: Card, quantity: Int) {
+        // Remove card if it exists and if quantity is 0
+        if deckCard(withId: card.id) != nil && quantity == 0 {
+            _cards.removeValue(forKey: card.id)
+        }
+        
+        guard quantity > 0 else { return }
+
         _cards[card.id] = DeckCard(card: card, quantity: quantity)
     }
     

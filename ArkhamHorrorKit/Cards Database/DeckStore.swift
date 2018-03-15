@@ -285,10 +285,16 @@ public final class DeckStore {
         var updatedDeck = deck
         
         return try dbWriter.write({ (db) -> Deck in
-            let record = DeckCardRecord(deckId: deck.id, cardId: card.id, quantity: quantity)
-            
-            if record.hasPersistentChangedValues {
-                try record.save(db)
+            if quantity == 0 {
+                if let record = try DeckCardRecord.fetchOne(db: db, deckId: deck.id, cardId: card.id) {
+                    try record.delete(db)
+                }
+            } else {
+                let record = DeckCardRecord(deckId: deck.id, cardId: card.id, quantity: quantity)
+                
+                if record.hasPersistentChangedValues {
+                    try record.save(db)
+                }
             }
             
             updatedDeck.changeQuantity(of: card, quantity: quantity)
