@@ -42,7 +42,7 @@ final class DeckCardRecord: Record {
     
     class func fetchAll(db: Database, deckId: Int) throws -> [DeckCardRecord] {
         return try DeckCardRecord.fetchAll(db,
-                                           "SELECT * FROM DeckCard WHERE deck_id = ?",
+                                           "SELECT * FROM \(databaseTableName) WHERE deck_id = ?",
                                            arguments: [deckId],
                                            adapter: nil)
     }

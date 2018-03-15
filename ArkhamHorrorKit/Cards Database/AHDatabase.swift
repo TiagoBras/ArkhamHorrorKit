@@ -50,6 +50,17 @@ public final class AHDatabase {
         dbQueue = DatabaseQueue()
         
         try migrateToLastVersion()
+        try cleanUp()
+    }
+    
+    
+    /// Cleans up unnecessary rows, for instance, DeckCardRecords with quantity = 0
+    ///
+    /// - Throws: Error
+    func cleanUp() throws {
+        try dbQueue.write { db in
+            try db.execute("DELETE FROM \(DeckCardRecord.databaseTableName) WHERE quantity = 0")
+        }
     }
     
     public func getAllJsonFilesChecksums() throws -> [String: String] {

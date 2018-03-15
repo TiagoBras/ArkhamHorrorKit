@@ -101,23 +101,23 @@ class AHDatabaseTests: XCTestCase {
     }
     
     func testInvestigatorRequiredCards() {
-        testRequiredCards(for: 1001, requiredCards: [1006: 1, 1007: 1])
-        testRequiredCards(for: 1002, requiredCards: [1008: 1, 1009: 1])
-        testRequiredCards(for: 1003, requiredCards: [1010: 1, 1011: 1])
-        testRequiredCards(for: 1004, requiredCards: [1012: 1, 1013: 1])
-        testRequiredCards(for: 1005, requiredCards: [1014: 1, 1015: 1])
-        testRequiredCards(for: 2001, requiredCards: [2006: 1, 2007: 1])
-        testRequiredCards(for: 2002, requiredCards: [2008: 1, 2009: 1])
-        testRequiredCards(for: 2003, requiredCards: [2010: 1, 2011: 1])
-        testRequiredCards(for: 2004, requiredCards: [2012: 1, 2013: 1])
-        testRequiredCards(for: 2005, requiredCards: [2014: 1, 2015: 1])
-        testRequiredCards(for: 3001, requiredCards: [3007: 1, 3008: 1, 3009: 1])
-        testRequiredCards(for: 3002, requiredCards: [3010: 1, 3011: 1])
-        testRequiredCards(for: 3003, requiredCards: [3012: 3, 3013: 1])
-        testRequiredCards(for: 3004, requiredCards: [3014: 1, 3015: 1])
-        testRequiredCards(for: 3005, requiredCards: [3016: 1, 3017: 1])
-        testRequiredCards(for: 3006, requiredCards: [3018: 2, 3019: 2])
-        testRequiredCards(for: 99001, requiredCards: [99002: 1, 99003: 1])
+        requiredCardsTest(for: 1001, requiredCards: [1006: 1, 1007: 1])
+        requiredCardsTest(for: 1002, requiredCards: [1008: 1, 1009: 1])
+        requiredCardsTest(for: 1003, requiredCards: [1010: 1, 1011: 1])
+        requiredCardsTest(for: 1004, requiredCards: [1012: 1, 1013: 1])
+        requiredCardsTest(for: 1005, requiredCards: [1014: 1, 1015: 1])
+        requiredCardsTest(for: 2001, requiredCards: [2006: 1, 2007: 1])
+        requiredCardsTest(for: 2002, requiredCards: [2008: 1, 2009: 1])
+        requiredCardsTest(for: 2003, requiredCards: [2010: 1, 2011: 1])
+        requiredCardsTest(for: 2004, requiredCards: [2012: 1, 2013: 1])
+        requiredCardsTest(for: 2005, requiredCards: [2014: 1, 2015: 1])
+        requiredCardsTest(for: 3001, requiredCards: [3007: 1, 3008: 1, 3009: 1])
+        requiredCardsTest(for: 3002, requiredCards: [3010: 1, 3011: 1])
+        requiredCardsTest(for: 3003, requiredCards: [3012: 3, 3013: 1])
+        requiredCardsTest(for: 3004, requiredCards: [3014: 1, 3015: 1])
+        requiredCardsTest(for: 3005, requiredCards: [3016: 1, 3017: 1])
+        requiredCardsTest(for: 3006, requiredCards: [3018: 2, 3019: 2])
+        requiredCardsTest(for: 99001, requiredCards: [99002: 1, 99003: 1])
     }
     
     func testInvestigatorsImages() {
@@ -186,7 +186,60 @@ class AHDatabaseTests: XCTestCase {
         wait(for: [promise], timeout: 30)
     }
     
-    private func testRequiredCards(for investigatorId: Int, requiredCards: [Int: Int]) {
+    func testCleanUp() {
+        let investigator = try! db.investigators().first!
+        let cards = db.cardStore.fetchCards(filter: nil, sorting: nil)
+        
+        XCTAssertGreaterThan(cards.count, 10)
+        
+        let deck = try! db.deckStore.createDeck(name: "Roland Shotguns", investigator: investigator)
+        
+        try! db.dbQueue.write { dbConn in
+            for i in 0..<4 {
+                let record = DeckCardRecord(deckId: deck.id, cardId: cards[i].id, quantity: 1)
+                try record.save(dbConn)
+            }
+            
+            for i in 4..<10 {
+                let record = DeckCardRecord(deckId: deck.id, cardId: cards[i].id, quantity: 0)
+                try record.save(dbConn)
+            }
+        }
+        
+        var (zeroQuantity, oneQuantity) = deckCardQuantityCounter(for: deck, database: db)
+        
+        XCTAssertEqual(zeroQuantity, 6)
+        XCTAssertEqual(oneQuantity, 4)
+        
+        try! db.cleanUp()
+        
+        (zeroQuantity, oneQuantity) = deckCardQuantityCounter(for: deck, database: db)
+        
+        XCTAssertEqual(zeroQuantity, 0)
+        XCTAssertEqual(oneQuantity, 4)
+    }
+    
+    private func deckCardQuantityCounter(for deck: Deck,
+                                         database: AHDatabase) -> (zeroQuantity: Int, oneQuantity: Int) {
+        return try! database.dbQueue.read({ (db) -> (zeroQuantity: Int, oneQuantity: Int) in
+            let deckCards = try DeckCardRecord.fetchAll(db: db, deckId: deck.id)
+            
+            var zeroQuantity = 0
+            var oneQuantity = 0
+            
+            for deckCard in deckCards {
+                if deckCard.quantity == 0 {
+                    zeroQuantity += 1
+                } else if deckCard.quantity == 1 {
+                    oneQuantity += 1
+                }
+            }
+            
+            return (zeroQuantity, oneQuantity)
+        })
+    }
+    
+    private func requiredCardsTest(for investigatorId: Int, requiredCards: [Int: Int]) {
         let investigators = try! db.investigatorsDictionary()
         
         let investigator = investigators[investigatorId]!
