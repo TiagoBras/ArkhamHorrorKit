@@ -11,6 +11,7 @@ public struct Investigator: Hashable, Comparable {
         case sefinaRousseauThePainter = 3003, akachiOnyeleTheShaman = 3004, williamYorickTheGravedigger = 3005
         case lolaHayesTheActress = 3006
         case marieLambeauTheEntertainer = 99001
+        case normanWithersTheAstronomer = 98007
     }
     
     class Dummy {}
@@ -157,6 +158,9 @@ public struct Investigator: Hashable, Comparable {
             filter.or(CardFilter(factions: [.seeker, .survivor], level: 0))
             filter.or(CardFilter(traits: ["Spell"], fromLevel: 0, toLevel: 5))
             filter.or(CardFilter(traits: ["Occult"], level: 0))
+        case .normanWithersTheAstronomer:
+            filter = CardFilter(factions: [.seeker], level: 0)
+            filter.or(CardFilter(factions: [.mystic, .neutral], fromLevel: 0, toLevel: 5))
         }
         
         return filter
@@ -184,6 +188,7 @@ public struct Investigator: Hashable, Comparable {
         case .williamYorickTheGravedigger:  return [3016: 1, 3017: 1]
         case .lolaHayesTheActress:  return [3018: 2, 3019: 2]
         case .marieLambeauTheEntertainer: return [99002: 1, 99003: 1]
+        case .normanWithersTheAstronomer: return [98008: 1, 98009: 1]
         }
     }
     
@@ -208,6 +213,7 @@ public struct Investigator: Hashable, Comparable {
         case .williamYorickTheGravedigger: return Image.inBundle("william_yorick_the_gravedigger", bundle)
         case .lolaHayesTheActress: return Image.inBundle("lola_hayes_the_actress", bundle)
         case .marieLambeauTheEntertainer: return Image.inBundle("marie_lambeau_the_entertainer", bundle)
+        case .normanWithersTheAstronomer: return Image.inBundle("norman_withers_the_astronomer", bundle)
         }
     }
     
@@ -242,6 +248,7 @@ public struct Investigator: Hashable, Comparable {
         case .jimCulverTheMusician: factions = allFactions.subtracting([faction])
         case .ashcanPeteTheDrifter: factions = allFactions.subtracting([faction])
         case .marieLambeauTheEntertainer: factions = [.seeker, .survivor]
+        case .normanWithersTheAstronomer: factions = [.mystic]
         default: return []
         }
         
