@@ -239,4 +239,20 @@ class CardStoreTests: XCTestCase {
             }
         }
     }
+    
+    func testRexDeckFilter() {
+        let investigators = try! database.investigatorsDictionary()
+        let rex = investigators[Investigator.InvestigatorId.rexMurphyTheReporter.rawValue]!
+        
+        database.cardStore.onBeforeFetch = { print($0) }
+        let cards = database.cardStore.fetchCards(filter: rex.availableCardsFilter, sorting: nil)
+        
+        XCTAssertTrue(cards.count > 0)
+        
+        for card in cards {
+            if card.traits.contains("Fortune") {
+                XCTFail("\(card.name) contains trait 'Fortune'")
+            }
+        }
+    }
 }

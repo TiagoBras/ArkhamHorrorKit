@@ -120,7 +120,12 @@ public struct Investigator: Hashable, Comparable {
             filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
         case .rexMurphyTheReporter:
             filter = CardFilter(factions: [.seeker, .neutral], fromLevel: 0, toLevel: 5)
-            filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))
+            filter.prohibitedTraits.insert("Fortune")
+            
+            var aFilter = CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0)
+            aFilter.prohibitedTraits.insert("Fortune")
+            
+            filter.or(aFilter)
         case .jennyBarnesTheDilettante:
             filter = CardFilter(factions: [.rogue, .neutral], fromLevel: 0, toLevel: 5)
             filter.or(CardFilter(factions: Array(allFactions.subtracting(filter.factions)), level: 0))

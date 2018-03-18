@@ -162,7 +162,7 @@ public struct CardFilter: Equatable {
     }
     
     func usesTraits() -> Bool {
-        if !traits.isEmpty {
+        if !traits.isEmpty || !prohibitedTraits.isEmpty {
             return true
         }
         

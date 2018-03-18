@@ -57,6 +57,7 @@ public final class CardsStore {
         }
     }
     
+    public var onBeforeFetch: ((String) -> ())?
     public func fetchCards(filter: CardFilter?, sorting: [CardsSortingDescriptor]?) -> [Card] {
         guard let cards = try? dbWriter.read({ db -> [Card] in
             let joinClause = genJoinClause(filter)
@@ -64,6 +65,8 @@ public final class CardsStore {
             let sortByClause = genOrderByClause(sorting)
             
             let stmt = "SELECT DISTINCT * FROM Card \(joinClause) WHERE \(whereClause) GROUP BY Card.id ORDER BY \(sortByClause)"
+            
+            onBeforeFetch?(stmt)
             
             return try CardRecord.fetchAll(db, stmt).flatMap ({ (record) -> Card? in
                 let traits = try CardTraitRecord.fetchCardTraits(
