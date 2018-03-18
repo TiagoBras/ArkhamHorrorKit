@@ -41,6 +41,7 @@ public final class AHDatabase {
         dbQueue = try DatabaseQueue(path: path)
         
         try migrateToLastVersion()
+        try cleanUp()
     }
     
     /// Creates an in-memory database

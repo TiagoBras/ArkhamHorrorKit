@@ -80,7 +80,7 @@ class CardImageStoreTests: XCTestCase {
                 XCTFail("Error should not be nil")
             }
 
-            XCTAssertEqual(urls!.count, 316)
+            XCTAssertEqual(urls!.count, 339)
             
             promise.fulfill()
             
@@ -88,7 +88,7 @@ class CardImageStoreTests: XCTestCase {
             
             imageStore.missingImages(completion: { (urls, error) in
                 XCTAssert(error == nil)
-                XCTAssertEqual(urls!.count, 315)
+                XCTAssertEqual(urls!.count, 339)
                 
                 promise2.fulfill()
                 
