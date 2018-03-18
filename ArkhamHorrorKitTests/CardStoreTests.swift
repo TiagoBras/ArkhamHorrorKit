@@ -219,4 +219,24 @@ class CardStoreTests: XCTestCase {
         
         XCTAssertEqual(cards.count, 34)
     }
+    
+    func testProhibitedTraits() {
+        var fortuneCards = Set<Card>()
+        
+        for card in database.cardStore.fetchCards(filter: nil, sorting: nil) {
+            if card.traits.contains("Fortune") {
+                fortuneCards.insert(card)
+            }
+        }
+        
+        XCTAssertTrue(fortuneCards.count > 0)
+        
+        let filter = CardFilter(prohibitedTraits: ["Fortune"])
+        
+        for card in database.cardStore.fetchCards(filter: filter, sorting: nil) {
+            if card.traits.contains("Fortune") {
+                XCTFail("\(card.name) has Fortune trait")
+            }
+        }
+    }
 }

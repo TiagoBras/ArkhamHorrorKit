@@ -370,6 +370,12 @@ public final class CardsStore {
             whereInClauses.append("(\(subClauses.joined(separator: " AND ")))")
         }
         
+        if !filter.prohibitedTraits.isEmpty {
+            var subClauses = filter.prohibitedTraits.map({ "CardTrait.trait_name != '\($0)'"  })
+            
+            whereInClauses.append("(\(subClauses.joined(separator: " AND ")))")
+        }
+        
         if let usesCharges = filter.usesCharges {
             whereInClauses.append("uses_charges = \(usesCharges ? 1 : 0)")
         }

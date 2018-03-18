@@ -14,6 +14,7 @@ public struct CardFilter: Equatable {
     public var fullTextSearchMatch: String? = nil
     public var deckId: Int? = nil
     public var traits = Set<String>()
+    public var prohibitedTraits = Set<String>()
     public var usesCharges: Bool? = nil
     public var hideWeaknesses: Bool? = nil
     public var onlyFavorites: Bool? = nil
@@ -39,6 +40,10 @@ public struct CardFilter: Equatable {
     public init(traits: [String], fromLevel: Int, toLevel: Int) {
         self.traits = Set(traits)
         self.levels = Set(Array(fromLevel...toLevel))
+    }
+    
+    public init(prohibitedTraits: [String]) {
+        self.prohibitedTraits = Set(prohibitedTraits)
     }
     
     public init(usesCharges: Bool, fromLevel: Int, toLevel: Int) {
@@ -78,8 +83,12 @@ public struct CardFilter: Equatable {
         if lhs.hideRestrictedCards != rhs.hideRestrictedCards { return false }
         if lhs.fullTextSearchMatch != rhs.fullTextSearchMatch { return false }
         if lhs.deckId != rhs.deckId { return false }
+        if lhs.traits != rhs.traits { return false }
+        if lhs.prohibitedTraits != rhs.prohibitedTraits { return false }
         if lhs.subfilters.count != rhs.subfilters.count { return false }
         if lhs.onlyFavorites != rhs.onlyFavorites { return false }
+        if lhs.hideWeaknesses != rhs.hideWeaknesses { return false }
+        if lhs.usesCharges != rhs.usesCharges { return false }
         
         for (s1, s2) in zip(lhs.subfilters, rhs.subfilters) {
             guard s1.op == s2.op else { return false }
