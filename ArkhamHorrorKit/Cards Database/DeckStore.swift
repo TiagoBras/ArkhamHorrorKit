@@ -3,8 +3,8 @@
 import GRDB
 
 public final class DeckStore {
-    private let dbWriter: DatabaseWriter
-    private let cardStore: CardsStore
+    var dbWriter: DatabaseWriter
+    var cardStore: CardsStore
     
     public init(dbWriter: DatabaseWriter, cardStore: CardsStore) {
         self.dbWriter = dbWriter

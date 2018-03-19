@@ -233,6 +233,7 @@ class CardStoreTests: XCTestCase {
         
         let filter = CardFilter(prohibitedTraits: ["Fortune"])
         
+        database.cardStore.onBeforeFetch = { print($0) }
         for card in database.cardStore.fetchCards(filter: filter, sorting: nil) {
             if card.traits.contains("Fortune") {
                 XCTFail("\(card.name) has Fortune trait")

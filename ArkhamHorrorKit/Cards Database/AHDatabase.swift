@@ -315,12 +315,26 @@ public final class AHDatabase {
         _traits = nil
         _investigators = nil
         
-        cardStore = CardsStore(dbWriter: dbQueue,
-                               cycles: try cardCyclesDictionary(),
-                               packs: try cardPacksDictionary(),
-                               traits: try traitsSet(),
-                               investigators: try investigatorsDictionary())
-        deckStore = DeckStore(dbWriter: dbQueue, cardStore: cardStore)
+        if let cardStore = cardStore {
+            cardStore.dbWriter = dbQueue
+            cardStore.cardCycles = try cardCyclesDictionary()
+            cardStore.cardPacks = try cardPacksDictionary()
+            cardStore.traits = try traitsSet()
+            cardStore.investigators = try investigatorsDictionary()
+        } else {
+            cardStore = CardsStore(dbWriter: dbQueue,
+                                   cycles: try cardCyclesDictionary(),
+                                   packs: try cardPacksDictionary(),
+                                   traits: try traitsSet(),
+                                   investigators: try investigatorsDictionary())
+        }
+        
+        if let deckStore = deckStore {
+            deckStore.dbWriter = dbQueue
+            deckStore.cardStore = cardStore
+        } else {
+            deckStore = DeckStore(dbWriter: dbQueue, cardStore: cardStore)
+        }
     }
     
     private func migrateToLastVersion() throws {

@@ -5,11 +5,11 @@ import GRDB
 import TBSwiftKit
 
 public final class CardsStore {
-    private let dbWriter: DatabaseWriter
-    private let cardCycles: [String: CardCycle]
-    private let cardPacks: [String: CardPack]
-    private let traits: Set<String>
-    public let investigators: [Int: Investigator]
+    var dbWriter: DatabaseWriter
+    var cardCycles: [String: CardCycle]
+    var cardPacks: [String: CardPack]
+    var traits: Set<String>
+    public internal(set) var investigators: [Int: Investigator]
     
     public private(set) var cardsCache = Cache<Int, Card>(maxItems: 50)
     
@@ -280,9 +280,9 @@ public final class CardsStore {
             clause.append("INNER JOIN DeckCard ON DeckCard.card_id = Card.id")
         }
         
-        if filter.usesTraits() {
-            clause.append("INNER JOIN CardTrait ON CardTrait.card_id = Card.id")
-        }
+//        if filter.usesTraits() {
+//            clause.append("INNER JOIN CardTrait ON CardTrait.card_id = Card.id")
+//        }
         
         return clause.isEmpty ? "" : clause.joined(separator: " ")
         
@@ -368,15 +368,15 @@ public final class CardsStore {
         }
         
         if !filter.traits.isEmpty {
-            var subClauses = filter.traits.map({ "CardTrait.trait_name = '\($0)'"  })
+            var traits = filter.traits.map({ "'\($0)'" }).joined(separator: ", ")
             
-            whereInClauses.append("(\(subClauses.joined(separator: " AND ")))")
+            whereInClauses.append("(Card.id IN (SELECT card_id FROM CardTrait WHERE trait_name IN (\(traits))))")
         }
         
         if !filter.prohibitedTraits.isEmpty {
-            var subClauses = filter.prohibitedTraits.map({ "CardTrait.trait_name != '\($0)'"  })
+            var traits = filter.prohibitedTraits.map({ "'\($0)'" }).joined(separator: ", ")
             
-            whereInClauses.append("(\(subClauses.joined(separator: " AND ")))")
+            whereInClauses.append("(Card.id NOT IN (SELECT card_id FROM CardTrait WHERE trait_name IN (\(traits))))")
         }
         
         if let usesCharges = filter.usesCharges {
