@@ -280,12 +280,7 @@ public final class CardsStore {
             clause.append("INNER JOIN DeckCard ON DeckCard.card_id = Card.id")
         }
         
-//        if filter.usesTraits() {
-//            clause.append("INNER JOIN CardTrait ON CardTrait.card_id = Card.id")
-//        }
-        
         return clause.isEmpty ? "" : clause.joined(separator: " ")
-        
     }
     
     private func genWhereClause(_ filter: CardFilter?) -> String {
