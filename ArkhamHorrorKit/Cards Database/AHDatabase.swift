@@ -24,6 +24,7 @@ public enum AHDatabaseError: Error {
     case invalidReport
     case invalidUrls
     case deckHasNoDefinedId
+    case databaseVersionNotDefined
 }
 
 public final class AHDatabase {
@@ -36,6 +37,16 @@ public final class AHDatabase {
     
     public private(set) var cardStore: CardsStore!
     public private(set) var deckStore: DeckStore!
+    
+    public private(set) var dbVersion: AHDatabaseMigrator.MigrationVersion = .v1
+    
+    var RightCardRecord: CardRecord.Type {
+        if dbVersion == .v2 {
+            return CardRecordV2.self
+        } else {
+            return CardRecord.self
+        }
+    }
     
     public init(path: String) throws {
         dbQueue = try DatabaseQueue(path: path)
@@ -94,6 +105,20 @@ public final class AHDatabase {
         return try dbQueue.read({ (db) -> String in
             return try GeneralInfo.fetchUniqueRow(db: db).jsonFilesChecksum
         })
+    }
+    
+    public func deleteAllSavedFileChecksums() throws {
+        try dbQueue.write { db in
+            try FileChecksumRecord.deleteAll(db)
+            
+            // Reset general info as well
+            let info = try GeneralInfo.fetchUniqueRow(db: db)
+            info.jsonFilesChecksum = ""
+            
+            if info.hasPersistentChangedValues {
+                try info.save(db)
+            }
+        }
     }
     
     private var server: DatabaseServer?
@@ -216,69 +241,56 @@ public final class AHDatabase {
         }
     }
     
-    public func updateDatabaseFromJSONFilesInDirectory(url: URL, completion: @escaping (Error?) -> ()) {
+    public func updateDatabaseFromJSONFilesInDirectory(url: URL) throws {
+        let checksums = try self.getAllJsonFilesChecksums()
         var urls = FileManager.default.contentsOf(directory: url, fileExtension: "json")
         
-        DispatchQueue.global().async {
-            self.getAllJsonFilesChecksums { (checksums, error) in
-                if let error = error {
-                    return completion(error)
-                }
+        // Try loading cycles first if exists
+        if let index = urls.index(where: { $0.lastPathComponent == "cycles.json" }) {
+            let res = try JSONLoader.load(url: urls[index])
+            
+            if let actual = checksums["cycles.json"], actual == res.checksum {
                 
-                guard let checksums = checksums else {
-                    return completion(AHDatabaseError.invalidChecksums)
-                }
+            } else {
+                try self.loadCyclesFromJSON(at: urls[index])
+            }
+            
+            urls.remove(at: index)
+        }
+        
+        // Try loading cycles first if exists
+        if let index = urls.index(where: { $0.lastPathComponent == "packs.json" }) {
+            let res = try JSONLoader.load(url: urls[index])
+            
+            if let actual = checksums["packs.json"], actual == res.checksum {
                 
-                do {
-                    // Try loading cycles first if exists
-                    if let index = urls.index(where: { $0.lastPathComponent == "cycles.json" }) {
-                        let res = try JSONLoader.load(url: urls[index])
-                        
-                        if let actual = checksums["cycles.json"], actual == res.checksum {
-                            
-                        } else {
-                            try self.loadCyclesFromJSON(at: urls[index])
-                            
-                            try self.dbQueue.write({ db in
-                                try FileChecksumRecord(filename: "cycles.json", hex: res.checksum).save(db)
-                            })
-                        }
-                        
-                        urls.remove(at: index)
-                    }
-                    
-                    // Try loading cycles first if exists
-                    if let index = urls.index(where: { $0.lastPathComponent == "packs.json" }) {
-                        let res = try JSONLoader.load(url: urls[index])
-                        
-                        if let actual = checksums["packs.json"], actual == res.checksum {
-                            
-                        } else {
-                            try self.loadPacksFromJSON(at: urls[index])
-                            
-                            try self.dbQueue.write({ db in
-                                try FileChecksumRecord(filename: "packs.json", hex: res.checksum).save(db)
-                            })
-                        }
-                        
-                        urls.remove(at: index)
-                    }
-                    
-                    // Load all files (ignore files that don't contain cards)
-                    for url in urls {
-                        do {
-                            try self.loadCardsAndInvestigatorsFromJSON(at: url)
-                        } catch CardRecord.CardError.jsonDoesNotContainCards {
-                            continue
-                        } catch {
-                            throw error
-                        }
-                    }
-                    
-                    completion(nil)
-                } catch {
-                    completion(error)
-                }
+            } else {
+                try self.loadPacksFromJSON(at: urls[index])
+            }
+            
+            urls.remove(at: index)
+        }
+        
+        // Load all files (ignore files that don't contain cards)
+        for url in urls {
+            do {
+                try self.loadCardsAndInvestigatorsFromJSON(at: url)
+            } catch CardRecord.CardError.jsonDoesNotContainCards {
+                continue
+            } catch {
+                throw error
+            }
+        }
+    }
+    
+    public func updateDatabaseFromJSONFilesInDirectory(url: URL, completion: @escaping (Error?) -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                try self?.updateDatabaseFromJSONFilesInDirectory(url: url)
+                
+                completion(nil)
+            } catch {
+                completion(error)
             }
         }
     }
@@ -304,7 +316,7 @@ public final class AHDatabase {
     public func loadCardsAndInvestigatorsFromJSON(at url: URL) throws {
         try loadJSON(at: url) { (db, res) in
             try InvestigatorRecord.loadJSONRecords(json: res.json, into: db)
-            try CardRecord.loadJSONRecords(json: res.json, into: db)
+            try self.RightCardRecord.loadJSONRecords(json: res.json, into: db)
         }
     }
     
@@ -326,7 +338,8 @@ public final class AHDatabase {
                                    cycles: try cardCyclesDictionary(),
                                    packs: try cardPacksDictionary(),
                                    traits: try traitsSet(),
-                                   investigators: try investigatorsDictionary())
+                                   investigators: try investigatorsDictionary(),
+                                   dbVersion: dbVersion)
         }
         
         if let deckStore = deckStore {
@@ -338,7 +351,14 @@ public final class AHDatabase {
     }
     
     private func migrateToLastVersion() throws {
-        try AHDatabaseMigrator().migrate(database: dbQueue)
+        let migrator = AHDatabaseMigrator()
+        try migrator.migrate(database: dbQueue)
+        
+        guard let version = migrator.currentVersion else {
+            throw AHDatabaseError.databaseVersionNotDefined
+        }
+        
+        dbVersion = version
         
         try updateStores()
     }
@@ -491,7 +511,7 @@ public final class AHDatabase {
                 for i in 0..<investigators.count {
                     let requiredIds = Investigator.requiredCardsIds(investigatorId: investigators[i].id)
                     
-                    let cardRecords = try CardRecord.fetchAll(db: db, ids: requiredIds.keys.sorted())
+                    let cardRecords = try self.RightCardRecord.fetchAll(db: db, ids: requiredIds.keys.sorted())
                     
                     let cards = try cardRecords.flatMap({ (record) -> DeckCard? in
                         guard let pack = packs[record.packId] else {

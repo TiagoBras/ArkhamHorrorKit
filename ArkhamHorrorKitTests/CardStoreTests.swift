@@ -256,4 +256,20 @@ class CardStoreTests: XCTestCase {
             }
         }
     }
+    
+    func testPlayerCardsInEncounterDecks() {
+        let bundle = Bundle(for: CardStoreTests.self)
+        
+        var filter = CardFilter()
+        filter.onlyEarnedCards = true
+        
+        var cards = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        XCTAssertEqual(cards.count, 0)
+        
+        try! database.deleteAllSavedFileChecksums()
+        try! database.updateDatabaseFromJSONFilesInDirectory(url: bundle.bundleURL)
+        
+        cards = database.cardStore.fetchCards(filter: filter, sorting: nil)
+        XCTAssertEqual(cards.count, 4)
+    }
 }

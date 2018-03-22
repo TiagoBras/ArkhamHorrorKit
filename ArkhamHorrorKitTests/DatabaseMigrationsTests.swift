@@ -13,7 +13,7 @@ import XCTest
 import GRDB
 import SwiftyJSON
 
-class DatabaseBaseValuesTests: XCTestCase {
+class DatabaseMigrationsTests: XCTestCase {
     #if os(iOS) || os(watchOS) || os(tvOS)
     let bundle = Bundle(identifier: "com.bitmountains.ArkhamHorrorKit-iOS")!
     #elseif os(OSX)
@@ -262,6 +262,21 @@ class DatabaseBaseValuesTests: XCTestCase {
             XCTAssertEqual(card3.internalCode, "03017")
         })
     }
+    
+    func testMigrationValuesV2() {
+        let db = try! AHDatabase()
+        var card = DatabaseTestsHelper.fetchCard(id: 2185, in: db)
+        XCTAssertEqual(card.isPermanent, false)
+        
+        try! db.deleteAllSavedFileChecksums()
+        
+        let botaURL = Bundle(for: AHDatabase.self).url(forResource: "bota", withExtension: "json")!
+        try! db.loadCardsAndInvestigatorsFromJSON(at: botaURL)
+        
+        card = DatabaseTestsHelper.fetchCard(id: 2185, in: db)
+        XCTAssertEqual(card.isPermanent, true)
+    }
+
     
     private func loadJSONInMainBundle(filename: String) -> JSON {
         let components = filename.components(separatedBy: ".")

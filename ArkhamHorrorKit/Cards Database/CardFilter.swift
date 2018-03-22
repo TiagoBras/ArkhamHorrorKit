@@ -18,6 +18,8 @@ public struct CardFilter: Equatable {
     public var usesCharges: Bool? = nil
     public var hideWeaknesses: Bool? = nil
     public var onlyFavorites: Bool? = nil
+    public var onlyPermanentCards: Bool? = nil
+    public var onlyEarnedCards: Bool? = nil
     
     public init() { }
     
@@ -89,6 +91,8 @@ public struct CardFilter: Equatable {
         if lhs.onlyFavorites != rhs.onlyFavorites { return false }
         if lhs.hideWeaknesses != rhs.hideWeaknesses { return false }
         if lhs.usesCharges != rhs.usesCharges { return false }
+        if lhs.onlyPermanentCards != rhs.onlyPermanentCards { return false }
+        if lhs.onlyEarnedCards != rhs.onlyEarnedCards { return false }
         
         for (s1, s2) in zip(lhs.subfilters, rhs.subfilters) {
             guard s1.op == s2.op else { return false }

@@ -9,6 +9,7 @@ public final class CardsStore {
     var cardCycles: [String: CardCycle]
     var cardPacks: [String: CardPack]
     var traits: Set<String>
+    var dbVersion: AHDatabaseMigrator.MigrationVersion
     public internal(set) var investigators: [Int: Investigator]
     
     public private(set) var cardsCache = Cache<Int, Card>(maxItems: 50)
@@ -17,18 +18,28 @@ public final class CardsStore {
                 cycles: [String: CardCycle],
                 packs: [String: CardPack],
                 traits: Set<String>,
-                investigators: [Int: Investigator]) {
+                investigators: [Int: Investigator],
+                dbVersion: AHDatabaseMigrator.MigrationVersion) {
         self.dbWriter = dbWriter
         self.cardCycles = cycles
         self.cardPacks = packs
         self.traits = traits
         self.investigators = investigators
+        self.dbVersion = dbVersion
+    }
+    
+    var RightCardRecord: CardRecord.Type {
+        if dbVersion == .v2 {
+            return CardRecordV2.self
+        } else {
+            return CardRecord.self
+        }
     }
     
     // MARK:- Public Interface
     public func fetchCard(id: Int) throws -> Card {
         return try dbWriter.read({ (db) -> Card in
-            guard let record = try CardRecord.fetchOne(db: db, id: id) else {
+            guard let record = try RightCardRecord.fetchOne(db: db, id: id) else {
                 throw AHDatabaseError.cardNotFound(id)
             }
             
@@ -68,7 +79,7 @@ public final class CardsStore {
             
             onBeforeFetch?(stmt)
             
-            return try CardRecord.fetchAll(db, stmt).flatMap ({ (record) -> Card? in
+            return try RightCardRecord.fetchAll(db, stmt).flatMap ({ (record) -> Card? in
                 let traits = try CardTraitRecord.fetchCardTraits(
                     db: db,
                     cardId: record.id).map({ $0.traitName })
@@ -136,7 +147,7 @@ public final class CardsStore {
             
             do {
                 try self?.dbWriter.read({ db in
-                    guard let record = try CardRecord.fetchOne(db: db, id: card.id) else {
+                    guard let record = try self?.RightCardRecord.fetchOne(db: db, id: card.id) else {
                         throw AHDatabaseError.cardNotFound(card.id)
                     }
                     
@@ -209,6 +220,14 @@ public final class CardsStore {
                 backImageName = "\(record.internalCode)b.jpeg"
             }
             
+            var isPermanent: Bool = false
+            var isEarnable: Bool = false
+            
+            if let recordV2 = record as? CardRecordV2 {
+                isPermanent = recordV2.isPermanent
+                isEarnable = recordV2.isEarnable
+            }
+            
             return Card(id: record.id,
                         name: record.name,
                         subname: record.subname,
@@ -240,7 +259,9 @@ public final class CardsStore {
                         enemyHealthPerInvestigator: record.enemyHealthPerInvestigator,
                         frontImageName: "\(record.internalCode).jpeg",
                         backImageName: backImageName,
-                        isFavorite: record.isFavorite)
+                        isFavorite: record.isFavorite,
+                        isPermanent: isPermanent,
+                        isEarnable: isEarnable)
         }
         
         if let cache = cardsCache {
@@ -411,7 +432,21 @@ public final class CardsStore {
             
             whereInClauses.append("favorite = \(favorite)")
         }
-        
+
+        if dbVersion == .v2 {
+            if let onlyPermanentCards = filter.onlyPermanentCards {
+                let intValue: Int = onlyPermanentCards ? 1 : 0
+                
+                whereInClauses.append("\(CardRecord.RowKeys.isPermanent.rawValue) = \(intValue)")
+            }
+            
+            if let onlyEarnedCards = filter.onlyEarnedCards {
+                let intValue: Int = onlyEarnedCards ? 1 : 0
+                
+                whereInClauses.append("\(CardRecord.RowKeys.isEarnable.rawValue) = \(intValue)")
+            }
+        }
+
         var s = ""
         if !whereInClauses.isEmpty {
             s = "(\(whereInClauses.joined(separator: " AND ")))"

@@ -36,6 +36,8 @@ public struct Card: Hashable, Comparable {
     public var frontImageName: String
     public var backImageName: String?
     public var isFavorite: Bool
+    public var isPermanent: Bool
+    public var isEarnable: Bool
     
     public var isWeakness: Bool {
         return subtype != nil

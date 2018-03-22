@@ -17,8 +17,8 @@
 		A508E3FD200FB1E100067885 /* JSONLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A508E3FB200FB1E100067885 /* JSONLoader.swift */; };
 		A51A261F1FAE7AFA004C6ED1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */; };
 		A51A26201FAE7B01004C6ED1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */; };
-		A51A264F1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */; };
-		A51A26501FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */; };
+		A51A264F1FAF323F004C6ED1 /* DatabaseMigrationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A264D1FAF323F004C6ED1 /* DatabaseMigrationsTests.swift */; };
+		A51A26501FAF323F004C6ED1 /* DatabaseMigrationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A264D1FAF323F004C6ED1 /* DatabaseMigrationsTests.swift */; };
 		A51A26511FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */; };
 		A51A26521FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */; };
 		A51A26641FAF3470004C6ED1 /* schema_v1.sql in Resources */ = {isa = PBXBuildFile; fileRef = A51A26611FAF3468004C6ED1 /* schema_v1.sql */; };
@@ -48,41 +48,13 @@
 		A51A26901FAF347B004C6ED1 /* uau.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26581FAF3467004C6ED1 /* uau.json */; };
 		A51A26911FAF347B004C6ED1 /* wda.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26591FAF3467004C6ED1 /* wda.json */; };
 		A51A26971FAF35D6004C6ED1 /* schema_v1.sql in Resources */ = {isa = PBXBuildFile; fileRef = A51A26611FAF3468004C6ED1 /* schema_v1.sql */; };
-		A51A269B1FAF35D6004C6ED1 /* bota.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265A1FAF3467004C6ED1 /* bota.json */; };
-		A51A269C1FAF35D6004C6ED1 /* core.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26631FAF3468004C6ED1 /* core.json */; };
-		A51A269D1FAF35D6004C6ED1 /* dwl.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26621FAF3468004C6ED1 /* dwl.json */; };
-		A51A269E1FAF35D6004C6ED1 /* eotp.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265E1FAF3467004C6ED1 /* eotp.json */; };
-		A51A269F1FAF35D6004C6ED1 /* litas.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26561FAF3467004C6ED1 /* litas.json */; };
-		A51A26A01FAF35D6004C6ED1 /* promo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26571FAF3467004C6ED1 /* promo.json */; };
-		A51A26A11FAF35D6004C6ED1 /* ptc.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26551FAF3467004C6ED1 /* ptc.json */; };
-		A51A26A21FAF35D6004C6ED1 /* tece.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265C1FAF3467004C6ED1 /* tece.json */; };
-		A51A26A31FAF35D6004C6ED1 /* tmm.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26601FAF3468004C6ED1 /* tmm.json */; };
-		A51A26A41FAF35D6004C6ED1 /* tuo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265B1FAF3467004C6ED1 /* tuo.json */; };
-		A51A26A51FAF35D6004C6ED1 /* uau.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26581FAF3467004C6ED1 /* uau.json */; };
-		A51A26A61FAF35D6004C6ED1 /* wda.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26591FAF3467004C6ED1 /* wda.json */; };
 		A51A26A71FAF35D7004C6ED1 /* schema_v1.sql in Resources */ = {isa = PBXBuildFile; fileRef = A51A26611FAF3468004C6ED1 /* schema_v1.sql */; };
-		A51A26AB1FAF35D7004C6ED1 /* bota.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265A1FAF3467004C6ED1 /* bota.json */; };
-		A51A26AC1FAF35D7004C6ED1 /* core.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26631FAF3468004C6ED1 /* core.json */; };
-		A51A26AD1FAF35D7004C6ED1 /* dwl.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26621FAF3468004C6ED1 /* dwl.json */; };
-		A51A26AE1FAF35D7004C6ED1 /* eotp.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265E1FAF3467004C6ED1 /* eotp.json */; };
-		A51A26AF1FAF35D7004C6ED1 /* litas.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26561FAF3467004C6ED1 /* litas.json */; };
-		A51A26B01FAF35D7004C6ED1 /* promo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26571FAF3467004C6ED1 /* promo.json */; };
-		A51A26B11FAF35D7004C6ED1 /* ptc.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26551FAF3467004C6ED1 /* ptc.json */; };
-		A51A26B21FAF35D7004C6ED1 /* tece.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265C1FAF3467004C6ED1 /* tece.json */; };
-		A51A26B31FAF35D7004C6ED1 /* tmm.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26601FAF3468004C6ED1 /* tmm.json */; };
-		A51A26B41FAF35D7004C6ED1 /* tuo.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A265B1FAF3467004C6ED1 /* tuo.json */; };
-		A51A26B51FAF35D7004C6ED1 /* uau.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26581FAF3467004C6ED1 /* uau.json */; };
-		A51A26B61FAF35D7004C6ED1 /* wda.json in Resources */ = {isa = PBXBuildFile; fileRef = A51A26591FAF3467004C6ED1 /* wda.json */; };
 		A51DBA421FDEF86500B247A4 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51DBA411FDEF86500B247A4 /* Helpers.swift */; };
 		A51DBA431FDEF86500B247A4 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51DBA411FDEF86500B247A4 /* Helpers.swift */; };
 		A53E36CE1FCC97A20002F85A /* cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CC1FCC97A20002F85A /* cycles.json */; };
 		A53E36CF1FCC97A20002F85A /* cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CC1FCC97A20002F85A /* cycles.json */; };
 		A53E36D01FCC97A20002F85A /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CD1FCC97A20002F85A /* packs.json */; };
 		A53E36D11FCC97A20002F85A /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CD1FCC97A20002F85A /* packs.json */; };
-		A53E36D71FCCA27D0002F85A /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CD1FCC97A20002F85A /* packs.json */; };
-		A53E36D81FCCA27E0002F85A /* packs.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CD1FCC97A20002F85A /* packs.json */; };
-		A53E36D91FCCA2800002F85A /* cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CC1FCC97A20002F85A /* cycles.json */; };
-		A53E36DA1FCCA2810002F85A /* cycles.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36CC1FCC97A20002F85A /* cycles.json */; };
 		A53E36DF1FCCACFE0002F85A /* eotpV1.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36DE1FCCACFE0002F85A /* eotpV1.json */; };
 		A53E36E01FCCACFE0002F85A /* eotpV1.json in Resources */ = {isa = PBXBuildFile; fileRef = A53E36DE1FCCACFE0002F85A /* eotpV1.json */; };
 		A53E370E1FCDBA080002F85A /* CardFTSRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53E370D1FCDBA080002F85A /* CardFTSRecord.swift */; };
@@ -211,6 +183,10 @@
 		A5DA6AD61FA246DD00457F27 /* AHDatabaseMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA6AD01FA246C000457F27 /* AHDatabaseMigrator.swift */; };
 		A5DA6AD71FA246DD00457F27 /* CardsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA6ACF1FA246C000457F27 /* CardsStore.swift */; };
 		A5DA6AD81FA246DD00457F27 /* DeckStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA6ACE1FA246C000457F27 /* DeckStore.swift */; };
+		A5F8205F2063C46B00A0B31C /* CardRecordV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8205E2063C46B00A0B31C /* CardRecordV2.swift */; };
+		A5F820602063C46B00A0B31C /* CardRecordV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8205E2063C46B00A0B31C /* CardRecordV2.swift */; };
+		A5F820622063F78B00A0B31C /* bota_encounterV2.json in Resources */ = {isa = PBXBuildFile; fileRef = A5F820612063F78B00A0B31C /* bota_encounterV2.json */; };
+		A5F820632063F78B00A0B31C /* bota_encounterV2.json in Resources */ = {isa = PBXBuildFile; fileRef = A5F820612063F78B00A0B31C /* bota_encounterV2.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -244,7 +220,7 @@
 		A508E3F8200FA0BB00067885 /* FileChecksum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileChecksum.swift; sourceTree = "<group>"; };
 		A508E3FB200FB1E100067885 /* JSONLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLoader.swift; sourceTree = "<group>"; };
 		A51A261E1FAE7AFA004C6ED1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseBaseValuesTests.swift; sourceTree = "<group>"; };
+		A51A264D1FAF323F004C6ED1 /* DatabaseMigrationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseMigrationsTests.swift; sourceTree = "<group>"; };
 		A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTestsHelper.swift; sourceTree = "<group>"; };
 		A51A26551FAF3467004C6ED1 /* ptc.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ptc.json; sourceTree = "<group>"; };
 		A51A26561FAF3467004C6ED1 /* litas.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = litas.json; sourceTree = "<group>"; };
@@ -334,6 +310,8 @@
 		A5DA6ACE1FA246C000457F27 /* DeckStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckStore.swift; sourceTree = "<group>"; };
 		A5DA6ACF1FA246C000457F27 /* CardsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsStore.swift; sourceTree = "<group>"; };
 		A5DA6AD01FA246C000457F27 /* AHDatabaseMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHDatabaseMigrator.swift; sourceTree = "<group>"; };
+		A5F8205E2063C46B00A0B31C /* CardRecordV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRecordV2.swift; sourceTree = "<group>"; };
+		A5F820612063F78B00A0B31C /* bota_encounterV2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bota_encounterV2.json; sourceTree = "<group>"; };
 		BBD970C05946780D19896C7F /* Pods_ArkhamHorrorKit_macOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArkhamHorrorKit_macOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F26C2B14B385004DB7863952 /* Pods_ArkhamHorrorKit_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArkhamHorrorKit_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -478,6 +456,7 @@
 				A53E36DE1FCCACFE0002F85A /* eotpV1.json */,
 				A5653C161FB2174000862AC1 /* non_card_file.json */,
 				A5D8B7291FB64A6800DAC40F /* chaos_bags.json */,
+				A5F820612063F78B00A0B31C /* bota_encounterV2.json */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -519,6 +498,7 @@
 			isa = PBXGroup;
 			children = (
 				A5DA6ABD1FA2460B00457F27 /* CardRecord.swift */,
+				A5F8205E2063C46B00A0B31C /* CardRecordV2.swift */,
 				A5BCA80C1FA282EF001E6817 /* DeckRecord.swift */,
 				A57E8EE31FAE6926008942B0 /* DeckCardRecord.swift */,
 				A5DA6AC01FA2460C00457F27 /* InvestigatorRecord.swift */,
@@ -588,7 +568,7 @@
 				A5837B811FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift */,
 				A5653BFD1FB1FBFC00862AC1 /* Data */,
 				A5653C021FB1FCDE00862AC1 /* AHDatabaseTests.swift */,
-				A51A264D1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift */,
+				A51A264D1FAF323F004C6ED1 /* DatabaseMigrationsTests.swift */,
 				A51A264E1FAF323F004C6ED1 /* DatabaseTestsHelper.swift */,
 				A5DA6A631FA23B2900457F27 /* Info.plist */,
 				A563C36F1FB11D670060FE8C /* CardStoreTests.swift */,
@@ -805,28 +785,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A51A26A01FAF35D6004C6ED1 /* promo.json in Resources */,
-				A51A26A11FAF35D6004C6ED1 /* ptc.json in Resources */,
 				A5653C051FB1FFCB00862AC1 /* base_core_updated.json in Resources */,
 				A59FCA521FB71B3000DF4994 /* chaos_bags.json in Resources */,
-				A51A26A31FAF35D6004C6ED1 /* tmm.json in Resources */,
-				A51A269F1FAF35D6004C6ED1 /* litas.json in Resources */,
 				A5653C171FB2174000862AC1 /* non_card_file.json in Resources */,
-				A53E36D71FCCA27D0002F85A /* packs.json in Resources */,
-				A51A269E1FAF35D6004C6ED1 /* eotp.json in Resources */,
-				A51A26A41FAF35D6004C6ED1 /* tuo.json in Resources */,
-				A51A269D1FAF35D6004C6ED1 /* dwl.json in Resources */,
 				A51A26971FAF35D6004C6ED1 /* schema_v1.sql in Resources */,
-				A51A26A51FAF35D6004C6ED1 /* uau.json in Resources */,
 				A5C6040A1FD860730016F538 /* 01043.jpeg in Resources */,
-				A51A26A61FAF35D6004C6ED1 /* wda.json in Resources */,
-				A51A269C1FAF35D6004C6ED1 /* core.json in Resources */,
 				A53E36DF1FCCACFE0002F85A /* eotpV1.json in Resources */,
-				A51A26A21FAF35D6004C6ED1 /* tece.json in Resources */,
 				A5653C0D1FB20EE200862AC1 /* cyclesV1.json in Resources */,
 				A5653C0E1FB20EE200862AC1 /* packsV1.json in Resources */,
-				A53E36D91FCCA2800002F85A /* cycles.json in Resources */,
-				A51A269B1FAF35D6004C6ED1 /* bota.json in Resources */,
+				A5F820622063F78B00A0B31C /* bota_encounterV2.json in Resources */,
 				A5653C081FB2037600862AC1 /* packs_update.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -858,28 +825,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A51A26B01FAF35D7004C6ED1 /* promo.json in Resources */,
-				A51A26B11FAF35D7004C6ED1 /* ptc.json in Resources */,
 				A5653C061FB1FFCC00862AC1 /* base_core_updated.json in Resources */,
 				A59FCA511FB71B2F00DF4994 /* chaos_bags.json in Resources */,
-				A51A26B31FAF35D7004C6ED1 /* tmm.json in Resources */,
-				A51A26AF1FAF35D7004C6ED1 /* litas.json in Resources */,
 				A5653C181FB2174000862AC1 /* non_card_file.json in Resources */,
-				A53E36D81FCCA27E0002F85A /* packs.json in Resources */,
-				A51A26AE1FAF35D7004C6ED1 /* eotp.json in Resources */,
-				A51A26B41FAF35D7004C6ED1 /* tuo.json in Resources */,
-				A51A26AD1FAF35D7004C6ED1 /* dwl.json in Resources */,
 				A51A26A71FAF35D7004C6ED1 /* schema_v1.sql in Resources */,
-				A51A26B51FAF35D7004C6ED1 /* uau.json in Resources */,
 				A5C6040B1FD860730016F538 /* 01043.jpeg in Resources */,
-				A51A26B61FAF35D7004C6ED1 /* wda.json in Resources */,
-				A51A26AC1FAF35D7004C6ED1 /* core.json in Resources */,
 				A53E36E01FCCACFE0002F85A /* eotpV1.json in Resources */,
-				A51A26B21FAF35D7004C6ED1 /* tece.json in Resources */,
 				A5653C131FB20EE300862AC1 /* cyclesV1.json in Resources */,
 				A5653C141FB20EE300862AC1 /* packsV1.json in Resources */,
-				A53E36DA1FCCA2810002F85A /* cycles.json in Resources */,
-				A51A26AB1FAF35D7004C6ED1 /* bota.json in Resources */,
+				A5F820632063F78B00A0B31C /* bota_encounterV2.json in Resources */,
 				A5653C091FB2037600862AC1 /* packs_update.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1116,6 +1070,7 @@
 				A5DA6AD21FA246DC00457F27 /* AHDatabaseMigrator.swift in Sources */,
 				A5DA6AA61FA244C300457F27 /* Deck.swift in Sources */,
 				A5DA6A9C1FA244C300457F27 /* Card.swift in Sources */,
+				A5F8205F2063C46B00A0B31C /* CardRecordV2.swift in Sources */,
 				A5837B6A1FCF40040062FBFA /* CardTraitRecord.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1133,7 +1088,7 @@
 				A59E56C3201210D200362558 /* DeckStoreTests.swift in Sources */,
 				A51A26511FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
 				A5837B7F1FD096F40062FBFA /* CardFiltersTests.swift in Sources */,
-				A51A264F1FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
+				A51A264F1FAF323F004C6ED1 /* DatabaseMigrationsTests.swift in Sources */,
 				A5653C031FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */,
 				A59E56C020116D1B00362558 /* DatabaseServerTests.swift in Sources */,
 			);
@@ -1189,6 +1144,7 @@
 				A57FFB441FB5FE7500B16FE6 /* CampaignRecord.swift in Sources */,
 				A5D8B72F1FB64B3000DAC40F /* Scenario.swift in Sources */,
 				A5779C331FB60C1400DB9DAD /* ChaosBagDatabase.swift in Sources */,
+				A5F820602063C46B00A0B31C /* CardRecordV2.swift in Sources */,
 				A5DA6AAC1FA244C400457F27 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1206,7 +1162,7 @@
 				A59E56C4201210D200362558 /* DeckStoreTests.swift in Sources */,
 				A51A26521FAF323F004C6ED1 /* DatabaseTestsHelper.swift in Sources */,
 				A5837B801FD096F40062FBFA /* CardFiltersTests.swift in Sources */,
-				A51A26501FAF323F004C6ED1 /* DatabaseBaseValuesTests.swift in Sources */,
+				A51A26501FAF323F004C6ED1 /* DatabaseMigrationsTests.swift in Sources */,
 				A5653C041FB1FCDE00862AC1 /* AHDatabaseTests.swift in Sources */,
 				A59E56C120116D1B00362558 /* DatabaseServerTests.swift in Sources */,
 			);

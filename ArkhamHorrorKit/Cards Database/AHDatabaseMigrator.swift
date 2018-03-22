@@ -5,7 +5,8 @@ import SwiftyJSON
 import TBSwiftKit
 
 public final class AHDatabaseMigrator {
-    public var lastVersion: MigrationVersion {
+    public var currentVersion: MigrationVersion?
+    public var lastAvailableVersion: MigrationVersion {
         let sortedMigrations = migrations.sorted(by: { $0.version.rawValue < $1.version.rawValue })
         
         return sortedMigrations.last!.version
@@ -13,10 +14,11 @@ public final class AHDatabaseMigrator {
     
     private var migrations: [Migration] {
         let v1 = Migration(version: .v1, migrate: AHDatabaseMigrator.v1)
+        let v2 = Migration(version: .v2, migrate: AHDatabaseMigrator.v2)
         
         // !!! Insert migrations here !!!
         
-        return [v1]
+        return [v1, v2]
     }
     
     public init() {
@@ -28,8 +30,10 @@ public final class AHDatabaseMigrator {
     public func migrate(database: DatabaseWriter, upTo migration: MigrationVersion? = nil) throws  {
         if let version = migration {
             try migrator.migrate(database, upTo: version.stringValue)
+            currentVersion = version
         } else {
             try migrator.migrate(database)
+            currentVersion = lastAvailableVersion
         }
     }
     
@@ -115,6 +119,21 @@ public final class AHDatabaseMigrator {
         try generalInfo.save(db)
     }
     
+    public static func v2(_ db: Database) throws {
+        // Add 'permanent' & 'fromEncounterDeck' columns to Card model
+        let newColumns: [String] = [
+            CardRecord.RowKeys.isPermanent.rawValue,
+            CardRecord.RowKeys.isEarnable.rawValue
+        ]
+        
+        let tableName = CardRecord.databaseTableName
+        for column in newColumns {
+            let sql = "ALTER TABLE \(tableName) ADD COLUMN \(column) INTEGER NOT NULL DEFAULT 0"
+            
+            try db.execute(sql)
+        }
+    }
+    
     private static func cleanUp(sql: String) -> String {
         return sql.components(separatedBy: CharacterSet.newlines)
             .map({ $0.trimmingCharacters(in: CharacterSet.whitespaces) })
@@ -186,7 +205,7 @@ public final class AHDatabaseMigrator {
     }
     
     public enum MigrationVersion: Int {
-        case v1 = 1
+        case v1 = 1, v2 = 2
         
         public var stringValue: String {
             return "v\(rawValue).0"

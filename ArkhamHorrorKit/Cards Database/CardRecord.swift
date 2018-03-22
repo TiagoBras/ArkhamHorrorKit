@@ -4,7 +4,7 @@ import Foundation
 import GRDB
 import SwiftyJSON
 
-final class CardRecord: Record {
+class CardRecord: Record {
     public private(set) var id: Int
     var position: Int
     var level: Int
@@ -146,118 +146,139 @@ final class CardRecord: Record {
         return try CardRecord.fetchAll(db, sql)
     }
     
+    class func loadJSONObjectIntoDictionary(_ obj: JSON) throws -> [String: DatabaseValueConvertible?]? {
+        guard obj["type_code"].string != nil else {
+            throw CardError.jsonDoesNotContainCards
+        }
+        
+        guard obj["type_code"] != "investigator" else { return nil }
+        
+        if let hidden = obj["hidden"].bool, hidden {
+            return nil
+        }
+        
+        var dict = [String: DatabaseValueConvertible?]()
+        
+        guard let cardType = CardType(code: obj["type_code"].stringValue) else {
+            return nil
+        }
+        dict[RowKeys.typeId.rawValue] = cardType.id
+        
+        guard let faction = CardFaction(code: obj["faction_code"].stringValue) else {
+            return nil
+        }
+        dict[RowKeys.factionId.rawValue] = faction.id
+        
+        guard let id = Int(obj["code"].stringValue) else { return nil }
+        
+        dict[RowKeys.id.rawValue] = id
+        dict[RowKeys.id.rawValue] = Int(obj["code"].stringValue)
+        dict[RowKeys.internalCode.rawValue] = obj["code"].stringValue
+        dict[RowKeys.position.rawValue] = obj["position"].intValue
+        dict[RowKeys.level.rawValue] = obj["xp"].intValue
+        dict[RowKeys.cost.rawValue] = obj["cost"].intValue
+        dict[RowKeys.quantity.rawValue] = obj["quantity"].intValue
+        dict[RowKeys.deckLimit.rawValue] = obj["deck_limit"].intValue
+        dict[RowKeys.name.rawValue] = obj["name"].stringValue
+        dict[RowKeys.subname.rawValue] = obj["subname"].stringValue
+        dict[RowKeys.isUnique.rawValue] = obj["is_unique"].boolValue
+        dict[RowKeys.text.rawValue] = obj["text"].stringValue
+        
+        if let subtype = obj["subtype_code"].string {
+            guard let subtypeId = CardSubtype(code: subtype)?.rawValue else {
+                throw CardError.invalidSubtypeCode(obj["type_code"].stringValue)
+            }
+            
+            dict[RowKeys.subtypeId.rawValue] = subtypeId
+        } else {
+            dict[RowKeys.subtypeId.rawValue] = nil
+        }
+        
+        dict[RowKeys.packId.rawValue] = obj["pack_code"].stringValue
+        
+        if let slot = obj["slot"].string {
+            guard let slotId = CardAssetSlot(code: slot)?.rawValue else {
+                throw CardError.invalidAssetSlotCode(obj["slot"].stringValue)
+            }
+            
+            dict[RowKeys.assetSlotId.rawValue] = slotId
+        } else {
+            dict[RowKeys.assetSlotId.rawValue] = nil
+        }
+        
+        dict[RowKeys.traits.rawValue] = obj["traits"].stringValue
+        dict[RowKeys.skillAgility.rawValue] = obj["skill_agility"].intValue
+        dict[RowKeys.skillCombat.rawValue] = obj["skill_combat"].intValue
+        dict[RowKeys.skillIntellect.rawValue] = obj["skill_intellect"].intValue
+        dict[RowKeys.skillWillpower.rawValue] = obj["skill_willpower"].intValue
+        dict[RowKeys.skillWild.rawValue] = obj["skill_wild"].intValue
+        
+        if cardType.id != CardType.enemy.id {
+            dict[RowKeys.health.rawValue] = obj["health"].intValue
+        } else {
+            dict[RowKeys.health.rawValue] = 0
+        }
+        
+        dict[RowKeys.sanity.rawValue] = obj["sanity"].intValue
+        
+        let restrictions = obj["restrictions"].stringValue
+        let components = restrictions.components(separatedBy: ":")
+        
+        if restrictions.hasPrefix("investigator:") && components.count == 2 {
+            dict[RowKeys.investigatorId.rawValue] = Int(components[1])
+        } else {
+            dict[RowKeys.investigatorId.rawValue] = nil
+        }
+        
+        dict[RowKeys.flavorText.rawValue] = obj["flavor"].stringValue
+        dict[RowKeys.illustrator.rawValue] = obj["illustrator"].stringValue
+        dict[RowKeys.doubleSided.rawValue] = obj["double_sided"].boolValue
+        dict[RowKeys.enemyFight.rawValue] = obj["enemy_fight"].intValue
+        dict[RowKeys.enemyEvade.rawValue] = obj["enemy_evade"].intValue
+        
+        if cardType.id == CardType.enemy.id {
+            dict[RowKeys.enemyHealth.rawValue] = obj["health"].intValue
+        } else {
+            dict[RowKeys.enemyHealth.rawValue] = 0
+        }
+        
+        dict[RowKeys.enemyDamage.rawValue] = obj["enemy_damage"].intValue
+        dict[RowKeys.enemyHorror.rawValue] = obj["enemy_horror"].intValue
+        dict[RowKeys.enemyHealthPerInvestigator.rawValue] = obj["health_per_investigator"].boolValue
+        dict[RowKeys.favorite.rawValue] = obj["favorite"].boolValue
+        
+        func doesCardUsesCharges(_ cardText: String) -> Bool {
+            let regex = "Uses \\(\\w+ charges?\\)"
+            
+            return cardText.range(of: regex,
+                                  options: [.regularExpression, .caseInsensitive],
+                                  range: nil,
+                                  locale: nil) != nil
+        }
+        
+        dict[RowKeys.usesCharges.rawValue] = doesCardUsesCharges(obj["text"].stringValue)
+        dict[RowKeys.favorite.rawValue] = obj["favorite"].boolValue
+        
+        return dict
+    }
+    
     class func loadJSONRecords(json: JSON, into db: Database) throws {
         for obj in json.arrayValue {
-            guard obj["type_code"].string != nil else {
-                throw CardError.jsonDoesNotContainCards
-            }
-            
-            guard obj["type_code"] != "investigator" else { continue }
-            
-            if let hidden = obj["hidden"].bool, hidden {
-                continue
-            }
-            
-            var dict = [String: DatabaseValueConvertible?]()
-            dict[RowKeys.id.rawValue] = Int(obj["code"].stringValue)
-            dict[RowKeys.internalCode.rawValue] = obj["code"].stringValue
-            dict[RowKeys.position.rawValue] = obj["position"].intValue
-            dict[RowKeys.level.rawValue] = obj["xp"].intValue
-            dict[RowKeys.cost.rawValue] = obj["cost"].intValue
-            dict[RowKeys.quantity.rawValue] = obj["quantity"].intValue
-            dict[RowKeys.deckLimit.rawValue] = obj["deck_limit"].intValue
-            dict[RowKeys.name.rawValue] = obj["name"].stringValue
-            dict[RowKeys.subname.rawValue] = obj["subname"].stringValue
-            dict[RowKeys.isUnique.rawValue] = obj["is_unique"].boolValue
-            dict[RowKeys.text.rawValue] = obj["text"].stringValue
-            
-            guard let typeId = CardType(code: obj["type_code"].stringValue)?.rawValue else {
-                throw CardError.invalidTypeCode(obj["type_code"].stringValue)
-            }
-            
-            dict[RowKeys.typeId.rawValue] = typeId
-            
-            if let subtype = obj["subtype_code"].string {
-                guard let subtypeId = CardSubtype(code: subtype)?.rawValue else {
-                    throw CardError.invalidSubtypeCode(obj["type_code"].stringValue)
-                }
-                
-                dict[RowKeys.subtypeId.rawValue] = subtypeId
-            } else {
-                dict[RowKeys.subtypeId.rawValue] = nil
-            }
-            
-            guard let factionId = CardFaction(code: obj["faction_code"].stringValue)?.rawValue else {
-                throw CardError.invalidFactionCode(obj["type_code"].stringValue)
-            }
-            
-            dict[RowKeys.factionId.rawValue] = factionId
-            dict[RowKeys.packId.rawValue] = obj["pack_code"].stringValue
-            
-            if let slot = obj["slot"].string {
-                guard let slotId = CardAssetSlot(code: slot)?.rawValue else {
-                    throw CardError.invalidAssetSlotCode(obj["type_code"].stringValue)
-                }
-                
-                dict[RowKeys.assetSlotId.rawValue] = slotId
-            } else {
-                dict[RowKeys.assetSlotId.rawValue] = nil
-            }
-            
-            dict[RowKeys.traits.rawValue] = obj["traits"].stringValue
-            dict[RowKeys.skillAgility.rawValue] = obj["skill_agility"].intValue
-            dict[RowKeys.skillCombat.rawValue] = obj["skill_combat"].intValue
-            dict[RowKeys.skillIntellect.rawValue] = obj["skill_intellect"].intValue
-            dict[RowKeys.skillWillpower.rawValue] = obj["skill_willpower"].intValue
-            dict[RowKeys.skillWild.rawValue] = obj["skill_wild"].intValue
-            
-            if typeId != CardType.enemy.id {
-                dict[RowKeys.health.rawValue] = obj["health"].intValue
-            } else {
-                dict[RowKeys.health.rawValue] = 0
-            }
-            
-            dict[RowKeys.sanity.rawValue] = obj["sanity"].intValue
-            
-            let restrictions = obj["restrictions"].stringValue
-            let components = restrictions.components(separatedBy: ":")
-            
-            if restrictions.hasPrefix("investigator:") && components.count == 2 {
-                dict[RowKeys.investigatorId.rawValue] = Int(components[1])
-            } else {
-                dict[RowKeys.investigatorId.rawValue] = nil
-            }
-            
-            dict[RowKeys.flavorText.rawValue] = obj["flavor"].stringValue
-            dict[RowKeys.illustrator.rawValue] = obj["illustrator"].stringValue
-            dict[RowKeys.doubleSided.rawValue] = obj["double_sided"].boolValue
-            dict[RowKeys.enemyFight.rawValue] = obj["enemy_fight"].intValue
-            dict[RowKeys.enemyEvade.rawValue] = obj["enemy_evade"].intValue
-            
-            if typeId == CardType.enemy.id {
-                dict[RowKeys.enemyHealth.rawValue] = obj["health"].intValue
-            } else {
-                dict[RowKeys.enemyHealth.rawValue] = 0
-            }
-            
-            dict[RowKeys.enemyDamage.rawValue] = obj["enemy_damage"].intValue
-            dict[RowKeys.enemyHorror.rawValue] = obj["enemy_horror"].intValue
-            dict[RowKeys.enemyHealthPerInvestigator.rawValue] = obj["health_per_investigator"].boolValue
-            dict[RowKeys.usesCharges.rawValue] = CardRecord.doesCardUsesCharges(obj["text"].stringValue)
-            
-            dict[RowKeys.favorite.rawValue] = obj["favorite"].boolValue
+            guard let dict = try loadJSONObjectIntoDictionary(obj) else { continue }
             
             let card = CardRecord(row: Row(dict))
             
             try card.save(db)
             
-            try CardRecord.updateCardFTS(db, card: card)
+            let keywords = extractKeywords(from: card)
+            
+            try CardRecord.updateCardFTS(db, card: card, keywords: keywords)
             
             try insertOrIgnoreTraitsIntoDatabase(db, card: card)
         }
     }
     
-    class private func updateCardFTS(_ db: Database, card: CardRecord) throws {
+    class func extractKeywords(from card: CardRecord) -> String {
         var keywords = [String]()
         keywords.append(String(card.id))
         keywords.append(card.name)
@@ -319,8 +340,10 @@ final class CardRecord: Record {
         keywords.append(card.illustrator)
         keywords.append(card.flavorText)
         
-        let keywordsString = keywords.joined(separator: " ").replacingOccurrences(of: ".", with: "")
-        
+        return keywords.joined(separator: " ").replacingOccurrences(of: ".", with: "")
+    }
+    
+    class func updateCardFTS(_ db: Database, card: CardRecord, keywords: String) throws {
         if let count = try Int.fetchOne(db, "SELECT Count(*) FROM CardFTS WHERE id = \(card.id)") {
             if count > 0 {
                 let sql = """
@@ -330,16 +353,16 @@ final class CardRecord: Record {
                 WHERE id = ?
                 """
                 
-                try db.execute(sql, arguments: [card.id, keywordsString, card.id])
+                try db.execute(sql, arguments: [card.id, keywords, card.id])
             } else {
                 let sql = "INSERT INTO CardFTS (id, keywords) VALUES (?, ?)"
                 
-                try db.execute(sql, arguments: [card.id, keywordsString])
+                try db.execute(sql, arguments: [card.id, keywords])
             }
         }
     }
     
-    class private func insertOrIgnoreTraitsIntoDatabase(_ db: Database, card: CardRecord) throws {
+    class func insertOrIgnoreTraitsIntoDatabase(_ db: Database, card: CardRecord) throws {
         let dotsRemoved = card.traits.replacingOccurrences(of: ".", with: "")
         let traits = dotsRemoved.components(separatedBy: " ")
         
@@ -350,15 +373,6 @@ final class CardRecord: Record {
             
             try CardTraitRecord(cardId: card.id, traitName: trait).save(db)
         }
-    }
-    
-    class private func doesCardUsesCharges(_ cardText: String) -> Bool {
-        let regex = "Uses \\(\\w+ charges?\\)"
-        
-        return cardText.range(of: regex,
-                              options: [.regularExpression, .caseInsensitive],
-                              range: nil,
-                              locale: nil) != nil
     }
     
     // MARK:- Enumerations
@@ -407,5 +421,7 @@ final class CardRecord: Record {
         case internalCode = "internal_code"
         case usesCharges = "uses_charges"
         case favorite = "favorite"
+        case isPermanent = "is_permanent"
+        case isEarnable = "is_earnable"
     }
 }
