@@ -48,7 +48,10 @@ public class DeckStats {
         for deckCard in deck.cards {
             let quantity = Int(deckCard.quantity)
             
-            stats.totalCardsCount += quantity
+            if !deckCard.card.isPermanent {
+                stats.totalCardsCount += quantity
+            }
+
             stats.totalXp += Int(deckCard.card.level) * quantity
             stats.totalCost += Int(deckCard.card.cost) * quantity
             stats[deckCard.card.type] += quantity

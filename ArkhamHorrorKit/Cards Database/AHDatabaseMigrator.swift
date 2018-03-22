@@ -52,6 +52,29 @@ public final class AHDatabaseMigrator {
         // Create schema
         try db.execute(AHDatabaseMigrator.cleanUp(sql: sql))
         
+        try loadBaseData(db, cardRecordClass: CardRecord.self)
+    }
+    
+    public static func v2(_ db: Database) throws {
+        // Add 'permanent' & 'fromEncounterDeck' columns to Card model
+        let newColumns: [String] = [
+            CardRecord.RowKeys.isPermanent.rawValue,
+            CardRecord.RowKeys.isEarnable.rawValue
+        ]
+        
+        let tableName = CardRecord.databaseTableName
+        for column in newColumns {
+            let sql = "ALTER TABLE \(tableName) ADD COLUMN \(column) INTEGER NOT NULL DEFAULT 0"
+            
+            try db.execute(sql)
+        }
+        
+        // Reload base data
+        try loadBaseData(db, cardRecordClass: CardRecordV2.self)
+    }
+    
+    private static func loadBaseData(_ db: Database, cardRecordClass: CardRecord.Type) throws {
+        let thisBundle = Bundle(for: self)
         var jsonLoaderResults = [JSONLoader.JSONLoaderResults]()
         
         // Load cycles.json
@@ -93,8 +116,12 @@ public final class AHDatabaseMigrator {
             }
             
             do {
-                try CardRecord.loadJSONRecords(json: loadResults.json, into: db)
-                
+                if cardRecordClass == CardRecordV2.self {
+                    try CardRecordV2.loadJSONRecords(json: loadResults.json, into: db)
+                } else {
+                    try CardRecord.loadJSONRecords(json: loadResults.json, into: db)
+                }
+
                 if !skipChecksum {
                     try FileChecksumRecord(filename: "\(pack.id).json", hex: loadResults.checksum).save(db)
                     jsonLoaderResults.append(loadResults)
@@ -117,21 +144,6 @@ public final class AHDatabaseMigrator {
         generalInfo.jsonFilesChecksum = checksum
         
         try generalInfo.save(db)
-    }
-    
-    public static func v2(_ db: Database) throws {
-        // Add 'permanent' & 'fromEncounterDeck' columns to Card model
-        let newColumns: [String] = [
-            CardRecord.RowKeys.isPermanent.rawValue,
-            CardRecord.RowKeys.isEarnable.rawValue
-        ]
-        
-        let tableName = CardRecord.databaseTableName
-        for column in newColumns {
-            let sql = "ALTER TABLE \(tableName) ADD COLUMN \(column) INTEGER NOT NULL DEFAULT 0"
-            
-            try db.execute(sql)
-        }
     }
     
     private static func cleanUp(sql: String) -> String {

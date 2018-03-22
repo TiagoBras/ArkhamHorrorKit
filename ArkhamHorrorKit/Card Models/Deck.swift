@@ -49,8 +49,12 @@ public struct Deck: Hashable {
         return DeckStats.fromDeck(self)
     }
     
-    public var numberOfCards: Int {
-        return cards.reduce(0, { $0 + $1.quantity })
+    public func numberOfCards(ignorePermanentCards: Bool) -> Int {
+        if ignorePermanentCards {
+            return cards.reduce(0, { $0 + ($1.card.isPermanent ? 0 : $1.quantity) })
+        } else {
+            return cards.reduce(0, { $0 + $1.quantity })
+        }
     }
     
     public func deckCard(withId id: Int) -> DeckCard? {
@@ -70,7 +74,7 @@ public struct Deck: Hashable {
             }
         }
         
-        switch numberOfCards {
+        switch numberOfCards(ignorePermanentCards: true) {
         case Int.min..<investigator.deckSize:
             return DeckValidationResult(isValid: false, message: "Deck hasn't enough cards")
         case let count where count > investigator.deckSize:

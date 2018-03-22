@@ -266,7 +266,7 @@ class DatabaseMigrationsTests: XCTestCase {
     func testMigrationValuesV2() {
         let db = try! AHDatabase()
         var card = DatabaseTestsHelper.fetchCard(id: 2185, in: db)
-        XCTAssertEqual(card.isPermanent, false)
+        XCTAssertEqual(card.isPermanent, true)
         
         try! db.deleteAllSavedFileChecksums()
         

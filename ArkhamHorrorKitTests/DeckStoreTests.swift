@@ -39,18 +39,20 @@ class DeckStoreTests: XCTestCase {
                                                   in: database)
         
         XCTAssertEqual(deck.name, "The God Killer")
-        XCTAssertEqual(deck.numberOfCards, 0)
+        XCTAssertEqual(deck.numberOfCards(ignorePermanentCards: true), 0)
         
         deck = DatabaseTestsHelper.update(deck: deck, cardId: 1010, quantity: 2, in: database)
         deck = DatabaseTestsHelper.update(deck: deck, cardId: 1011, quantity: 1, in: database)
+        deck = DatabaseTestsHelper.update(deck: deck, cardId: 2185, quantity: 2, in: database)
         
-        XCTAssertEqual(deck.numberOfCards, 3)
+        XCTAssertEqual(deck.numberOfCards(ignorePermanentCards: true), 3)
+        XCTAssertEqual(deck.numberOfCards(ignorePermanentCards: false), 5)
         
         let recordsCountBeforeDelete = try! database.dbQueue.read { (db) -> Int in
             return try DeckCardRecord.fetchCount(db)
         }
         
-        XCTAssertEqual(recordsCountBeforeDelete, 2)
+        XCTAssertEqual(recordsCountBeforeDelete, 3)
         
         try! database.deckStore.deleteDeck(deck)
         
@@ -181,10 +183,10 @@ class DeckStoreTests: XCTestCase {
         XCTAssertEqual(deck.cards.first!.quantity, 2)
         
         let updatedDeck = try! database.deckStore.changeCardQuantity(deck: deck, card: shotgun, quantity: 0)
-        XCTAssertEqual(updatedDeck.numberOfCards, 0)
+        XCTAssertEqual(updatedDeck.numberOfCards(ignorePermanentCards: true), 0)
         
         deck = (try! database.deckStore.fetchDeck(id: deck.id))!
-        XCTAssertEqual(updatedDeck.numberOfCards, 0)
+        XCTAssertEqual(updatedDeck.numberOfCards(ignorePermanentCards: true), 0)
     }
 }
 
