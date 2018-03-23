@@ -39,7 +39,7 @@ public final class CardsStore {
     // MARK:- Public Interface
     public func fetchCard(id: Int) throws -> Card {
         return try dbWriter.read({ (db) -> Card in
-            guard let record = try RightCardRecord.fetchOne(db: db, id: id) else {
+            guard let record = try RightCardRecord.fetchCard(db: db, id: id) else {
                 throw AHDatabaseError.cardNotFound(id)
             }
             
@@ -79,7 +79,8 @@ public final class CardsStore {
             
             onBeforeFetch?(stmt)
             
-            return try RightCardRecord.fetchAll(db, stmt).flatMap ({ (record) -> Card? in
+            
+            return try RightCardRecord.fetchCards(db: db, sql: stmt).flatMap ({ (record) -> Card? in
                 let traits = try CardTraitRecord.fetchCardTraits(
                     db: db,
                     cardId: record.id).map({ $0.traitName })
@@ -147,7 +148,7 @@ public final class CardsStore {
             
             do {
                 try self?.dbWriter.read({ db in
-                    guard let record = try self?.RightCardRecord.fetchOne(db: db, id: card.id) else {
+                    guard let record = try self?.RightCardRecord.fetchCard(db: db, id: card.id) else {
                         throw AHDatabaseError.cardNotFound(card.id)
                     }
                     
@@ -192,7 +193,7 @@ public final class CardsStore {
             throw AHDatabaseError.invalidCardFactionId(record.factionId)
         }
         
-        guard let type = CardType(rawValue: record.typeId) else {
+        guard let cardType = CardType(rawValue: record.typeId) else {
             throw AHDatabaseError.typeNotFound(record.typeId)
         }
         
@@ -232,7 +233,7 @@ public final class CardsStore {
                         name: record.name,
                         subname: record.subname,
                         cost: record.cost, level: record.level,
-                        type: type, subtype: subtype,
+                        type: cardType, subtype: subtype,
                         faction: faction, text: record.text,
                         pack: pack, assetSlot: assetSlot,
                         position: record.position,

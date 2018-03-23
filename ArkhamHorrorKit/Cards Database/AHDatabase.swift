@@ -511,7 +511,7 @@ public final class AHDatabase {
                 for i in 0..<investigators.count {
                     let requiredIds = Investigator.requiredCardsIds(investigatorId: investigators[i].id)
                     
-                    let cardRecords = try self.RightCardRecord.fetchAll(db: db, ids: requiredIds.keys.sorted())
+                    let cardRecords = try self.RightCardRecord.fetchAllCards(db: db, ids: requiredIds.keys.sorted())
                     
                     let cards = try cardRecords.flatMap({ (record) -> DeckCard? in
                         guard let pack = packs[record.packId] else {

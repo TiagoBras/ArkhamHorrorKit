@@ -132,17 +132,21 @@ class CardRecord: Record {
         container[RowKeys.favorite.rawValue] = isFavorite
     }
     
-    class func fetchOne(db: Database, id: Int) throws -> CardRecord? {
+    class func fetchCard(db: Database, id: Int) throws -> CardRecord? {
         return try CardRecord.fetchOne(db, key: ["id": id])
     }
     
-    class func fetchAll(db: Database, ids: [Int]) throws -> [CardRecord] {
-        guard ids.count > 0 else { return [] }
+    class func fetchAllCards(db: Database, ids: [Int]? = nil) throws -> [CardRecord] {
+        guard let ids = ids else { return try CardRecord.fetchAll(db) }
         
         let idsString = ids.map({ String($0) }).joined(separator: ", ")
         
         let sql = "SELECT * FROM \(CardRecord.databaseTableName) WHERE id IN (\(idsString))"
         
+        return try CardRecord.fetchAll(db, sql)
+    }
+    
+    class func fetchCards(db: Database, sql: String) throws -> [CardRecord] {
         return try CardRecord.fetchAll(db, sql)
     }
     

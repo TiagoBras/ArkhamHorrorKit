@@ -22,17 +22,21 @@ final class CardRecordV2: CardRecord {
         container[CardRecord.RowKeys.isEarnable.rawValue] = isEarnable
     }
     
-    override class func fetchOne(db: Database, id: Int) throws -> CardRecord? {
+    override class func fetchCard(db: Database, id: Int) throws -> CardRecord? {
         return try CardRecordV2.fetchOne(db, key: ["id": id])
     }
-    
-    override class func fetchAll(db: Database, ids: [Int]) throws -> [CardRecord] {
-        guard ids.count > 0 else { return [] }
-        
+
+    override class func fetchCards(db: Database, sql: String) throws -> [CardRecord] {
+        return try CardRecordV2.fetchAll(db, sql)
+    }
+
+    override class func fetchAllCards(db: Database, ids: [Int]? = nil) throws -> [CardRecord] {
+        guard let ids = ids, ids.count > 0 else { return try CardRecordV2.fetchAll(db) }
+
         let idsString = ids.map({ String($0) }).joined(separator: ", ")
-        
+
         let sql = "SELECT * FROM \(CardRecord.databaseTableName) WHERE id IN (\(idsString))"
-        
+
         return try CardRecordV2.fetchAll(db, sql)
     }
     

@@ -150,7 +150,7 @@ class DatabaseMigrationsTests: XCTestCase {
             
             XCTAssertEqual(try CardRecord.fetchCount(db), 269)
             
-            let card1 = try CardRecord.fetchOne(db: db, id: 2027)!
+            let card1 = try CardRecord.fetchCard(db: db, id: 2027)!
             
             XCTAssertEqual(card1.id, 2027)
             XCTAssertEqual(card1.position, 27)
@@ -187,7 +187,7 @@ class DatabaseMigrationsTests: XCTestCase {
             XCTAssertEqual(card1.enemyHealthPerInvestigator, false)
             XCTAssertEqual(card1.internalCode, "02027")
             
-            let card2 = try CardRecord.fetchOne(db: db, id: 3012)!
+            let card2 = try CardRecord.fetchCard(db: db, id: 3012)!
             
             XCTAssertEqual(card2.id, 3012)
             XCTAssertEqual(card2.position, 12)
@@ -224,7 +224,7 @@ class DatabaseMigrationsTests: XCTestCase {
             XCTAssertEqual(card2.enemyHealthPerInvestigator, false)
             XCTAssertEqual(card2.internalCode, "03012")
             
-            let card3 = try CardRecord.fetchOne(db: db, id: 3017)!
+            let card3 = try CardRecord.fetchCard(db: db, id: 3017)!
             
             XCTAssertEqual(card3.id, 3017)
             XCTAssertEqual(card3.position, 17)

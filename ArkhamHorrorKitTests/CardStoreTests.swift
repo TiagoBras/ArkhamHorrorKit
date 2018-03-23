@@ -42,6 +42,25 @@ class CardStoreTests: XCTestCase {
         XCTAssertEqual(card.faction, CardFaction.neutral)
         XCTAssertEqual(card.doubleSided, false)
         
+        let card1 = try! database.cardStore.fetchCard(id: 2185)
+        
+        XCTAssertEqual(card1.id, 2185)
+        XCTAssertEqual(card1.position, 185)
+        XCTAssertEqual(card1.level, 3)
+        XCTAssertEqual(card1.cost, 0)
+        XCTAssertEqual(card1.quantity, 2)
+        XCTAssertEqual(card1.deckLimit, 2)
+        XCTAssertEqual(card1.name, "Keen Eye")
+        XCTAssertEqual(card1.subname, "")
+        XCTAssertEqual(card1.isUnique, false)
+        XCTAssertEqual(card1.text, "Permanent.\n[free] Spend 2 resources: You get +1 [intellect] until the end of the phase.\n[free] Spend 2 resources: You get +1 [combat] until the end of the phase.")
+        XCTAssertEqual(card1.type, CardType.asset)
+        XCTAssertEqual(card1.faction, CardFaction.guardian)
+        XCTAssertEqual(card1.doubleSided, false)
+        XCTAssertEqual(card1.isPermanent, true)
+        XCTAssertEqual(card1.isEarnable, false)
+        XCTAssertEqual(card1.traits, ["Talent"])
+        
         let pack = try! database.cardPacksDictionary()["ptc"]!
         
         XCTAssertEqual(card.pack, pack)
@@ -74,6 +93,22 @@ class CardStoreTests: XCTestCase {
         let cards = database.cardStore.fetchCards(filter: nil, sorting: nil)
         
         XCTAssertEqual(cards.count, 269)
+        
+        if let index = cards.index(where: { $0.id == 2185 }) {
+            let card = cards[index]
+            
+            XCTAssertEqual(card.isPermanent, true)
+        } else {
+            XCTFail("Index should not be nil")
+        }
+        
+        if let index = cards.index(where: { $0.id == 2184 }) {
+            let card = cards[index]
+            
+            XCTAssertEqual(card.isPermanent, false)
+        } else {
+            XCTFail("Index should not be nil")
+        }
     }
     
     func testFetchAllCards() {
