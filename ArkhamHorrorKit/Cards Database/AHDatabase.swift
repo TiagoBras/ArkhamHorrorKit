@@ -48,21 +48,37 @@ public final class AHDatabase {
         }
     }
     
-    public init(path: String) throws {
+    public init(path: String, upToVersion version: AHDatabaseMigrator.MigrationVersion? = nil) throws {
         dbQueue = try DatabaseQueue(path: path)
         
-        try migrateToLastVersion()
-        try cleanUp()
+        try setup(version: version)
     }
     
     /// Creates an in-memory database
     ///
     /// - Throws: AHDatabaseError
-    public init() throws {
+    public init(upToVersion version: AHDatabaseMigrator.MigrationVersion? = nil) throws {
         dbQueue = DatabaseQueue()
         
-        try migrateToLastVersion()
-        try cleanUp()
+        try setup(version: version)
+    }
+    
+    private func setup(version: AHDatabaseMigrator.MigrationVersion? = nil) throws {
+        let migrator = AHDatabaseMigrator()
+        
+        if let version = version {
+            try migrator.migrate(database: dbQueue, upTo: version)
+        } else {
+            try migrator.migrate(database: dbQueue)
+        }
+        
+        guard let version = migrator.currentVersion else {
+            throw AHDatabaseError.databaseVersionNotDefined
+        }
+        
+        dbVersion = version
+        
+        try updateStores()
     }
     
     
@@ -348,19 +364,6 @@ public final class AHDatabase {
         } else {
             deckStore = DeckStore(dbWriter: dbQueue, cardStore: cardStore)
         }
-    }
-    
-    private func migrateToLastVersion() throws {
-        let migrator = AHDatabaseMigrator()
-        try migrator.migrate(database: dbQueue)
-        
-        guard let version = migrator.currentVersion else {
-            throw AHDatabaseError.databaseVersionNotDefined
-        }
-        
-        dbVersion = version
-        
-        try updateStores()
     }
     
     // MARK:- CardCycle

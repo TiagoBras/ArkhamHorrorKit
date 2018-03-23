@@ -218,7 +218,7 @@ class DatabaseServerTests: XCTestCase {
         
         server.checkUpdatedJsonFiles(jsonFilesChecksums: [String: String]()) { (urls, error) in
             let files = ["apot.json", "bota.json", "bsr.json", "core.json", "cycles.json", "dca.json", "dwl.json", "eotp.json", "litas.json", "packs.json", "promo.json", "ptc.json",
-                "tece.json", "tmm.json", "tpm.json", "tuo.json", "uau.json", "wda.json"].sorted()
+                "tece.json", "tmm.json", "tpm.json", "tuo.json", "uau.json", "wda.json", "books.json"].sorted()
             
             let expectedUrls = files.map({ self.domain.appendingPathComponent("json/\($0)") })
             
