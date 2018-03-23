@@ -22,6 +22,9 @@ public struct CardFilter: Equatable {
     public var onlyEarnedCards: Bool? = nil
     
     public init() { }
+    public init(faction: CardFaction) {
+        self.factions.insert(faction)
+    }
     
     public init(factions: [CardFaction], fromLevel: Int, toLevel: Int) {
         assert(fromLevel <= toLevel)

@@ -90,7 +90,7 @@ class AHDatabaseTests: XCTestCase {
             
             promise.fulfill()
         })
-
+        
         wait(for: [promise], timeout: 30.0)
     }
     
@@ -165,22 +165,22 @@ class AHDatabaseTests: XCTestCase {
         let expectedChecksum = "ffbb536c348a15da3d666e90bcec3edba1dbdb820489b72f2fb78627f6fbd7a1"
         
         database.updateDatabase(serverDomain: server,
-                          authenticationToken: authToken,
-                          jsonLocalDirectory: FileManager.default.temporaryDirectory) { (error) in
-                            if error != nil {
-                                print(error!)
-                                XCTFail("Error should be nil")
-                            }
-                            
-                            let checksum = try! database.generalInfoJsonChecksum()
-                            
-                            let sums = try! database.getAllJsonFilesChecksums()
-                            
-                            print(sums)
-                            
-                            XCTAssertEqual(checksum, expectedChecksum)
-                            
-                            promise.fulfill()
+                                authenticationToken: authToken,
+                                jsonLocalDirectory: FileManager.default.temporaryDirectory) { (error) in
+                                    if error != nil {
+                                        print(error!)
+                                        XCTFail("Error should be nil")
+                                    }
+                                    
+                                    let checksum = try! database.generalInfoJsonChecksum()
+                                    
+                                    let sums = try! database.getAllJsonFilesChecksums()
+                                    
+                                    print(sums)
+                                    
+                                    XCTAssertEqual(checksum, expectedChecksum)
+                                    
+                                    promise.fulfill()
         }
         
         wait(for: [promise], timeout: 30)
@@ -219,6 +219,65 @@ class AHDatabaseTests: XCTestCase {
         XCTAssertEqual(oneQuantity, 4)
     }
     
+    func testLolaInvestigatorAdditionalRequirements() {
+        var deck = DatabaseTestsHelper.createDeck(
+            name: "Jack-of-all-trades",
+            investigatorId: Investigator.InvestigatorId.lolaHayesTheActress.rawValue,
+            in: db)
+        
+        XCTAssertEqual(deck.validateDeck().isValid, false)
+
+        let neutralCards = db.cardStore.fetchCards(filter: CardFilter(faction: .neutral), sorting: nil)
+        let guardianCards = db.cardStore.fetchCards(filter: CardFilter(faction: .guardian), sorting: nil)
+        let seekerCards = db.cardStore.fetchCards(filter: CardFilter(faction: .seeker), sorting: nil)
+        let rogueCards = db.cardStore.fetchCards(filter: CardFilter(faction: .rogue), sorting: nil)
+        let survivorCards = db.cardStore.fetchCards(filter: CardFilter(faction: .survivor), sorting: nil)
+        
+        // 11
+        deck.changeQuantity(of: neutralCards[0], quantity: 2)
+        deck.changeQuantity(of: neutralCards[1], quantity: 2)
+        deck.changeQuantity(of: neutralCards[2], quantity: 2)
+        deck.changeQuantity(of: neutralCards[3], quantity: 2)
+        deck.changeQuantity(of: neutralCards[4], quantity: 2)
+        deck.changeQuantity(of: neutralCards[5], quantity: 1)
+        
+        // 11 + 6 = 17
+        deck.changeQuantity(of: guardianCards[0], quantity: 2)
+        deck.changeQuantity(of: guardianCards[1], quantity: 2)
+        deck.changeQuantity(of: guardianCards[2], quantity: 2)
+
+        // 17 + 6 = 23
+        deck.changeQuantity(of: seekerCards[0], quantity: 2)
+        deck.changeQuantity(of: seekerCards[1], quantity: 2)
+        deck.changeQuantity(of: seekerCards[2], quantity: 2)
+        
+        // 23 + 6 = 29
+        deck.changeQuantity(of: rogueCards[0], quantity: 2)
+        deck.changeQuantity(of: rogueCards[1], quantity: 2)
+        deck.changeQuantity(of: rogueCards[2], quantity: 2)
+        
+        // 29 + 6 = 35
+        deck.changeQuantity(of: survivorCards[0], quantity: 2)
+        deck.changeQuantity(of: survivorCards[1], quantity: 2)
+        deck.changeQuantity(of: survivorCards[2], quantity: 2)
+        
+        XCTAssertEqual(deck.numberOfCards(ignorePermanentCards: true), 35)
+        XCTAssertEqual(deck.validateDeck().isValid, false)
+        XCTAssertEqual(deck.validateDeck().message, "Check deck aditional requirements")
+        
+        deck.changeQuantity(of: survivorCards[0], quantity: 1)  // -1
+        deck.changeQuantity(of: survivorCards[1], quantity: 1)  // -1
+        deck.changeQuantity(of: guardianCards[3], quantity: 1)  // +1
+        deck.changeQuantity(of: seekerCards[3], quantity: 1)    // +1
+        XCTAssertEqual(deck.validateDeck().isValid, false)
+        XCTAssertEqual(deck.validateDeck().message, "Check deck aditional requirements")
+        
+        deck.changeQuantity(of: survivorCards[0], quantity: 0)  // -1
+        deck.changeQuantity(of: rogueCards[3], quantity: 1)     // +1
+        
+        XCTAssertEqual(deck.validateDeck().isValid, true)
+    }
+    
     private func deckCardQuantityCounter(for deck: Deck,
                                          database: AHDatabase) -> (zeroQuantity: Int, oneQuantity: Int) {
         return try! database.dbQueue.read({ (db) -> (zeroQuantity: Int, oneQuantity: Int) in
@@ -247,8 +306,8 @@ class AHDatabaseTests: XCTestCase {
             let card = DatabaseTestsHelper.fetchCard(id: id, in: db)
             
             return DeckCard(card: card, quantity: quantity)
-        }.sorted()
-
+            }.sorted()
+        
         XCTAssertEqual(investigator.requiredCards.sorted(), expected)
     }
 }

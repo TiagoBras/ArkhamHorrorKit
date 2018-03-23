@@ -254,6 +254,10 @@ public struct Investigator: Hashable, Comparable {
         case .ashcanPeteTheDrifter: factions = allFactions.subtracting([faction])
         case .marieLambeauTheEntertainer: factions = [.seeker, .survivor]
         case .normanWithersTheAstronomer: factions = [.mystic]
+        case .lolaHayesTheActress:
+            return [MinimumCardsQuantityPerFactionRequirement(factions: Array(allFactions),
+                                                             minCardQuantity: 7,
+                                                             minDifferentFactions: 3)]
         default: return []
         }
         
@@ -303,3 +307,33 @@ public struct DeckOptionAllowedFactions: DeckOption {
     }
 }
 
+public struct MinimumCardsQuantityPerFactionRequirement: DeckOption {
+    public var factions: [CardFaction]
+    public var minCardQuantity: Int
+    public var minDifferentFactions: Int
+    
+    public func isDeckValid(_ deck: Deck) -> Deck.DeckValidationResult {
+        let factionsCounter = NSCountedSet()
+        
+        for deckCard in deck.cards {
+            guard deckCard.card.faction != .neutral else { continue }
+            
+            for _ in 0..<deckCard.quantity {
+                factionsCounter.add(deckCard.card.faction)
+            }
+        }
+        
+        var atLeastSevenCardsCounter = 0
+        for faction in CardFaction.allValues {
+            if factionsCounter.count(for: faction) >= minCardQuantity {
+                atLeastSevenCardsCounter += 1
+            }
+        }
+        
+        if atLeastSevenCardsCounter >= minDifferentFactions {
+            return Deck.DeckValidationResult(isValid: true, message: "Deck is valid")
+        }
+        
+        return Deck.DeckValidationResult(isValid: false, message: "Check deck aditional requirements")
+    }
+}
