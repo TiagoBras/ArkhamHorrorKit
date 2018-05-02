@@ -41,10 +41,14 @@ class DeckStoreTests: XCTestCase {
         XCTAssertEqual(deck.name, "The God Killer")
         XCTAssertEqual(deck.numberOfCards(ignorePermanentCards: true), 0)
         
-        deck = DatabaseTestsHelper.update(deck: deck, cardId: 1010, quantity: 2, in: database)
-        deck = DatabaseTestsHelper.update(deck: deck, cardId: 1011, quantity: 1, in: database)
+        deck = DatabaseTestsHelper.update(deck: deck, cardId: 1012, quantity: 2, in: database)
+        deck = DatabaseTestsHelper.update(deck: deck, cardId: 1032, quantity: 1, in: database)
         deck = DatabaseTestsHelper.update(deck: deck, cardId: 2185, quantity: 2, in: database)
         
+        print(DatabaseTestsHelper.fetchCard(id: 1012, in: database).isWeakness)
+        print(DatabaseTestsHelper.fetchCard(id: 1032, in: database).isWeakness)
+        print(DatabaseTestsHelper.fetchCard(id: 2185, in: database).isWeakness)
+
         XCTAssertEqual(deck.numberOfCards(ignorePermanentCards: true), 3)
         XCTAssertEqual(deck.numberOfCards(ignorePermanentCards: false), 5)
         

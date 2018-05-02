@@ -1,5 +1,5 @@
 //  Copyright © 2017 Tiago Bras. All rights reserved.
-public struct Card: Hashable, Comparable {
+public struct Card: Hashable, Comparable, CustomStringConvertible {
     public var id: Int
     public var name: String
     public var subname: String
@@ -77,5 +77,48 @@ public struct Card: Hashable, Comparable {
         }
         
         return false
+    }
+    
+    public var description: String {
+        return "id: \(id)\n" +
+            "name: \(name)\n" +
+            "subname: \(subname)\n" +
+            "cost: \(cost)\n" +
+            "level: \(level)\n" +
+            "type: \(type)\n" +
+            "subtype: \(subtype?.name ?? "nil")\n" +
+            "faction: \(faction)\n" +
+            "text: \(text)\n" +
+            "pack: \(pack)\n" +
+            "assetSlot: \(assetSlot?.name ?? "nil")\n" +
+            "position: \(position)\n" +
+            "quantity: \(quantity)\n" +
+            "deckLimit: \(deckLimit)\n" +
+            "isUnique: \(isUnique)\n" +
+            "skillAgility: \(skillAgility)\n" +
+            "skillCombat: \(skillCombat)\n" +
+            "skillIntellect: \(skillIntellect)\n" +
+            "skillWillpower: \(skillWillpower)\n" +
+            "skillWild: \(skillWild)\n" +
+            "restrictedToInvestigator: \(restrictedToInvestigator?.name ?? "nil")\n" +
+            "health: \(health)\n" +
+            "sanity: \(sanity)\n" +
+            "flavorText: \(flavorText)\n" +
+            "traits: \(traits)\n" +
+            "illustrator: \(illustrator)\n" +
+            "doubleSided: \(doubleSided)\n" +
+            "enemyFight: \(enemyFight)\n" +
+            "enemyEvade: \(enemyEvade)\n" +
+            "enemyHealth: \(enemyHealth)\n" +
+            "enemyDamage: \(enemyDamage)\n" +
+            "enemyHorror: \(enemyHorror)\n" +
+            "enemyHealthPerInvestigator: \(enemyHealthPerInvestigator)\n" +
+            "frontImageName: \(frontImageName)\n" +
+            "backImageName: \(backImageName ?? "nil")\n" +
+            "isFavorite: \(isFavorite)\n" +
+            "isPermanent: \(isPermanent)\n" +
+            "isEarnable: \(isEarnable)\n" +
+            "isWeakness: \(isWeakness)\n" +
+            "isBasicWeakness: \(isBasicWeakness)"
     }
 }

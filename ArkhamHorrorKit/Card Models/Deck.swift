@@ -9,7 +9,10 @@ public struct Deck: Hashable {
     public var investigator: Investigator
     public var name: String
     public var cards: Set<DeckCard> {
-        return Set(Array(_cards.values))
+        return Set(_cards.values.filter({ !$0.card.isWeakness }))
+    }
+    public var weaknesses: Set<DeckCard> {
+        return Set(_cards.values.filter({ $0.card.isWeakness }))
     }
     public var creationDate: Date
     public var updateDate: Date
@@ -87,6 +90,12 @@ public struct Deck: Hashable {
     public func sortedCards(sortingDescriptors: [CardsSortingDescriptor]) -> [DeckCard] {
         return cards.sorted(by: { (a, b) -> Bool in
             return a.isLessThan(deckCard: b, using: sortingDescriptors)
+        })
+    }
+    
+    public func sortedWeaknesses() -> [DeckCard] {
+        return weaknesses.sorted(by: { (a, b) -> Bool in
+            return a.card.id < b.card.id
         })
     }
     

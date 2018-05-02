@@ -227,11 +227,21 @@ class AHDatabaseTests: XCTestCase {
         
         XCTAssertEqual(deck.validateDeck().isValid, false)
 
-        let neutralCards = db.cardStore.fetchCards(filter: CardFilter(faction: .neutral), sorting: nil)
-        let guardianCards = db.cardStore.fetchCards(filter: CardFilter(faction: .guardian), sorting: nil)
-        let seekerCards = db.cardStore.fetchCards(filter: CardFilter(faction: .seeker), sorting: nil)
-        let rogueCards = db.cardStore.fetchCards(filter: CardFilter(faction: .rogue), sorting: nil)
-        let survivorCards = db.cardStore.fetchCards(filter: CardFilter(faction: .survivor), sorting: nil)
+        var neutralCards = db.cardStore.fetchCards(filter: CardFilter(faction: .neutral), sorting: nil)
+        var guardianCards = db.cardStore.fetchCards(filter: CardFilter(faction: .guardian), sorting: nil)
+        var seekerCards = db.cardStore.fetchCards(filter: CardFilter(faction: .seeker), sorting: nil)
+        var rogueCards = db.cardStore.fetchCards(filter: CardFilter(faction: .rogue), sorting: nil)
+        var survivorCards = db.cardStore.fetchCards(filter: CardFilter(faction: .survivor), sorting: nil)
+        
+        func filterOutWeaknesses(_ cards: inout [Card]) {
+            cards = cards.filter({ !$0.isWeakness })
+        }
+        
+        filterOutWeaknesses(&neutralCards)
+        filterOutWeaknesses(&guardianCards)
+        filterOutWeaknesses(&seekerCards)
+        filterOutWeaknesses(&rogueCards)
+        filterOutWeaknesses(&survivorCards)
         
         // 11
         deck.changeQuantity(of: neutralCards[0], quantity: 2)
