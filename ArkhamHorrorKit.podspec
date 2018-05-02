@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "ArkhamHorrorKit"
-  s.version      = "2.0.4"
+  s.version      = "2.0.5"
   s.summary      = "Arhkahm Horror SDK"
   s.description  = <<-DESC
   A module with Arkham Horror LCG cards database and related helper classes.
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.source_files  = "ArkhamHorrorKit/*.h", "ArkhamHorrorKit/*.swift", "ArkhamHorrorKit/**/*.swift"
 
   s.resources = "ArkhamHorrorKit/Resources/*.{xcassets,json,sql}"
-  s.dependency 'SwiftyJSON', '~> 3.1.4'
-  s.dependency 'GRDB.swift', '~> 2.3.0'
+  s.dependency 'SwiftyJSON', '~> 4.1.0'
+  s.dependency 'GRDB.swift', '~> 2.10.0'
   s.dependency 'TBSwiftKit', '~> 0.0.31'
 end

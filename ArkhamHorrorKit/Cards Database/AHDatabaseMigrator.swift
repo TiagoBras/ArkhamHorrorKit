@@ -15,10 +15,11 @@ public final class AHDatabaseMigrator {
     private var migrations: [Migration] {
         let v1 = Migration(version: .v1, migrate: AHDatabaseMigrator.v1)
         let v2 = Migration(version: .v2, migrate: AHDatabaseMigrator.v2)
+        let v3 = Migration(version: .v3, migrate: AHDatabaseMigrator.v3)
         
         // !!! Insert migrations here !!!
         
-        return [v1, v2]
+        return [v1, v2, v3]
     }
     
     public init() {
@@ -73,6 +74,14 @@ public final class AHDatabaseMigrator {
         try loadBaseData(db, cardRecordClass: CardRecordV2.self)
     }
     
+    public static func v3(_ db: Database) throws {
+        let sql = "CREATE TABLE \(FavoriteCard.databaseTableName) (" +
+        "\(FavoriteCard.ColumnName.cardId.rawValue) INTEGER PRIMARY KEY," +
+        "FOREIGN KEY (\(FavoriteCard.ColumnName.cardId.rawValue)) REFERENCES \(CardRecordV2.databaseTableName)(id));"
+        
+       try db.execute(sql)
+    }
+    
     private static func loadBaseData(_ db: Database, cardRecordClass: CardRecord.Type) throws {
         let thisBundle = Bundle(for: self)
         var jsonLoaderResults = [JSONLoader.JSONLoaderResults]()
@@ -121,7 +130,7 @@ public final class AHDatabaseMigrator {
                 } else {
                     try CardRecord.loadJSONRecords(json: loadResults.json, into: db)
                 }
-
+                
                 if !skipChecksum {
                     try FileChecksumRecord(filename: "\(pack.id).json", hex: loadResults.checksum).save(db)
                     jsonLoaderResults.append(loadResults)
@@ -189,13 +198,13 @@ public final class AHDatabaseMigrator {
             private init() { }
             
             static let bundle = Bundle(for: AHDatabaseMigrator.self)
-
+            
             static let v1 = Basename(stem: "schema_v1", ext: "sql", bundle: Schemas.bundle)
         }
         
         struct BaseData {
             static let bundle = Bundle(for: AHDatabaseMigrator.self)
-
+            
             private init() { }
             static let cycles = Basename(stem: "cycles", ext: "json", bundle: BaseData.bundle)
             static let packs = Basename(stem: "packs", ext: "json", bundle: BaseData.bundle)
@@ -216,8 +225,13 @@ public final class AHDatabaseMigrator {
         }
     }
     
-    public enum MigrationVersion: Int {
-        case v1 = 1, v2 = 2
+    public enum MigrationVersion: Int, Comparable {
+        public static func < (lhs: AHDatabaseMigrator.MigrationVersion,
+                              rhs: AHDatabaseMigrator.MigrationVersion) -> Bool {
+            return lhs.rawValue < rhs.rawValue
+        }
+        
+        case v1 = 1, v2 = 2, v3 = 3
         
         public var stringValue: String {
             return "v\(rawValue).0"

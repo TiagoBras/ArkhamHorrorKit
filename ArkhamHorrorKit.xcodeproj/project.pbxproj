@@ -108,6 +108,8 @@
 		A5837B801FD096F40062FBFA /* CardFiltersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5837B7E1FD096F40062FBFA /* CardFiltersTests.swift */; };
 		A5837B821FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5837B811FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift */; };
 		A5837B831FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5837B811FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift */; };
+		A59CA8342066DC54006A83E6 /* FavoriteCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59CA8332066DC54006A83E6 /* FavoriteCard.swift */; };
+		A59CA8352066DC54006A83E6 /* FavoriteCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59CA8332066DC54006A83E6 /* FavoriteCard.swift */; };
 		A59E56BD2011596E00362558 /* DatabaseServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E56BC2011596E00362558 /* DatabaseServer.swift */; };
 		A59E56BE2011596E00362558 /* DatabaseServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E56BC2011596E00362558 /* DatabaseServer.swift */; };
 		A59E56C020116D1B00362558 /* DatabaseServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E56BF20116D1B00362558 /* DatabaseServerTests.swift */; };
@@ -268,6 +270,7 @@
 		A5837B6C1FCF411D0062FBFA /* CardTraitsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTraitsTests.swift; sourceTree = "<group>"; };
 		A5837B7E1FD096F40062FBFA /* CardFiltersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFiltersTests.swift; sourceTree = "<group>"; };
 		A5837B811FD0B77A0062FBFA /* CreateDatabaseInDocumentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDatabaseInDocumentsTests.swift; sourceTree = "<group>"; };
+		A59CA8332066DC54006A83E6 /* FavoriteCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCard.swift; sourceTree = "<group>"; };
 		A59E56BC2011596E00362558 /* DatabaseServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseServer.swift; sourceTree = "<group>"; };
 		A59E56BF20116D1B00362558 /* DatabaseServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseServerTests.swift; sourceTree = "<group>"; };
 		A59E56C2201210D200362558 /* DeckStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckStoreTests.swift; sourceTree = "<group>"; };
@@ -509,6 +512,7 @@
 				A5837B661FCF3E440062FBFA /* TraitRecord.swift */,
 				A5837B691FCF40040062FBFA /* CardTraitRecord.swift */,
 				A5C6D02520101DC6002EDE2F /* GeneralInfo.swift */,
+				A59CA8332066DC54006A83E6 /* FavoriteCard.swift */,
 			);
 			name = Cards;
 			sourceTree = "<group>";
@@ -634,7 +638,6 @@
 				A5DA6A4F1FA23B2900457F27 /* Frameworks */,
 				A5DA6A501FA23B2900457F27 /* Headers */,
 				A5DA6A511FA23B2900457F27 /* Resources */,
-				0C102058B28F8EBBEEA34E1D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -654,7 +657,6 @@
 				A5DA6A591FA23B2900457F27 /* Frameworks */,
 				A5DA6A5A1FA23B2900457F27 /* Resources */,
 				2B9F8BB2355DB1B6F2E75AAC /* [CP] Embed Pods Frameworks */,
-				41E98D9BD9E6E48B217882AA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -675,7 +677,6 @@
 				A5DA6A6E1FA23C4B00457F27 /* Frameworks */,
 				A5DA6A6F1FA23C4B00457F27 /* Headers */,
 				A5DA6A701FA23C4B00457F27 /* Resources */,
-				B0A98C90945E17EAB268E6CD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -695,7 +696,6 @@
 				A5DA6A771FA23C4C00457F27 /* Frameworks */,
 				A5DA6A781FA23C4C00457F27 /* Resources */,
 				7F7B90C6204832B44A6D14BD /* [CP] Embed Pods Frameworks */,
-				D62D61BF7AEA90F2996CE7B9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -859,21 +859,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0C102058B28F8EBBEEA34E1D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit iOS/Pods-ArkhamHorrorKit iOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2B9F8BB2355DB1B6F2E75AAC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -894,21 +879,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit iOSTests/Pods-ArkhamHorrorKit iOSTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		41E98D9BD9E6E48B217882AA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit iOSTests/Pods-ArkhamHorrorKit iOSTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6ACA81EA87C43D5C1119E52B /* [CP] Check Pods Manifest.lock */ = {
@@ -987,36 +957,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B0A98C90945E17EAB268E6CD /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit macOS/Pods-ArkhamHorrorKit macOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D62D61BF7AEA90F2996CE7B9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArkhamHorrorKit macOSTests/Pods-ArkhamHorrorKit macOSTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1041,6 +981,7 @@
 				A557A7EA1FB0E65E007B9D6F /* DeckSortingDescriptor.swift in Sources */,
 				A5DA6A9E1FA244C300457F27 /* CardCycle.swift in Sources */,
 				A5C6D02620101DC6002EDE2F /* GeneralInfo.swift in Sources */,
+				A59CA8342066DC54006A83E6 /* FavoriteCard.swift in Sources */,
 				A55DEB391FCA3D5700141FED /* CardImageStore.swift in Sources */,
 				A51DBA421FDEF86500B247A4 /* Helpers.swift in Sources */,
 				A57FFB461FB5FE7F00B16FE6 /* ScenarioRecord.swift in Sources */,
@@ -1115,6 +1056,7 @@
 				A5DA6AC61FA2461300457F27 /* InvestigatorRecord.swift in Sources */,
 				A5DA6AC51FA2461300457F27 /* CardRecord.swift in Sources */,
 				A5DA6AB51FA244C400457F27 /* CardType.swift in Sources */,
+				A59CA8352066DC54006A83E6 /* FavoriteCard.swift in Sources */,
 				A5BCA7B31FA24CF3001E6817 /* CardFilter.swift in Sources */,
 				A5DA6AAE1FA244C400457F27 /* CardCycle.swift in Sources */,
 				A5DA6AC81FA2461300457F27 /* CardPackRecord.swift in Sources */,

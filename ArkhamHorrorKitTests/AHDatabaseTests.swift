@@ -66,7 +66,7 @@ class AHDatabaseTests: XCTestCase {
         }
         
         try! fm.createDirectory(atPath: filesDir.path,
-                                withIntermediateDirectories: false,
+                                withIntermediateDirectories: true,
                                 attributes: nil)
         
         let bundleCycles = Bundle(for: type(of: self)).url(forResource: "cyclesV1", withExtension: "json")!
@@ -162,7 +162,7 @@ class AHDatabaseTests: XCTestCase {
     func testUpdateDatabase() {
         let promise = expectation(description: "Update Database")
         let database = try! AHDatabase()
-        let expectedChecksum = "1f82deda726247c1c5745930b06a4a4ab01827315709c6061d76ae96f7432af8"
+        let expectedChecksum = "ea059854ab5a2e38d89f847be69fd067337428bb322f273379bd10c8c7b47fe9"
         
         database.updateDatabase(serverDomain: server,
                                 authenticationToken: authToken,

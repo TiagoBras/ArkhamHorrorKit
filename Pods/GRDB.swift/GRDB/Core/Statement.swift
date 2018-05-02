@@ -8,18 +8,11 @@ import Foundation
 /// A raw SQLite statement, suitable for the SQLite C API.
 public typealias SQLiteStatement = OpaquePointer
 
+/// Statements are separated by semicolons and white spaces
+let statementSeparatorCharacterSet = CharacterSet(charactersIn: ";").union(.whitespacesAndNewlines)
+
 /// An error emitted when one tries to compile an empty statement.
 struct EmptyStatementError : Error {
-}
-
-/// A common protocol for UpdateStatement and SelectStatement
-protocol AuthorizedStatement {
-    init(
-        database: Database,
-        statementStart: UnsafePointer<Int8>,
-        statementEnd: UnsafeMutablePointer<UnsafePointer<Int8>?>,
-        prepFlags: Int32,
-        authorizer: StatementCompilationAuthorizer) throws
 }
 
 /// A statement represents an SQL query.
@@ -35,10 +28,9 @@ public class Statement {
     public var sql: String {
         // trim white space and semicolumn for homogeneous output
         return String(cString: sqlite3_sql(sqliteStatement))
-            .trimmingCharacters(in: CharacterSet(charactersIn: ";").union(.whitespacesAndNewlines))
+            .trimmingCharacters(in: statementSeparatorCharacterSet)
     }
     
-    /// The database
     unowned let database: Database
     
     /// Creates a prepared statement.
@@ -73,9 +65,6 @@ public class Statement {
         }
         
         guard let statement = sqliteStatement else {
-            // Sanity check: verify that the string contains only whitespace
-            assert(String(data: Data(bytesNoCopy: UnsafeMutableRawPointer(mutating: statementStart), count: statementEnd.pointee! - statementStart, deallocator: .none), encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-            
             // I wish we could simply return nil, and make this initializer failable.
             //
             // Unfortunately, there is a Swift bug with failable+throwing initializers:
@@ -223,6 +212,73 @@ public class Statement {
     }
 }
 
+// MARK: - AuthorizedStatement
+
+/// A common protocol for UpdateStatement and SelectStatement
+protocol AuthorizedStatement {
+    // This initializer should be a required initializer of Statement.
+    //
+    // But Swift requires this required initializer to be public:
+    // https://bugs.swift.org/browse/SR-2347
+    //
+    // We work around SR-2347 with this internal protocol.
+    init(
+        database: Database,
+        statementStart: UnsafePointer<Int8>,
+        statementEnd: UnsafeMutablePointer<UnsafePointer<Int8>?>,
+        prepFlags: Int32,
+        authorizer: StatementCompilationAuthorizer) throws
+}
+
+extension AuthorizedStatement {
+    // Static function instead of an initializer because initializer doesn't
+    // compile due to the "capturing of an uninitialized self" in
+    // `sqlCodeUnits.withUnsafeBufferPointer`.
+    static func prepare(sql: String, prepFlags: Int32, in database: Database) throws -> Self {
+        let authorizer = StatementCompilationAuthorizer()
+        database.authorizer = authorizer
+        defer { database.authorizer = nil }
+        
+        let sqlCodeUnits = sql.utf8CString
+        return try sqlCodeUnits.withUnsafeBufferPointer { codeUnits in
+            let statementStart = UnsafePointer<Int8>(codeUnits.baseAddress)!
+            var statementEnd: UnsafePointer<Int8>? = nil
+            let statement: Self
+            do {
+                statement = try self.init(
+                    database: database,
+                    statementStart: statementStart,
+                    statementEnd: &statementEnd,
+                    prepFlags: prepFlags,
+                    authorizer: authorizer)
+            } catch is EmptyStatementError {
+                throw DatabaseError(
+                    resultCode: .SQLITE_ERROR,
+                    message: "empty statement",
+                    sql: sql,
+                    arguments: nil)
+            }
+            
+            let remainingData = Data(
+                bytesNoCopy: UnsafeMutableRawPointer(mutating: statementEnd!),
+                count: statementStart + sqlCodeUnits.count - statementEnd! - 1,
+                deallocator: .none)
+            
+            let remainingSQL = String(data: remainingData, encoding: .utf8)!
+                .trimmingCharacters(in: statementSeparatorCharacterSet)
+            
+            guard remainingSQL.isEmpty else {
+                throw DatabaseError(
+                    resultCode: .SQLITE_MISUSE,
+                    message: "Multiple statements found. To execute multiple statements, use Database.execute() instead.",
+                    sql: sql,
+                    arguments: nil)
+            }
+            
+            return statement
+        }
+    }
+}
 
 // MARK: - SelectStatement
 
@@ -235,9 +291,17 @@ public class Statement {
 ///         let moreThanTwentyCount = try Int.fetchOne(statement, arguments: [20])!
 ///         let moreThanThirtyCount = try Int.fetchOne(statement, arguments: [30])!
 ///     }
-public final class SelectStatement : Statement, AuthorizedStatement {
-    /// Information about the table and columns read by a SelectStatement
-    public private(set) var selectionInfo: SelectionInfo
+public final class SelectStatement : Statement {
+    /// :nodoc:
+    @available(*, deprecated, renamed:"DatabaseRegion")
+    public typealias SelectionInfo = DatabaseRegion
+    
+    /// :nodoc:
+    @available(*, deprecated, renamed:"fetchedRegion")
+    public var selectionInfo: DatabaseRegion { return fetchedRegion }
+    
+    /// The database region that the statement looks into.
+    public private(set) var fetchedRegion: DatabaseRegion
     
     /// Creates a prepared statement.
     ///
@@ -258,7 +322,7 @@ public final class SelectStatement : Statement, AuthorizedStatement {
         prepFlags: Int32,
         authorizer: StatementCompilationAuthorizer) throws
     {
-        self.selectionInfo = SelectionInfo()
+        self.fetchedRegion = DatabaseRegion()
         try super.init(
             database: database,
             statementStart: statementStart,
@@ -268,7 +332,7 @@ public final class SelectStatement : Statement, AuthorizedStatement {
         GRDBPrecondition(authorizer.invalidatesDatabaseSchemaCache == false, "Invalid statement type for query \(String(reflecting: sql)): use UpdateStatement instead.")
         GRDBPrecondition(authorizer.transactionEffect == nil, "Invalid statement type for query \(String(reflecting: sql)): use UpdateStatement instead.")
         
-        self.selectionInfo = authorizer.selectionInfo
+        self.fetchedRegion = authorizer.region
     }
     
     /// The number of columns in the resulting rows.
@@ -308,69 +372,10 @@ public final class SelectStatement : Statement, AuthorizedStatement {
         prepare(withArguments: arguments)
         reset()
     }
-    
-    /// Information about the table and columns read by a SelectStatement
-    public struct SelectionInfo : CustomStringConvertible {
-        /// Selection is unknown when a statement uses the COUNT function,
-        /// and SQLite version < 3.19:
-        ///
-        /// `SELECT COUNT(*) FROM t1` -> unknown selection
-        private let isUnknown: Bool
-        
-        /// `SELECT a, b FROM t1` -> ["t1": ["a", "b"]]
-        private var columns: [String: Set<String>] = [:]
-        
-        /// `SELECT COUNT(*) FROM t1` -> ["t1"]
-        private var tables: Set<String> = []
-        
-        /// The unknown selection
-        static let unknown = SelectionInfo(isUnknown: true)
-        
-        mutating func insert(allColumnsOfTable table: String) {
-            tables.insert(table)
-        }
-        
-        mutating func insert(column: String, ofTable table: String) {
-            columns[table, default: []].insert(column)
-        }
-        
-        /// Returns true if isUnknown is true
-        func contains(anyColumnFrom table: String) -> Bool {
-            if isUnknown { return true }
-            return tables.contains(table) || columns.index(forKey: table) != nil
-        }
-        
-        /// Returns true if isUnknown is true
-        func contains(anyColumnIn columns: Set<String>, from table: String) -> Bool {
-            if isUnknown { return true }
-            return tables.contains(table) || !(self.columns[table]?.isDisjoint(with: columns) ?? true)
-        }
-        
-        init() {
-            self.init(isUnknown: false)
-        }
-        
-        private init(isUnknown: Bool) {
-            self.isUnknown = isUnknown
-        }
-        
-        public var description: String {
-            if isUnknown {
-                return "unknown"
-            }
-            return tables.union(columns.keys)
-                .sorted()
-                .map { table -> String in
-                    if let columns = columns[table] {
-                        return "\(table)(\(columns.sorted().joined(separator: ",")))"
-                    } else {
-                        return "\(table)(*)"
-                    }
-                }
-                .joined(separator: ",")
-        }
-    }
 }
+
+// Hide AuthorizedStatement from Jazzy
+extension SelectStatement: AuthorizedStatement { }
 
 /// A cursor that iterates a database statement without producing any value.
 /// For example:
@@ -391,6 +396,7 @@ public final class StatementCursor: Cursor {
         statement.cursorReset(arguments: arguments)
     }
     
+    /// :nodoc:
     public func next() throws -> Void? {
         if done { return nil }
         switch sqlite3_step(sqliteStatement) {
@@ -419,7 +425,7 @@ public final class StatementCursor: Cursor {
 ///         try statement.execute(arguments: ["Barbara"])
 ///         return .commit
 ///     }
-public final class UpdateStatement : Statement, AuthorizedStatement {
+public final class UpdateStatement : Statement {
     enum TransactionEffect {
         case beginTransaction
         case commitTransaction
@@ -433,10 +439,6 @@ public final class UpdateStatement : Statement, AuthorizedStatement {
     /// is executed.
     private(set) var invalidatesDatabaseSchemaCache: Bool
     
-    /// If true, the statement needs support from TruncateOptimizationBlocker
-    /// when executed
-    private(set) var needsTruncateOptimizationPreventionDuringExecution: Bool
-
     private(set) var transactionEffect: TransactionEffect?
     private(set) var databaseEventKinds: [DatabaseEventKind]
     
@@ -460,7 +462,6 @@ public final class UpdateStatement : Statement, AuthorizedStatement {
         authorizer: StatementCompilationAuthorizer) throws
     {
         self.invalidatesDatabaseSchemaCache = false
-        self.needsTruncateOptimizationPreventionDuringExecution = false
         self.databaseEventKinds = []
         try super.init(
             database: database,
@@ -468,7 +469,6 @@ public final class UpdateStatement : Statement, AuthorizedStatement {
             statementEnd: statementEnd,
             prepFlags: prepFlags)
         self.invalidatesDatabaseSchemaCache = authorizer.invalidatesDatabaseSchemaCache
-        self.needsTruncateOptimizationPreventionDuringExecution = authorizer.needsTruncateOptimizationPreventionDuringExecution
         self.transactionEffect = authorizer.transactionEffect
         self.databaseEventKinds = authorizer.databaseEventKinds
     }
@@ -482,10 +482,6 @@ public final class UpdateStatement : Statement, AuthorizedStatement {
         prepare(withArguments: arguments)
         reset()
         database.updateStatementWillExecute(self)
-        
-        if needsTruncateOptimizationPreventionDuringExecution {
-            database.authorizer = TruncateOptimizationBlocker()
-        }
         
         while true {
             switch sqlite3_step(sqliteStatement) {
@@ -509,18 +505,19 @@ public final class UpdateStatement : Statement, AuthorizedStatement {
                 continue
                 
             case SQLITE_DONE:
-                database.authorizer = nil
                 try database.updateStatementDidExecute(self)
                 return
                 
             case let code:
-                database.authorizer = nil
                 try database.updateStatementDidFail(self)
                 throw DatabaseError(resultCode: code, message: database.lastErrorMessage, sql: sql, arguments: self.arguments) // Error uses self.arguments, not the optional arguments parameter.
             }
         }
     }
 }
+
+// Hide AuthorizedStatement from Jazzy
+extension UpdateStatement: AuthorizedStatement { }
 
 
 // MARK: - StatementArguments
@@ -596,7 +593,7 @@ public final class UpdateStatement : Statement, AuthorizedStatement {
 ///     let row = try Row.fetchOne(db, sql, arguments: [1, 2, "bar"] + ["foo": "foo"])!
 ///     print(row)
 ///     // Prints <Row two:2 foo:"foo" one:1 foo2:"foo" bar:"bar">
-public struct StatementArguments {
+public struct StatementArguments: CustomStringConvertible, Equatable, ExpressibleByArrayLiteral, ExpressibleByDictionaryLiteral {
     var values: [DatabaseValue] = []
     var namedValues: [String: DatabaseValue] = [:]
     
@@ -882,7 +879,8 @@ public struct StatementArguments {
     }
 }
 
-extension StatementArguments : ExpressibleByArrayLiteral {
+// ExpressibleByArrayLiteral
+extension StatementArguments {
     /// Returns a StatementArguments from an array literal:
     ///
     ///     db.selectRows("SELECT ...", arguments: ["Arthur", 41])
@@ -891,7 +889,8 @@ extension StatementArguments : ExpressibleByArrayLiteral {
     }
 }
 
-extension StatementArguments : ExpressibleByDictionaryLiteral {
+// ExpressibleByDictionaryLiteral
+extension StatementArguments {
     /// Returns a StatementArguments from a dictionary literal:
     ///
     ///     db.selectRows("SELECT ...", arguments: ["name": "Arthur", "score": 41])
@@ -900,7 +899,9 @@ extension StatementArguments : ExpressibleByDictionaryLiteral {
     }
 }
 
-extension StatementArguments : CustomStringConvertible {
+// CustomStringConvertible
+extension StatementArguments {
+    /// :nodoc:
     public var description: String {
         let valuesDescriptions = values.map { $0.description }
         let namedValuesDescriptions = namedValues.map { (key, value) -> String in
@@ -910,13 +911,17 @@ extension StatementArguments : CustomStringConvertible {
     }
 }
 
-extension StatementArguments : Equatable {
+#if !swift(>=4.1)
+// Equatable
+extension StatementArguments {
+    /// :nodoc:
     public static func == (lhs: StatementArguments, rhs: StatementArguments) -> Bool {
         if lhs.values != rhs.values { return false }
         if lhs.namedValues != rhs.namedValues { return false }
         return true
     }
 }
+#endif
 
 /// A thread-unsafe statement cache
 struct StatementCache {

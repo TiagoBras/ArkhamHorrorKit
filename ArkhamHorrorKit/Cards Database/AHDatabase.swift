@@ -41,7 +41,7 @@ public final class AHDatabase {
     public private(set) var dbVersion: AHDatabaseMigrator.MigrationVersion = .v1
     
     var RightCardRecord: CardRecord.Type {
-        if dbVersion == .v2 {
+        if dbVersion >= .v2 {
             return CardRecordV2.self
         } else {
             return CardRecord.self
@@ -131,7 +131,7 @@ public final class AHDatabase {
             let info = try GeneralInfo.fetchUniqueRow(db: db)
             info.jsonFilesChecksum = ""
             
-            if info.hasPersistentChangedValues {
+            if info.hasDatabaseChanges {
                 try info.save(db)
             }
         }
@@ -516,7 +516,7 @@ public final class AHDatabase {
                     
                     let cardRecords = try self.RightCardRecord.fetchAllCards(db: db, ids: requiredIds.keys.sorted())
                     
-                    let cards = try cardRecords.flatMap({ (record) -> DeckCard? in
+                    let cards = try cardRecords.compactMap({ (record) -> DeckCard? in
                         guard let pack = packs[record.packId] else {
                             throw AHDatabaseError.packNotFound(record.packId)
                         }
@@ -570,7 +570,7 @@ public final class AHDatabase {
             
             let record = FileChecksumRecord(filename: results.filename, hex: results.checksum)
             
-            if record.hasPersistentChangedValues {
+            if record.hasDatabaseChanges {
                 try record.save(db)
                 
                 shouldUpdateStores = true
@@ -588,7 +588,7 @@ public final class AHDatabase {
                 
                 info.jsonFilesChecksum = checksum
                 
-                if info.hasPersistentChangedValues {
+                if info.hasDatabaseChanges {
                     try info.save(db)
                 }
             }

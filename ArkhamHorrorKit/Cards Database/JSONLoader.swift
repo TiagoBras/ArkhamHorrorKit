@@ -33,9 +33,9 @@ public class JSONLoader {
     
     public class func load(url: URL) throws -> JSONLoaderResults {
         let data = try Data(contentsOf: url)
-        
+
         return JSONLoaderResults(filename: url.lastPathComponent,
-                                 json: JSON(data: data),
+                                 json: try JSON(data: data),
                                  checksum: CryptoHelper.sha256Hex(data: data))
     }
     

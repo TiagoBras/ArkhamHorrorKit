@@ -27,7 +27,7 @@ public struct Campaign {
             record.iconName = iconName
             record.protected = protected
             
-            if record.hasPersistentChangedValues {
+            if record.hasDatabaseChanges {
                 try record.update(db)
             }
         })

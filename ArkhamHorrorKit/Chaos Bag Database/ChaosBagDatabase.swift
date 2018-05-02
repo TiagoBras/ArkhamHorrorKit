@@ -169,7 +169,7 @@ public class ChaosBagDatabase {
                 
                 bag.updateTokens(dictionary: tokens)
                 
-                if bag.hasPersistentChangedValues {
+                if bag.hasDatabaseChanges {
                     try bag.update(db)
                 }
                 
@@ -250,7 +250,7 @@ public class ChaosBagDatabase {
     
     public func updateDatabase(jsonURL: URL) throws {
         let data = try Data(contentsOf: jsonURL)
-        let json = JSON(data: data)
+        let json = try JSON(data: data)
         
         try dbQueue.write({ (db) in
             for campaignJson in json.arrayValue {
@@ -263,7 +263,7 @@ public class ChaosBagDatabase {
                     campaignId = record.id!
                     record.iconName = iconName
                     
-                    if record.hasPersistentChangedValues {
+                    if record.hasDatabaseChanges {
                         try record.update(db)
                     }
                 } else {
@@ -291,7 +291,7 @@ public class ChaosBagDatabase {
                         arguments: [name, campaignId],
                         adapter: nil) {
                         
-                        if record.hasPersistentChangedValues {
+                        if record.hasDatabaseChanges {
                             try record.update(db)
                         }
                         
@@ -332,7 +332,7 @@ public class ChaosBagDatabase {
                             let bagRecord = try ChaosBagRecord.fetchOne(db, key: ["id": chaosBagId])!
                             bagRecord.updateTokens(dictionary: tokens)
                             
-                            if bagRecord.hasPersistentChangedValues {
+                            if bagRecord.hasDatabaseChanges {
                                 try bagRecord.update(db)
                             }
                         } else {

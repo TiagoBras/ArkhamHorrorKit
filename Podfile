@@ -4,8 +4,8 @@ source 'https://bitbucket.org/tiagobras/tbpods'
 use_frameworks!
 
 def shared_pods
-    pod 'SwiftyJSON', '~> 3.1.4'
-    pod 'GRDB.swift', '~> 2.3.0'
+    pod 'SwiftyJSON', '~> 4.1.0'
+    pod 'GRDB.swift', '~> 2.10.0'
     pod 'TBSwiftKit', '~> 0.0.31'
 end
 

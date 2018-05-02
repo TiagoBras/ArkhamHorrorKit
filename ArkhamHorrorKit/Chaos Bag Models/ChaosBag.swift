@@ -132,7 +132,7 @@ public struct ChaosBag: Equatable {
             
             record.updateTokens(dictionary: tokensDictionary)
             
-            if record.hasPersistentChangedValues {
+            if record.hasDatabaseChanges {
                 try record.update(db)
             }
         })

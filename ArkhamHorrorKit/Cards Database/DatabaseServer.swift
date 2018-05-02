@@ -84,14 +84,19 @@ public class DatabaseServer {
                         return completion(nil, DatabaseServerError.httpStatusCode(httpStatus.statusCode))
                     }
                     
-                    let json = JSON(data: data)
-                    let shouldUpdateJson = json["json_update_available"].boolValue
-                    let shouldUpdateImages = json["images_update_available"].boolValue
+                    do {
+                        let json = try JSON(data: data)
+                        let shouldUpdateJson = json["json_update_available"].boolValue
+                        let shouldUpdateImages = json["images_update_available"].boolValue
+                        
+                        let report = UpdateReport(jsonFilesUpdateAvailable: shouldUpdateJson,
+                                                  imagesUpdateAvailable: shouldUpdateImages)
+                        
+                        completion(report, nil)
+                    } catch {
+                        completion(nil, error)
+                    }
                     
-                    let report = UpdateReport(jsonFilesUpdateAvailable: shouldUpdateJson,
-                                              imagesUpdateAvailable: shouldUpdateImages)
-                    
-                    completion(report, nil)
                 }
                 
                 task.resume()
@@ -131,19 +136,23 @@ public class DatabaseServer {
                         return completion(nil, DatabaseServerError.httpStatusCode(httpStatus.statusCode))
                     }
                     
-                    let json = JSON(data: data)
-                    
-                    if let imageURL = json["images_url"].string,
-                        let images = json["images"].arrayObject as? [String] {
+                    do {
+                        let json = try JSON(data: data)
                         
-                        if let url = URL(string: imageURL) {
-                            let fullpaths = images.map({ url.appendingPathComponent($0) })
+                        if let imageURL = json["images_url"].string,
+                            let images = json["images"].arrayObject as? [String] {
                             
-                            return completion(fullpaths, nil)
+                            if let url = URL(string: imageURL) {
+                                let fullpaths = images.map({ url.appendingPathComponent($0) })
+                                
+                                return completion(fullpaths, nil)
+                            }
                         }
+                        
+                        return completion([], nil)
+                    } catch {
+                        return completion(nil, error)
                     }
-                    
-                    return completion([], nil)
                 }
                 
                 task.resume()
@@ -177,19 +186,23 @@ public class DatabaseServer {
                         return completion(nil, DatabaseServerError.httpStatusCode(httpStatus.statusCode))
                     }
                     
-                    let json = JSON(data: data)
-                    
-                    if let jsonURL = json["json_url"].string,
-                        let jsonFiles = json["json_files"].arrayObject as? [String] {
+                    do {
+                        let json = try JSON(data: data)
                         
-                        if let url = URL(string: jsonURL) {
-                            let fullpaths = jsonFiles.map({ url.appendingPathComponent($0) })
+                        if let jsonURL = json["json_url"].string,
+                            let jsonFiles = json["json_files"].arrayObject as? [String] {
                             
-                            return completion(fullpaths, nil)
+                            if let url = URL(string: jsonURL) {
+                                let fullpaths = jsonFiles.map({ url.appendingPathComponent($0) })
+                                
+                                return completion(fullpaths, nil)
+                            }
                         }
+                        
+                        return completion([], nil)
+                    } catch {
+                        return completion(nil, error)
                     }
-                    
-                    return completion([], nil)
                 }
                 
                 task.resume()

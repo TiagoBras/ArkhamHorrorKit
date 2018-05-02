@@ -288,7 +288,7 @@ class DatabaseMigrationsTests: XCTestCase {
         
         let data = try! Data(contentsOf: url!)
         
-        return JSON(data: data)
+        return try! JSON(data: data)
     }
     
     private func loadInvestigatorsJSONInMainBundle(filename: String) -> [JSON] {

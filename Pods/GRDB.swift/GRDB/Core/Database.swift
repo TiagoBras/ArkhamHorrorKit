@@ -46,7 +46,20 @@ public final class Database {
     /// > advantage of the error logging facility of SQLite in their products,
     /// > as it is very low CPU and memory cost but can be a huge aid
     /// > for debugging.
-    public static var logError: LogErrorFunction? = nil
+    public static var logError: LogErrorFunction? = nil {
+        didSet {
+            if logError != nil {
+                registerErrorLogCallback { (_, code, message) in
+                    guard let logError = Database.logError else { return }
+                    guard let message = message.map({ String(cString: $0) }) else { return }
+                    let resultCode = ResultCode(rawValue: code)
+                    logError(resultCode, message)
+                }
+            } else {
+                registerErrorLogCallback(nil)
+            }
+        }
+    }
     
     /// The database configuration
     public let configuration: Configuration
@@ -85,6 +98,8 @@ public final class Database {
     
     /// True if the database connection is currently in a transaction.
     public var isInsideTransaction: Bool {
+        if isClosed { return false }
+        
         // https://sqlite.org/c3ref/get_autocommit.html
         //
         // > The sqlite3_get_autocommit() interface returns non-zero or zero if
@@ -145,9 +160,6 @@ public final class Database {
     // MARK: - Initializer
 
     init(path: String, configuration: Configuration, schemaCache: DatabaseSchemaCache) throws {
-        // Setup the global SQLite error log before connecting to the database.
-        Database.setupGlobalErrorLog()
-        
         let sqliteConnection = try Database.openConnection(path: path, flags: configuration.SQLiteOpenFlags)
         do {
             try Database.activateExtendedCodes(sqliteConnection)
@@ -178,26 +190,6 @@ public final class Database {
 extension Database {
 
     // MARK: - Database Opening
-    
-    /// Registers the public Database.logError function as the global SQLite
-    /// error log, with sqlite3_config(SQLITE_CONFIG_LOG).
-    ///
-    /// See https://sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfiglog
-    private static func setupGlobalErrorLog() {
-        // We use a Swift static variable as a way to ensure that the error log
-        // is registered once and only once.
-        struct Impl {
-            static let setupErrorLog: () = {
-                registerErrorLogCallback { (_, code, message) in
-                    guard let log = Database.logError else { return }
-                    guard let message = message.map({ String(cString: $0) }) else { return }
-                    let resultCode = ResultCode(rawValue: code)
-                    log(resultCode, message)
-                }
-            }()
-        }
-        Impl.setupErrorLog
-    }
     
     private static func openConnection(path: String, flags: Int32) throws -> SQLiteConnection {
         // See https://www.sqlite.org/c3ref/open.html
@@ -280,7 +272,7 @@ extension Database {
         setupBusyMode()
         setupDefaultFunctions()
         setupDefaultCollations()
-        observationBroker.setup()
+        observationBroker.installCommitAndRollbackHooks()
     }
     
     private func setupTrace() {
@@ -559,7 +551,7 @@ extension Database {
     /// - throws: The error thrown by the block.
     public func inTransaction(_ kind: TransactionKind? = nil, _ block: () throws -> TransactionCompletion) throws {
         // Begin transaction
-        try beginTransaction(kind ?? configuration.defaultTransactionKind)
+        try beginTransaction(kind)
         
         // Now that transaction has begun, we'll rollback in case of error.
         // But we'll throw the first caught error, so that user knows
@@ -679,11 +671,20 @@ extension Database {
         }
     }
     
-    func beginTransaction(_ kind: TransactionKind) throws {
+    /// Begins a database transaction.
+    ///
+    /// - parameter kind: The transaction type (default nil). If nil, the
+    ///   transaction type is configuration.defaultTransactionKind, which itself
+    ///   defaults to .immediate. See https://www.sqlite.org/lang_transaction.html
+    ///   for more information.
+    /// - throws: The error thrown by the block.
+    public func beginTransaction(_ kind: TransactionKind? = nil) throws {
+        let kind = kind ?? configuration.defaultTransactionKind
         try execute("BEGIN \(kind.rawValue) TRANSACTION")
     }
     
-    private func rollback() throws {
+    /// Rollbacks a database transaction.
+    public func rollback() throws {
         // The SQLite documentation contains two related but distinct techniques
         // to handle rollbacks and errors:
         //
@@ -728,7 +729,8 @@ extension Database {
         }
     }
     
-    func commit() throws {
+    /// Commits a database transaction.
+    public func commit() throws {
         try execute("COMMIT TRANSACTION")
     }
 }
@@ -827,8 +829,10 @@ extension Database {
     ///
     /// See https://www.sqlite.org/datatype3.html#collation
     public struct CollationName : RawRepresentable, Hashable {
+        /// :nodoc:
         public let rawValue: String
         
+        /// :nodoc:
         public init(rawValue: String) {
             self.rawValue = rawValue
         }
@@ -837,10 +841,13 @@ extension Database {
             self.rawValue = rawValue
         }
         
+        #if !swift(>=4.1)
         /// The hash value
+        /// :nodoc:
         public var hashValue: Int {
             return rawValue.hashValue
         }
+        #endif
         
         /// The `BINARY` built-in SQL collation
         public static let binary = CollationName("BINARY")
@@ -861,8 +868,10 @@ extension Database {
     ///
     /// See https://www.sqlite.org/datatype3.html
     public struct ColumnType : RawRepresentable, Hashable {
+        /// :nodoc:
         public let rawValue: String
         
+        /// :nodoc:
         public init(rawValue: String) {
             self.rawValue = rawValue
         }
@@ -871,10 +880,13 @@ extension Database {
             self.rawValue = rawValue
         }
         
+        #if !swift(>=4.1)
         /// The hash value
+        /// :nodoc:
         public var hashValue: Int {
             return rawValue.hashValue
         }
+        #endif
         
         /// The `TEXT` SQL column type
         public static let text = ColumnType("TEXT")

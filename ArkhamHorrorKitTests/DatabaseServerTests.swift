@@ -191,7 +191,7 @@ class DatabaseServerTests: XCTestCase {
         let promise2 = expectation(description: "Check Missing Images - 2")
         
         server.checkMissingImages(imagesDirectory: localDir) { (urls, error) in
-            XCTAssertEqual(urls!.count, 339)
+            XCTAssertEqual(urls!.count, 353)
 
             promise1.fulfill()
             
@@ -201,7 +201,7 @@ class DatabaseServerTests: XCTestCase {
             try! self.fm.copyItem(at: sourceURL, to: localDir.appendingPathComponent("01043.jpeg"))
             
             server.checkMissingImages(imagesDirectory: localDir, completion: { (urls, error) in
-                XCTAssertEqual(urls!.count, 338)
+                XCTAssertEqual(urls!.count, 352)
                 
                 promise2.fulfill()
             })

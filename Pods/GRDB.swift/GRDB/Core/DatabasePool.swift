@@ -39,19 +39,15 @@ public final class DatabasePool {
     /// - parameters:
     ///     - path: The path to the database file.
     ///     - configuration: A configuration.
-    ///     - maximumReaderCount: The maximum number of readers. Default is 5.
     /// - throws: A DatabaseError whenever an SQLite error occurs.
     public init(path: String, configuration: Configuration = Configuration()) throws {
         GRDBPrecondition(configuration.maximumReaderCount > 0, "configuration.maximumReaderCount must be at least 1")
-        
-        // Writer and readers share the same database schema cache
-        let sharedSchemaCache = SharedDatabaseSchemaCache()
         
         // Writer
         writer = try SerializedDatabase(
             path: path,
             configuration: configuration,
-            schemaCache: sharedSchemaCache)
+            schemaCache: SimpleDatabaseSchemaCache())
         
         // Activate WAL Mode unless readonly
         if !configuration.readonly {
@@ -80,21 +76,13 @@ public final class DatabasePool {
         readerConfig = configuration
         readerConfig.readonly = true
         readerConfig.defaultTransactionKind = .deferred // Make it the default for readers. Other transaction kinds are forbidden by SQLite in read-only connections.
+        readerConfig.allowsUnsafeTransactions = false   // Because there's no guarantee that one can get the same reader in order to close its opened transaction.
         readerPool = Pool(maximumCount: configuration.maximumReaderCount, makeElement: { [unowned self] in
             let reader = try SerializedDatabase(
                 path: path,
                 configuration: self.readerConfig,
-                schemaCache: sharedSchemaCache)
-            
-            reader.sync { db in
-                for function in self.functions {
-                    db.add(function: function)
-                }
-                for collation in self.collations {
-                    db.add(collation: collation)
-                }
-            }
-            
+                schemaCache: SimpleDatabaseSchemaCache())
+            reader.sync { self.setupDatabase($0) }
             return reader
         })
     }
@@ -108,6 +96,15 @@ public final class DatabasePool {
         NotificationCenter.default.removeObserver(self)
     }
     #endif
+    
+    private func setupDatabase(_ db: Database) {
+        for function in self.functions {
+            db.add(function: function)
+        }
+        for collation in self.collations {
+            db.add(collation: collation)
+        }
+    }
 }
 
 extension DatabasePool {
@@ -250,6 +247,8 @@ extension DatabasePool : DatabaseReader {
                 // The block isolation comes from the DEFERRED transaction.
                 // See DatabasePoolTests.testReadMethodIsolationOfBlock().
                 try db.inTransaction(.deferred) {
+                    // Reset the schema cache before running user code in snapshot isolation
+                    db.schemaCache = SimpleDatabaseSchemaCache()
                     result = try block(db)
                     return .commit
                 }
@@ -287,7 +286,11 @@ extension DatabasePool : DatabaseReader {
     public func unsafeRead<T>(_ block: (Database) throws -> T) throws -> T {
         GRDBPrecondition(currentReader == nil, "Database methods are not reentrant.")
         return try readerPool.get { reader in
-            try reader.sync(block)
+            try reader.sync { db in
+                // No schema cache when snapshot isolation is not established
+                db.schemaCache = EmptyDatabaseSchemaCache()
+                return try block(db)
+            }
         }
     }
     
@@ -323,7 +326,11 @@ extension DatabasePool : DatabaseReader {
             return try reader.reentrantSync(block)
         } else {
             return try readerPool.get { reader in
-                try reader.sync(block)
+                try reader.sync { db in
+                    // No schema cache when snapshot isolation is not established
+                    db.schemaCache = EmptyDatabaseSchemaCache()
+                    return try block(db)
+                }
             }
         }
     }
@@ -504,7 +511,8 @@ extension DatabasePool : DatabaseWriter {
     /// Asynchronously executes a read-only block in a protected dispatch queue,
     /// wrapped in a deferred transaction.
     ///
-    /// This method must be called from the writing dispatch queue.
+    /// This method must be called from the writing dispatch queue, outside of a
+    /// transaction. You'll get a fatal error otherwise.
     ///
     /// The *block* argument is guaranteed to see the database in the last
     /// committed state at the moment this method is called. Eventual concurrent
@@ -570,8 +578,11 @@ extension DatabasePool : DatabaseWriter {
         //                                  UPDATE ...
         //     Here the change is not visible by GRDB user
         
-        // This method must be called from the writing dispatch queue:
-        writer.preconditionValidQueue()
+        // Check that we're on the writer queue...
+        writer.execute { db in
+            // ... and that no transaction is opened.
+            GRDBPrecondition(!db.isInsideTransaction, "readFromCurrentState must not be called from inside a transaction.")
+        }
         
         // The semaphore that blocks the writing dispatch queue until snapshot
         // isolation has been established:
@@ -590,7 +601,11 @@ extension DatabasePool : DatabaseWriter {
                     return
                 }
                 semaphore.signal() // We can release the writer queue now that we are isolated for good
+                
+                // Reset the schema cache before running user code in snapshot isolation
+                db.schemaCache = SimpleDatabaseSchemaCache()
                 block(db)
+                
                 _ = try? db.commit() // Ignore commit error
             }
         }
@@ -599,5 +614,45 @@ extension DatabasePool : DatabaseWriter {
             // TODO: write a test for this
             throw readError
         }
+    }
+}
+
+extension DatabasePool {
+    
+    // MARK: - Snapshots
+    
+    /// Creates a database snapshot.
+    //:
+    /// The snapshot sees an unchanging database content, as it existed at the
+    /// moment it was created.
+    ///
+    /// When you want to control the latest committed changes seen by a
+    /// snapshot, create it from the pool's writer protected dispatch queue:
+    ///
+    ///     let snapshot1 = try dbPool.write { db -> DatabaseSnapshot in
+    ///         try Player.deleteAll()
+    ///         return dbPool.makeSnapshot()
+    ///     }
+    ///     // <- Other threads may modify the database here
+    ///     let snapshot2 = try dbPool.makeSnapshot()
+    ///
+    ///     try snapshot1.read { db in
+    ///         // Guaranteed to be zero
+    ///         try Player.fetchCount(db)
+    ///     }
+    ///
+    ///     try snapshot2.read { db in
+    ///         // Could be anything
+    ///         try Player.fetchCount(db)
+    ///     }
+    ///
+    /// You can create as many snapshots as you need, regardless of the maximum
+    /// number of reader connections in the pool.
+    ///
+    /// For more information, read about "snapshot isolation" at https://sqlite.org/isolation.html
+    public func makeSnapshot() throws -> DatabaseSnapshot {
+        let snapshot = try DatabaseSnapshot(path: path, configuration: writer.configuration)
+        snapshot.read { setupDatabase($0) }
+        return snapshot
     }
 }

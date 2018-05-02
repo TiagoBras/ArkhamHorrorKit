@@ -29,7 +29,7 @@ public final class CardsStore {
     }
     
     var RightCardRecord: CardRecord.Type {
-        if dbVersion == .v2 {
+        if dbVersion >= .v2 {
             return CardRecordV2.self
         } else {
             return CardRecord.self
@@ -80,7 +80,7 @@ public final class CardsStore {
             onBeforeFetch?(stmt)
             
             
-            return try RightCardRecord.fetchCards(db: db, sql: stmt).flatMap ({ (record) -> Card? in
+            return try RightCardRecord.fetchCards(db: db, sql: stmt).compactMap ({ (record) -> Card? in
                 let traits = try CardTraitRecord.fetchCardTraits(
                     db: db,
                     cardId: record.id).map({ $0.traitName })
@@ -142,38 +142,16 @@ public final class CardsStore {
         }
     }
     
+    private func updateFavoriteCardStatus(_ card: Card, isFavorite: Bool) {
+        
+    }
+    
     private func updateCardStar(_ card: Card, starred: Bool, completion: ((Card?, Error?) -> ())?) {
-        DispatchQueue.global().async { [weak self] in
-            var updatedCard = card
-            
-            do {
-                try self?.dbWriter.read({ db in
-                    guard let record = try self?.RightCardRecord.fetchCard(db: db, id: card.id) else {
-                        throw AHDatabaseError.cardNotFound(card.id)
-                    }
-                    
-                    record.isFavorite = starred
-                    
-                    if record.hasPersistentChangedValues {
-                        try record.save(db)
-                        
-                        updatedCard.isFavorite = true
-                        
-                        DispatchQueue.main.async {
-                            completion?(updatedCard, nil)
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            completion?(card, nil)
-                        }
-                    }
-                })
-            } catch {
-                DispatchQueue.main.async {
-                    completion?(nil, error)
-                }
-            }
-        }
+        // TODO: complete this
+//        DispatchQueue.global().async { [weak self] in
+//
+//        }
+        print("!!!!!!!!!!!!!!! NOT IMPLEMENTED !!!!!!!!!!!!!!!")
     }
     
     public func starCard(_ card: Card, completion: ((Card?, Error?) -> ())?) {
@@ -434,7 +412,7 @@ public final class CardsStore {
             whereInClauses.append("favorite = \(favorite)")
         }
 
-        if dbVersion == .v2 {
+        if dbVersion >= .v2 {
             if let onlyPermanentCards = filter.onlyPermanentCards {
                 let intValue: Int = onlyPermanentCards ? 1 : 0
                 

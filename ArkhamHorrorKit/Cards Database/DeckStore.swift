@@ -249,7 +249,7 @@ public final class DeckStore {
             
             record.name = name
             
-            if record.hasPersistentChangedValues {
+            if record.hasDatabaseChanges {
                 try record.save(db)
             }
             
@@ -292,7 +292,7 @@ public final class DeckStore {
             } else {
                 let record = DeckCardRecord(deckId: deck.id, cardId: card.id, quantity: quantity)
                 
-                if record.hasPersistentChangedValues {
+                if record.hasDatabaseChanges {
                     try record.save(db)
                 }
             }
